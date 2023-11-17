@@ -23,7 +23,7 @@ namespace TukiVerkko1
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+                      "~/Content/bootstrapQuartz.css",
                       "~/Content/site.css"));
         }
     }
