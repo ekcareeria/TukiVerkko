@@ -37,7 +37,7 @@ namespace TukiVerkko1.Controllers
             {
                 //ViewBag.LoggedStatus = "Paikalla";
                 ViewBag.LoginError = 0;
-                Session["UserName"] = LoggedUser.Käyttäjätunnus;
+                Session["Käyttäjätunnus"] = LoggedUser.Käyttäjätunnus;
                 return RedirectToAction("About", "Home");
             }
             else
@@ -55,7 +55,7 @@ namespace TukiVerkko1.Controllers
         public ActionResult LogOut()
         {
             Session.Abandon();
-            ViewBag.LoggedStatus = "Vieras";
+            //ViewBag.LoggedStatus = "Vieras";
             return RedirectToAction("Index", "Home");
         }
     }

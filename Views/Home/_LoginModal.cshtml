@@ -13,7 +13,6 @@
                 {
                     @Html.AntiForgeryToken()
                     <div class="form-horizontal">
-                        @*<hr />*@
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         @Html.HiddenFor(model => model.LoginID)
                         <div class="form-group">
@@ -38,13 +37,13 @@
             </div>
             <div class="modal-footer">
                 <div>
-                    @*Kontrollerin kutsu Url.Action -komennolla, jotta peruuttaminen johtaa alkutilanteeseen*@
-                    <a href="@Url.Action("Index", "Home")" class="btn btn-primary"><i class="fas fa-times"></i></a>
-                    <button type="submit" class="btn btn-info" form="loginForm"><i class="fas fa-check"></i></button>
-                    @*Formin lähettävä button, joka ei kuitenkaan ole formin sisällä, mutta viittaa formin ID:hen*@
+                    @*Tässä nää buttonit oli keskenään erilaisia, ehkä siksi kun toinen on linkki ja toinen buttoni? Toisessa ei ollut kulmien pyöristystä lainkaan, 
+                        siksi se on lisätty inlinena. FAS-ikoneista johtuen ne on myös hieman eri levyisiä.*@
+                    <a href="@Url.Action("Index", "Home")" class="btn btn-primary" style="border-radius: 6px"><i class="fas fa-times"></i></a>
+                    <button type="submit" class="btn btn-info loginbutton" form="loginForm"><i class="fas fa-check"></i></button>
                 </div>
             </div>
-
+            
         </div>
     </div>
 </div>
