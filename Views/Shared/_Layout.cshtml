@@ -6,7 +6,21 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+
+    <style>
+        footer {
+            padding-left: 1em;
+            padding-right: 1em;
+        }
+
+        img.footer {
+            height: 2em;
+        }
+    </style>
+
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
@@ -21,14 +35,23 @@
                         <a class="nav-link active" href="/Home/Index">Etusivu<span class="visually-hidden">(current)</span></a></li>
                 </ul>
                 <form class="d-flex">
-                    <ul class="nav-item"><a class="nav-link" href="Home/Contact">Info</a></ul> 
+                    <ul class="nav-item"><a class="nav-link" href="/Home/Contact">Info</a></ul> 
                 </form>
             </div>
         </div>
-    </nav>        @RenderBody()
+    </nav>        
+    @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Date - My ASP.NET Application</p>
+            @using System.Globalization
+            <div class="row">
+                <div class="column col-sm-6">
+                    &copy;
+                    <img class="footer" src="~/Content/TukiverkkoLogoPieni.png">
+                    <img class="footer" src="~/Content/CareeriaLogo.png">
+                </div>
+                <div class="column col-sm-6"><p style="text-align:right">Tänään on @DateTime.Now.ToString("F", CultureInfo.CreateSpecificCulture("fi-FI"))</p></div>
+            </div>
         </footer>
 
     @Scripts.Render("~/bundles/jquery")
