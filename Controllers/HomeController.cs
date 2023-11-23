@@ -32,19 +32,17 @@ namespace TukiVerkko1.Controllers
         {
             TikettiDBEntities db = new TikettiDBEntities();
 
-            var LoggedUser = db.Logins.SingleOrDefault(x => x.Käyttäjätunnus == LoginModel.Käyttäjätunnus && x.Salasana == LoginModel.Salasana);
-            if (LoggedUser != null)
+            var Kirjautunut = db.Logins.SingleOrDefault(x => x.Käyttäjätunnus == LoginModel.Käyttäjätunnus && x.Salasana == LoginModel.Salasana);
+            if (Kirjautunut != null)
             {
-                //ViewBag.LoggedStatus = "Paikalla";
-                ViewBag.LoginError = 0;
-                Session["Käyttäjätunnus"] = LoggedUser.Käyttäjätunnus;
+                ViewBag.LoginVirhe = 0;
+                Session["Käyttäjätunnus"] = Kirjautunut.Käyttäjätunnus;
                 return RedirectToAction("About", "Home");
             }
             else
             {
-                //ViewBag.LoggedStatus = "Vieras";
-                ViewBag.LoginError = 1;
-                LoginModel.KirjautumisVirheIlmoitus = "Tuntematon käyttäjätunnus tai salasana";
+                ViewBag.LoginVirhe = 1;
+                LoginModel.LoginVirheilmo = "Tuntematon käyttäjätunnus tai salasana";
                 return View("Index", LoginModel);
             }
         }
@@ -52,10 +50,10 @@ namespace TukiVerkko1.Controllers
         {
             return View();
         }
+
         public ActionResult LogOut()
         {
             Session.Abandon();
-            //ViewBag.LoggedStatus = "Vieras";
             return RedirectToAction("Index", "Home");
         }
     }

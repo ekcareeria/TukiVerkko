@@ -30,17 +30,15 @@
                             </div>
                         </div>
                         <label class="text-danger">
-                            @Html.DisplayFor(model => model.KirjautumisVirheIlmoitus)
+                            @Html.DisplayFor(model => model.LoginVirheilmo)
                         </label>
                     </div>
                 }
             </div>
             <div class="modal-footer">
                 <div>
-                    @*Tässä nää buttonit oli keskenään erilaisia, ehkä siksi kun toinen on linkki ja toinen buttoni? Toisessa ei ollut kulmien pyöristystä lainkaan, 
-                        siksi se on lisätty inlinena. FAS-ikoneista johtuen ne on myös hieman eri levyisiä.*@
                     <a href="@Url.Action("Index", "Home")" class="btn btn-primary" style="border-radius: 6px"><i class="fas fa-times"></i></a>
-                    <button type="submit" class="btn btn-info loginbutton" form="loginForm"><i class="fas fa-check"></i></button>
+                    <button type="submit" class="btn btn-info" form="loginForm"><i class="fas fa-check"></i></button>
                 </div>
             </div>
             

@@ -22,6 +22,6 @@ namespace TukiVerkko1.Models
         [DataType(DataType.Password)]
         public string Salasana { get; set; }
         public string Rooli { get; set; }
-        public string KirjautumisVirheIlmoitus { get; set; }
+        public string LoginVirheilmo { get; set; }
     }
 }
