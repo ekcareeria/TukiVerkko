@@ -3,6 +3,20 @@
 }
 
 <main>
+    @section scripts {
+        <script type="text/javascript">
+        $(window).on('load', function () {
+            if (@ViewBag.LoginVirhe == 1) {
+                $('#LoginRuutu').modal('show');
+            }
+        });
+
+        </script>
+
+        @{
+            Html.RenderPartial("_LoginModal");
+        }
+    }
     <div>
         <br />
         <button type="button" class="btn btn-primary">Primary</button>
