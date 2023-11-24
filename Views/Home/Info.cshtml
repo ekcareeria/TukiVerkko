@@ -1,6 +1,7 @@
 ﻿@{
-    ViewBag.Title = "Contact";
+    ViewBag.Title = "Info";
 }
+
 <script src="https://kit.fontawesome.com/028f6f57aa.js" crossorigin="anonymous"></script>
 <style>
     div {
@@ -21,12 +22,22 @@
 
     img.logot {
         width: 15em;
-        vertical-align: central;
+        place-content: center;
     }
 
     div.container {
         background-color: #DED6EA;
         border: 1px solid black;
+    }
+
+    .ikonit {
+        display: flex;
+        text-align: left;
+    }
+
+    .teksti {
+        display: block;
+        padding-left: 1em;
     }
 </style>
 <body>
@@ -45,18 +56,18 @@
                 </p>
             </div>
             <div class="column col-sm-4">
-                <p style="text-align:left;">
-                    <i class='fas fa-map-marker-alt' style='font-size:40px'></i>
-                    Hevosenkengänkatu 2<br />06100 Porvoo
-                    <br />
-                    <br />
-                    <i class='fas fa-phone' style='font-size:40px'></i>
-                    Vaihde 020 51 311 (ma–pe klo 8–16)<br />Aulavastaava 040 736 8200
-                    <br />
-                    <br />
-                    <i class='fas fa-mail-bulk' style='font-size:40px'></i>
-                    hkk.infopiste@careeria.fi
-                </p>
+                <div class="ikonit">
+                    <i class="fas fa-map-marker-alt fa-2x"></i>
+                    <p class="teksti">Hevosenkengänkatu 2<br />06100 Porvoo</p>
+                </div>
+                <div class="ikonit">
+                    <i class="fas fa-phone fa-2x"></i>
+                    <p class="teksti">Vaihde 020 51 311 (ma–pe klo 8–16)<br />Aulavastaava 040 736 8200</p>
+                </div>
+                <div class="ikonit">
+                    <i class="fas fa-mail-bulk fa-2x"></i>
+                    <p class="teksti">hkk.infopiste@careeria.fi</p>
+                </div>
             </div>
             <div class="column col-sm-4">
                 <img class="logot" src="~/Content/TukiverkkoLogo.png">
