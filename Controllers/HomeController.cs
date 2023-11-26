@@ -21,9 +21,9 @@ namespace TukiVerkko1.Controllers
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult Info()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Infoa";
 
             return View();
         }
