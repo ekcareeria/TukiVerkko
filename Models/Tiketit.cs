@@ -26,6 +26,7 @@ namespace TukiVerkko1.Models
         public string Kuvaus { get; set; }
         public System.DateTime Aika { get; set; }
         public Nullable<System.DateTime> Valmistumisaika { get; set; }
+        public string Status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Asiakkaat> Asiakkaat { get; set; }
