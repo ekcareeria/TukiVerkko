@@ -7,21 +7,22 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TukiVerkko1.Models;
+using TukiVerkko1.ViewModels;
 
 namespace TukiVerkko1.Controllers
 {
-    public class AsiakkaatTestiController : Controller
+    public class AsiakkaatsController : Controller
     {
         private TikettiDBEntities db = new TikettiDBEntities();
 
-        // GET: AsiakkaatTesti
+        // GET: Asiakkaats
         public ActionResult Index()
         {
             var asiakkaat = db.Asiakkaat.Include(a => a.Tiketit);
             return View(asiakkaat.ToList());
         }
 
-        // GET: AsiakkaatTesti/Details/5
+        // GET: Asiakkaats/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,21 +37,19 @@ namespace TukiVerkko1.Controllers
             return View(asiakkaat);
         }
 
-        // GET: AsiakkaatTesti/Create
+        // GET: Asiakkaats/Create
         public ActionResult Create()
         {
-            //Metodia kutsutaan listanäkymästä ja metodi näyttää luontinäytön
             ViewBag.TikettiID = new SelectList(db.Tiketit, "TikettiID", "Otsikko");
             return View();
         }
 
-        // POST: AsiakkaatTesti/Create
+        // POST: Asiakkaats/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "AsiakasID,TikettiID,Etunimi,Sukunimi,Puhelinnumero,Sähköposti")] Asiakkaat asiakkaat)
-        public ActionResult Create([Bind(Include = "Etunimi,Sukunimi,Puhelinnumero,Sähköposti")] Asiakkaat asiakkaat)
+        public ActionResult Create([Bind(Include = "AsiakasID,TikettiID,Etunimi,Sukunimi,Puhelinnumero,Sähköposti")] Asiakkaat asiakkaat)
         {
             if (ModelState.IsValid)
             {
@@ -63,7 +62,7 @@ namespace TukiVerkko1.Controllers
             return View(asiakkaat);
         }
 
-        // GET: AsiakkaatTesti/Edit/5
+        // GET: Asiakkaats/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -79,7 +78,7 @@ namespace TukiVerkko1.Controllers
             return View(asiakkaat);
         }
 
-        // POST: AsiakkaatTesti/Edit/5
+        // POST: Asiakkaats/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -96,7 +95,7 @@ namespace TukiVerkko1.Controllers
             return View(asiakkaat);
         }
 
-        // GET: AsiakkaatTesti/Delete/5
+        // GET: Asiakkaats/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -111,7 +110,7 @@ namespace TukiVerkko1.Controllers
             return View(asiakkaat);
         }
 
-        // POST: AsiakkaatTesti/Delete/5
+        // POST: Asiakkaats/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -129,6 +128,23 @@ namespace TukiVerkko1.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+        public ActionResult Lomake()
+        {
+            var lomake = from a in db.Asiakkaat
+                         join t in db.Tiketit on a.TikettiID equals t.TikettiID
+                         join k in db.Kategoriat on t.KategoriaID equals k.KategoriaID
+                         select new Lomake
+                         {
+                             Otsikko = t.Otsikko,
+                             Nimi = k.Nimi,
+                             Etunimi = a.Etunimi,
+                             Sukunimi = a.Sukunimi,
+                             Sähköposti = a.Sähköposti,
+                             Puhelinnumero = a.Puhelinnumero,
+                             Kuvaus = t.Kuvaus,
+                         };
+            return View(lomake);
         }
     }
 }
