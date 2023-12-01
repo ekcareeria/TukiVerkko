@@ -17,7 +17,7 @@ namespace TukiVerkko1.Controllers
         private TikettiDBEntities db = new TikettiDBEntities();
 
         // GET: Asiakkaats
-        public ActionResult Index()
+        public ActionResult Tukipyyntolista()
         {
             var asiakkaat = db.Asiakkaat.Include(a => a.Tiketit);
             return View(asiakkaat.ToList());
