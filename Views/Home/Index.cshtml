@@ -17,25 +17,86 @@
             Html.RenderPartial("_LoginModal");
         }
     }
-    <div>
-        <br />
-        <button type="button" class="btn btn-primary">Primary</button>
-        <button type="button" class="btn btn-secondary">Secondary</button>
-        <button type="button" class="btn btn-success">Success</button>
-        <button type="button" class="btn btn-danger">Danger</button>
-        <button type="button" class="btn btn-warning">Warning</button>
-        <button type="button" class="btn btn-info">Info</button>
-        <button type="button" class="btn btn-light">Light</button>
-        <button type="button" class="btn btn-dark">Dark</button>
-        <br />
-        <br />
-        <button type="button" class="btn btn-outline-primary">Primary</button>
-        <button type="button" class="btn btn-outline-secondary">Secondary</button>
-        <button type="button" class="btn btn-outline-success">Success</button>
-        <button type="button" class="btn btn-outline-danger">Danger</button>
-        <button type="button" class="btn btn-outline-warning">Warning</button>
-        <button type="button" class="btn btn-outline-info">Info</button>
-        <button type="button" class="btn btn-outline-light">Light</button>
-        <button type="button" class="btn btn-outline-dark">Dark</button>
+    <style>
+        div.container {
+            padding-top: 1em;
+        }
+
+        .karuselli {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .iso-button {
+            font-size: 30px;
+            padding-right: 30px;
+            padding-left: 30px;
+            padding-top: 24px;
+            padding-bottom: 24px;
+        }
+    </style>
+
+    <div id="karuselli" class="carousel slide" data-bs-ride="carousel">
+
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#karuselli" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#karuselli" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#karuselli" data-bs-slide-to="2"></button>
+            <button type="button" data-bs-target="#karuselli" data-bs-slide-to="3"></button>
+        </div>
+
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="~/Content/Kuva1.png" style="width:100%" class="d-block w-100">
+                <div class="carousel-caption">
+                    <h1>TukiVERKKO</h1>
+                    <p style="font-size: 20px;">It-tukipalvelut</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="~/Content/Kuva2.jpg" style="width:100%" class="d-block w-100">
+                <div class="carousel-caption">
+                    <h1>TukiVERKKO</h1>
+                    <p style="font-size: 20px;">It-tukipalvelut</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="~/Content/Kuva3.jpg" style="width:100%" class="d-block w-100">
+                <div class="carousel-caption">
+                    <h1>TukiVERKKO</h1>
+                    <p style="font-size: 20px;">It-tukipalvelut</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="~/Content/Kuva4.jpg" style="width:100%" class="d-block w-100">
+                <div class="carousel-caption">
+                    <h1>TukiVERKKO</h1>
+                    <p style="font-size: 20px;">It-tukipalvelut</p>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="column col-sm-6 sarake">
+                    <div class="text-center">
+                        <p>
+                            Miten voimme auttaa?<br />
+                            Täytä it-tukipyyntö klikkaamalla alla olevaa painiketta.
+                        </p>
+                        <button type="button" class="btn btn-primary btn-lg iso-button" data-bs-toggle="modal" data-bs-target="#LoginRuutu">Tukipyyntö</button>
+                    </div>
+                </div>
+                <div class="column col-sm-6 sarake">
+                    <div class="text-center">
+                        <p>
+                            Hei IT-tuen opiskelija!<br />
+                            Kirjaudu sisään alapuolelta.
+                        </p>
+                        <button type="button" class="btn btn-info btn-lg iso-button" data-bs-toggle="modal" data-bs-target="#LoginRuutu">Kirjaudu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
