@@ -17,24 +17,36 @@
             Html.RenderPartial("_LoginModal");
         }
     }
-    <style>
-        div.container {
-            padding-top: 1em;
-        }
+<style>
+    div.container {
+        padding-top: 1em;
+    }
 
-        .karuselli {
-            width: 100%;
-            margin: 0;
-            padding: 0;
-        }
+    .karuselli {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
 
-        .iso-button {
-            font-size: 30px;
-            padding-right: 30px;
-            padding-left: 30px;
-            padding-top: 24px;
-            padding-bottom: 24px;
-        }
+    .iso-button {
+        font-size: 30px;
+        padding-right: 30px;
+        padding-left: 30px;
+        padding-top: 24px;
+        padding-bottom: 24px;
+    }
+
+    /* Lisää pystyviiva kaikkien sarakkeiden oikeaan reunaan, paitsi viimeisen sarakkeen */
+    .sarakkeet > div {
+        border-right: 1px solid black;
+        padding: 10px;
+        display: inline-block;
+    }
+
+    /* Poista pystyviiva viimeisen sarakkeen oikeasta reunasta */
+    .sarakkeet > div:last-child {
+        border-right: none;
+    }
     </style>
 
     <div id="karuselli" class="carousel slide" data-bs-ride="carousel">
@@ -77,7 +89,7 @@
             </div>
         </div>
         <div class="container">
-            <div class="row">
+            <div class="row sarakkeet">
                 <div class="column col-sm-6 sarake">
                     <div class="text-center">
                         <p>
