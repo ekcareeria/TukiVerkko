@@ -6,7 +6,8 @@ namespace TukiVerkko1.ViewModels
     using System;
     public class Lomaketiedot
     {
-        public int AsiakasID { get; set; }      //Tarvittavat rivit tietokannasta, eri tauluista.
+
+        public int AsiakasID { get; set; }      //Copypastattu Elenalta
         public int TikettiID { get; set; }
         public string Etunimi { get; set; }
         public string Sukunimi { get; set; }
@@ -18,7 +19,7 @@ namespace TukiVerkko1.ViewModels
         public Nullable<System.DateTime> Aika { get; set; }
         public Nullable<System.DateTime> Valmistumisaika { get; set; }
         public string Nimi { get; set; }
-        public string Status { get; set; }
+        //public string Status { get; set; }
 
     }
 }

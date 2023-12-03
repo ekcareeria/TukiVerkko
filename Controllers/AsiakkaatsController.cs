@@ -122,7 +122,7 @@ namespace TukiVerkko1.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Lomaketiedot()
+        public ActionResult LuoLomake()
         {
             var lomake = from a in db.Asiakkaat
                          join t in db.Tiketit on a.TikettiID equals t.TikettiID
@@ -130,21 +130,40 @@ namespace TukiVerkko1.Controllers
                          select new Lomaketiedot
                          {
                              Otsikko = t.Otsikko,
-                             //Nimi = k.Nimi,
-                             //Etunimi = a.Etunimi,
-                             //Sukunimi = a.Sukunimi,
-                             //Sähköposti = a.Sähköposti,
-                             //Puhelinnumero = a.Puhelinnumero,
-                             //Kuvaus = t.Kuvaus,
-                         };
-            if (lomake != null)
+                             Nimi = k.Nimi,
+                             Etunimi = a.Etunimi,
+                             Sukunimi = a.Sukunimi,
+                             Sähköposti = a.Sähköposti,
+                             Puhelinnumero = a.Puhelinnumero,
+                             Kuvaus = t.Kuvaus,
+                             //Otsikko = t.Otsikko,                               //Tulosjoukko.
 
-            {
-                int i = 0;
-                i = lomake.ToList().Count;
-            }
-            //var lomake = new Lomake();
-            return View(lomake);
+                             //Nimi = k.Nimi,
+
+                             //Aika = (DateTime)t.Aika,
+
+                             //Kuvaus = t.Kuvaus,
+
+                             //Etunimi = a.Etunimi,
+
+                             //Sukunimi = a.Sukunimi,
+
+                             //Puhelinnumero = a.Puhelinnumero,
+
+                             //Sähköposti = a.Sähköposti,
+
+                             //TikettiID = (int)t.TikettiID,
+
+                             //AsiakasID = (int)a.AsiakasID,
+
+                             //KategoriaID = (int)k.KategoriaID,
+
+                             //Valmistumisaika = (DateTime)t.Valmistumisaika,
+
+                             //Status = t.Status,
+                         };
+            
+            return View(lomake.SingleOrDefault());
         }
 
         protected override void Dispose(bool disposing)
