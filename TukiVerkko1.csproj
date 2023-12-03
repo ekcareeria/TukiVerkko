@@ -130,7 +130,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AsiakkaatsController.cs" />
-    <Compile Include="Controllers\AsiakkaatTestiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -242,22 +241,17 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\AsiakkaatTesti\Create.cshtml" />
-    <Content Include="Views\AsiakkaatTesti\Delete.cshtml" />
-    <Content Include="Views\AsiakkaatTesti\Details.cshtml" />
-    <Content Include="Views\AsiakkaatTesti\Edit.cshtml" />
-    <Content Include="Views\AsiakkaatTesti\Index.cshtml" />
     <Content Include="Views\Asiakkaats\Create.cshtml" />
     <Content Include="Views\Asiakkaats\Delete.cshtml" />
     <Content Include="Views\Asiakkaats\Details.cshtml" />
     <Content Include="Views\Asiakkaats\Edit.cshtml" />
     <Content Include="Views\Asiakkaats\Index.cshtml" />
     <Content Include="Views\Asiakkaats\Lomake.cshtml" />
-    <Content Include="Views\Asiakkaats\LomakeTestiLista.cshtml" />
+    <Content Include="Views\Asiakkaats\LomakeTesti2.cshtml" />
+    <Content Include="Views\Asiakkaats\Index2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Lomake\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

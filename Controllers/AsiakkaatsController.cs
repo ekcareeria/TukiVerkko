@@ -122,14 +122,6 @@ namespace TukiVerkko1.Controllers
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
         public ActionResult Lomake()
         {
             var lomake = from a in db.Asiakkaat
@@ -147,5 +139,15 @@ namespace TukiVerkko1.Controllers
                          };
             return View(lomake);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+        
     }
 }
