@@ -247,7 +247,6 @@
     <Content Include="Views\Asiakkaats\Edit.cshtml" />
     <Content Include="Views\Asiakkaats\Index.cshtml" />
     <Content Include="Views\Asiakkaats\Lomake.cshtml" />
-    <Content Include="Views\Asiakkaats\LomakeTesti2.cshtml" />
     <Content Include="Views\Asiakkaats\Index2.cshtml" />
   </ItemGroup>
   <ItemGroup>

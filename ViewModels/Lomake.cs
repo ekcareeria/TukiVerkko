@@ -1,7 +1,9 @@
-﻿namespace TukiVerkko1.ViewModels
+﻿
+//using TukiVerkko1.Models;
+
+namespace TukiVerkko1.ViewModels
 {
     using System;
-    using TukiVerkko1.Models;
     public class Lomake
     {
         public int AsiakasID { get; set; }

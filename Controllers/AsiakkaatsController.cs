@@ -129,14 +129,21 @@ namespace TukiVerkko1.Controllers
                          join k in db.Kategoriat on t.KategoriaID equals k.KategoriaID
                          select new Lomake
                          {
-                             Otsikko = t.Otsikko,
-                             Nimi = k.Nimi,
+                             //Otsikko = t.Otsikko,
+                             //Nimi = k.Nimi,
                              Etunimi = a.Etunimi,
-                             Sukunimi = a.Sukunimi,
-                             Sähköposti = a.Sähköposti,
-                             Puhelinnumero = a.Puhelinnumero,
-                             Kuvaus = t.Kuvaus,
+                             //Sukunimi = a.Sukunimi,
+                             //Sähköposti = a.Sähköposti,
+                             //Puhelinnumero = a.Puhelinnumero,
+                             //Kuvaus = t.Kuvaus,
                          };
+            if (lomake != null)
+
+            {
+                int i = 0;
+                i = lomake.ToList().Count;
+            }
+            //var lomake = new Lomake();
             return View(lomake);
         }
 
