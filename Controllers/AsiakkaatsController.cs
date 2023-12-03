@@ -122,16 +122,16 @@ namespace TukiVerkko1.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Lomake()
+        public ActionResult Lomaketiedot()
         {
             var lomake = from a in db.Asiakkaat
                          join t in db.Tiketit on a.TikettiID equals t.TikettiID
                          join k in db.Kategoriat on t.KategoriaID equals k.KategoriaID
-                         select new Lomake
+                         select new Lomaketiedot
                          {
-                             //Otsikko = t.Otsikko,
+                             Otsikko = t.Otsikko,
                              //Nimi = k.Nimi,
-                             Etunimi = a.Etunimi,
+                             //Etunimi = a.Etunimi,
                              //Sukunimi = a.Sukunimi,
                              //Sähköposti = a.Sähköposti,
                              //Puhelinnumero = a.Puhelinnumero,
