@@ -22,8 +22,5 @@ namespace TukiVerkko1.Models
         public string Sähköposti { get; set; }
     
         public virtual Tiketit Tiketit { get; set; }
-        public virtual Tiketit Otsikko { get; set; }
-        public virtual Tiketit Kuvaus { get; set; }
-
     }
 }
