@@ -2,6 +2,21 @@
     ViewBag.Title = "Info";
 }
 
+@section scripts {
+    <script type="text/javascript">
+    $(window).on('load', function () {
+        if (@ViewBag.LoginVirhe == 1) {
+            $('#LoginRuutu').modal('show');
+        }
+    });
+
+    </script>
+
+    @{
+        Html.RenderPartial("_LoginModal");
+    }
+}
+
 <style>
     div {
         padding-left: 1em;
