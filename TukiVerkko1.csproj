@@ -248,6 +248,7 @@
     <Content Include="Views\Asiakkaats\Edit.cshtml" />
     <Content Include="Views\Asiakkaats\Index.cshtml" />
     <Content Include="Views\Asiakkaats\LuoLomake.cshtml" />
+    <Content Include="Views\Asiakkaats\Tukipyynto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

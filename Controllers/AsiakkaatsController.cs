@@ -122,7 +122,8 @@ namespace TukiVerkko1.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult LuoLomake()
+        // GET: Create-NÄKYMÄ tukipyyntölomakkeelle:
+        public ActionResult Tukipyynto() 
         {
             var lomake = from a in db.Asiakkaat
                          join t in db.Tiketit on a.TikettiID equals t.TikettiID
@@ -136,34 +137,53 @@ namespace TukiVerkko1.Controllers
                              Sähköposti = a.Sähköposti,
                              Puhelinnumero = a.Puhelinnumero,
                              Kuvaus = t.Kuvaus,
-                             //Otsikko = t.Otsikko,                               //Tulosjoukko.
 
-                             //Nimi = k.Nimi,
-
-                             //Aika = (DateTime)t.Aika,
-
-                             //Kuvaus = t.Kuvaus,
-
-                             //Etunimi = a.Etunimi,
-
-                             //Sukunimi = a.Sukunimi,
-
-                             //Puhelinnumero = a.Puhelinnumero,
-
-                             //Sähköposti = a.Sähköposti,
-
-                             //TikettiID = (int)t.TikettiID,
-
-                             //AsiakasID = (int)a.AsiakasID,
-
-                             //KategoriaID = (int)k.KategoriaID,
-
-                             //Valmistumisaika = (DateTime)t.Valmistumisaika,
-
-                             //Status = t.Status,
                          };
+
+            return View(lomake.FirstOrDefault());
+        }
+        // POST: Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Tukipyynto([Bind(Include = "Otsikko,Nimi,Etunimi,Sukunimi,Sähköposti,Puhelinnumero,Kuvaus")] Lomaketiedot tiedot)
+        {
+            if (ModelState.IsValid)
+            {
+                var tiketti = new Tiketit()
+                {
+                    Otsikko = tiedot.Otsikko,
+                    Kuvaus = tiedot.Kuvaus
+                };
+
+                db.Tiketit.Add(tiketti);
+                db.SaveChanges();
+
+                var kategoria = new Kategoriat()
+                {
+                    Nimi = tiedot.Nimi,
+                };
+                
+                db.Kategoriat.Add(kategoria);
+                db.SaveChanges();
+
+                var asiakas = new Asiakkaat()
+                {
+                    Etunimi = tiedot.Etunimi,
+                    Sukunimi = tiedot.Sukunimi,
+                    Sähköposti = tiedot.Sähköposti,
+                    Puhelinnumero = tiedot.Puhelinnumero
+                };
+
+                db.Asiakkaat.Add(asiakas);
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+                        
+            return View(tiedot);
             
-            return View(lomake.SingleOrDefault());
         }
 
         protected override void Dispose(bool disposing)
