@@ -1,0 +1,99 @@
+﻿@model IEnumerable<TukiVerkko1.ViewModels.Lomaketiedot>
+
+@{
+    ViewBag.Title = "TukipyyntolistaTESTI";
+}
+
+<h2>TukipyyntolistaTESTI</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AsiakasID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TikettiID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Etunimi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sukunimi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Puhelinnumero)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sähköposti)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.KategoriaID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Otsikko)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Kuvaus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Aika)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Valmistumisaika)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nimi)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.AsiakasID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TikettiID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Etunimi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sukunimi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Puhelinnumero)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sähköposti)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.KategoriaID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Otsikko)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Kuvaus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Aika)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Valmistumisaika)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nimi)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

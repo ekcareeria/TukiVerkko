@@ -21,7 +21,10 @@ namespace TukiVerkko1.Controllers
         {
             var asiakkaat = db.Asiakkaat.Include(a => a.Tiketit);
             return View(asiakkaat.ToList());
+
         }
+
+        
 
         // GET: Asiakkaats/Details/5
         public ActionResult Details(int? id)
@@ -121,6 +124,27 @@ namespace TukiVerkko1.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        // Testausta varten: ViewModelin mukainen lista tukipyynnöistä
+        public ActionResult TukipyyntolistaTESTI()
+        {
+            var lomake = from a in db.Asiakkaat
+                         join t in db.Tiketit on a.TikettiID equals t.TikettiID
+                         join k in db.Kategoriat on t.KategoriaID equals k.KategoriaID
+                         select new Lomaketiedot
+                         {
+                             Otsikko = t.Otsikko,
+                             Nimi = k.Nimi,
+                             Etunimi = a.Etunimi,
+                             Sukunimi = a.Sukunimi,
+                             Sähköposti = a.Sähköposti,
+                             Puhelinnumero = a.Puhelinnumero,
+                             Kuvaus = t.Kuvaus,
+
+                         };
+            return View(lomake.ToList());
+        }
+
 
         // GET: Create-NÄKYMÄ tukipyyntölomakkeelle:
         public ActionResult Tukipyynto() 
