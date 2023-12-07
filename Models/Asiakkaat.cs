@@ -14,13 +14,19 @@ namespace TukiVerkko1.Models
     
     public partial class Asiakkaat
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Asiakkaat()
+        {
+            this.Tiketit = new HashSet<Tiketit>();
+        }
+    
         public int AsiakasID { get; set; }
-        public int TikettiID { get; set; }
         public string Etunimi { get; set; }
         public string Sukunimi { get; set; }
         public string Puhelinnumero { get; set; }
         public string Sähköposti { get; set; }
     
-        public virtual Tiketit Tiketit { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tiketit> Tiketit { get; set; }
     }
 }
