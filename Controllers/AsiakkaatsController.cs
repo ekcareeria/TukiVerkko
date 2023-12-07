@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -44,6 +45,7 @@ namespace TukiVerkko1.Controllers
         // GET: Asiakkaats/Create
         public ActionResult Create()
         {
+            // Tämä SelectList liittyy vain dropdowniin
             ViewBag.TikettiID = new SelectList(db.Tiketit, "TikettiID", "Otsikko");
             return View();
         }
@@ -61,7 +63,7 @@ namespace TukiVerkko1.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            // Tämä SelectList liittynee vain dropdowniin
             ViewBag.TikettiID = new SelectList(db.Tiketit, "TikettiID", "Otsikko", asiakkaat.TikettiID);
             return View(asiakkaat);
         }
@@ -149,22 +151,27 @@ namespace TukiVerkko1.Controllers
         // GET: Create-NÄKYMÄ tukipyyntölomakkeelle:
         public ActionResult Tukipyynto() 
         {
-            var lomake = from a in db.Asiakkaat
-                         join t in db.Tiketit on a.TikettiID equals t.TikettiID
-                         join k in db.Kategoriat on t.KategoriaID equals k.KategoriaID
-                         select new Lomaketiedot
-                         {
-                             Otsikko = t.Otsikko,
-                             Nimi = k.Nimi,
-                             Etunimi = a.Etunimi,
-                             Sukunimi = a.Sukunimi,
-                             Sähköposti = a.Sähköposti,
-                             Puhelinnumero = a.Puhelinnumero,
-                             Kuvaus = t.Kuvaus,
+            
+            ////LINQ-kysely tässä kohdassa lienee turha?
+            //var lomake = from a in db.Asiakkaat
+            //             join t in db.Tiketit on a.TikettiID equals t.TikettiID
+            //             join k in db.Kategoriat on t.KategoriaID equals k.KategoriaID
+            //             select new Lomaketiedot
+            //             {
+            //                 Otsikko = t.Otsikko,
+            //                 Nimi = k.Nimi,
+            //                 Etunimi = a.Etunimi,
+            //                 Sukunimi = a.Sukunimi,
+            //                 Sähköposti = a.Sähköposti,
+            //                 Puhelinnumero = a.Puhelinnumero,
+            //                 Kuvaus = t.Kuvaus,
 
-                         };
+            //             };
 
-            return View(lomake.FirstOrDefault());
+            //// Tuleeko tähän kohtaan kategorian dropdown?
+
+            //return View(lomake.FirstOrDefault());
+            return View();
         }
         // POST: Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
@@ -178,19 +185,23 @@ namespace TukiVerkko1.Controllers
                 var tiketti = new Tiketit()
                 {
                     Otsikko = tiedot.Otsikko,
-                    Kuvaus = tiedot.Kuvaus
+                    Kuvaus = tiedot.Kuvaus,
+                    Aika = tiedot.Aika, // Huom! 7.12. muutettu kenttä Nullable Tiketit.cs ja Lomaketiedot.cs
                 };
 
+                DateTime aikanyt = DateTime.Now;
+                tiedot.Aika = aikanyt;
                 db.Tiketit.Add(tiketti);
-                db.SaveChanges();
-
-                var kategoria = new Kategoriat()
+                try
                 {
-                    Nimi = tiedot.Nimi,
-                };
+                    db.SaveChanges();
+                }
+                catch (DbEntityValidationException e)
+                {
+                    Console.WriteLine(e);
+                }
+
                 
-                db.Kategoriat.Add(kategoria);
-                db.SaveChanges();
 
                 var asiakas = new Asiakkaat()
                 {
@@ -201,7 +212,31 @@ namespace TukiVerkko1.Controllers
                 };
 
                 db.Asiakkaat.Add(asiakas);
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (DbEntityValidationException e)
+                {
+                    Console.WriteLine(e);
+                }
+                
+
+                var kategoria = new Kategoriat()
+                {
+                    Nimi = tiedot.Nimi,
+                };
+                
+                db.Kategoriat.Add(kategoria);
+                
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (DbEntityValidationException e)
+                {
+                    Console.WriteLine(e);
+                }
 
                 return RedirectToAction("Index");
             }
