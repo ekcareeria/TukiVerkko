@@ -132,40 +132,40 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Asiakkaat.cs">
-      <DependentUpon>TikettiDB.tt</DependentUpon>
+      <DependentUpon>TikettiDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Kategoriat.cs">
-      <DependentUpon>TikettiDB.tt</DependentUpon>
+      <DependentUpon>TikettiDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Logins.cs">
-      <DependentUpon>TikettiDB.tt</DependentUpon>
+      <DependentUpon>TikettiDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>TikettiDB.tt</DependentUpon>
+      <DependentUpon>TikettiDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_helpdiagrams_Result.cs">
-      <DependentUpon>TikettiDB.tt</DependentUpon>
+      <DependentUpon>TikettiDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagrams.cs">
-      <DependentUpon>TikettiDB.tt</DependentUpon>
+      <DependentUpon>TikettiDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tiketit.cs">
-      <DependentUpon>TikettiDB.tt</DependentUpon>
+      <DependentUpon>TikettiDBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TikettiDB.Context.cs">
+    <Compile Include="Models\TikettiDBModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TikettiDB.Context.tt</DependentUpon>
+      <DependentUpon>TikettiDBModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TikettiDB.cs">
+    <Compile Include="Models\TikettiDBModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TikettiDB.tt</DependentUpon>
+      <DependentUpon>TikettiDBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TikettiDB.Designer.cs">
+    <Compile Include="Models\TikettiDBModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TikettiDB.edmx</DependentUpon>
+      <DependentUpon>TikettiDBModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -194,15 +194,15 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\TikettiDB.Context.tt">
+    <Content Include="Models\TikettiDBModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>TikettiDB.Context.cs</LastGenOutput>
-      <DependentUpon>TikettiDB.edmx</DependentUpon>
+      <DependentUpon>TikettiDBModel.edmx</DependentUpon>
+      <LastGenOutput>TikettiDBModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\TikettiDB.tt">
+    <Content Include="Models\TikettiDBModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TikettiDB.edmx</DependentUpon>
-      <LastGenOutput>TikettiDB.cs</LastGenOutput>
+      <DependentUpon>TikettiDBModel.edmx</DependentUpon>
+      <LastGenOutput>TikettiDBModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -210,12 +210,12 @@
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\TikettiDB.edmx">
+    <EntityDeploy Include="Models\TikettiDBModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>TikettiDB.Designer.cs</LastGenOutput>
+      <LastGenOutput>TikettiDBModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\TikettiDB.edmx.diagram">
-      <DependentUpon>TikettiDB.edmx</DependentUpon>
+    <Content Include="Models\TikettiDBModel.edmx.diagram">
+      <DependentUpon>TikettiDBModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />

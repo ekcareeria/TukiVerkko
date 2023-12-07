@@ -4,13 +4,12 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="TikettiDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="TikettiDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Asiakkaat">
           <Key>
             <PropertyRef Name="AsiakasID" />
           </Key>
           <Property Name="AsiakasID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TikettiID" Type="int" Nullable="false" />
           <Property Name="Etunimi" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Sukunimi" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Puhelinnumero" Type="nvarchar" MaxLength="15" />
@@ -47,6 +46,7 @@
             <PropertyRef Name="TikettiID" />
           </Key>
           <Property Name="TikettiID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AsiakasID" Type="int" Nullable="false" />
           <Property Name="KategoriaID" Type="int" Nullable="false" />
           <Property Name="Otsikko" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Kuvaus" Type="nvarchar" MaxLength="500" Nullable="false" />
@@ -54,18 +54,6 @@
           <Property Name="Valmistumisaika" Type="datetime" />
           <Property Name="Status" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <Association Name="FK__Asiakkaat__Tiket__7A672E12">
-          <End Role="Tiketit" Type="Self.Tiketit" Multiplicity="1" />
-          <End Role="Asiakkaat" Type="Self.Asiakkaat" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tiketit">
-              <PropertyRef Name="TikettiID" />
-            </Principal>
-            <Dependent Role="Asiakkaat">
-              <PropertyRef Name="TikettiID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Tiketit__Kategor__4AB81AF0">
           <End Role="Kategoriat" Type="Self.Kategoriat" Multiplicity="1" />
           <End Role="Tiketit" Type="Self.Tiketit" Multiplicity="*" />
@@ -75,6 +63,18 @@
             </Principal>
             <Dependent Role="Tiketit">
               <PropertyRef Name="KategoriaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tiketit_Asiakkaat">
+          <End Role="Asiakkaat" Type="Self.Asiakkaat" Multiplicity="1" />
+          <End Role="Tiketit" Type="Self.Tiketit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asiakkaat">
+              <PropertyRef Name="AsiakasID" />
+            </Principal>
+            <Dependent Role="Tiketit">
+              <PropertyRef Name="AsiakasID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -115,16 +115,17 @@
           <EntitySet Name="Logins" EntityType="Self.Logins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tiketit" EntityType="Self.Tiketit" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Asiakkaat__Tiket__7A672E12" Association="Self.FK__Asiakkaat__Tiket__7A672E12">
-            <End Role="Tiketit" EntitySet="Tiketit" />
-            <End Role="Asiakkaat" EntitySet="Asiakkaat" />
-          </AssociationSet>
           <AssociationSet Name="FK__Tiketit__Kategor__4AB81AF0" Association="Self.FK__Tiketit__Kategor__4AB81AF0">
             <End Role="Kategoriat" EntitySet="Kategoriat" />
             <End Role="Tiketit" EntitySet="Tiketit" />
           </AssociationSet>
+          <AssociationSet Name="FK_Tiketit_Asiakkaat" Association="Self.FK_Tiketit_Asiakkaat">
+            <End Role="Asiakkaat" EntitySet="Asiakkaat" />
+            <End Role="Tiketit" EntitySet="Tiketit" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TikettiDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -133,12 +134,11 @@
             <PropertyRef Name="AsiakasID" />
           </Key>
           <Property Name="AsiakasID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TikettiID" Type="Int32" Nullable="false" />
           <Property Name="Etunimi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Sukunimi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Puhelinnumero" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="Sähköposti" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Tiketit" Relationship="Self.FK__Asiakkaat__Tiket__7A672E12" FromRole="Asiakkaat" ToRole="Tiketit" />
+          <NavigationProperty Name="Tiketit" Relationship="Self.FK_Tiketit_Asiakkaat" FromRole="Asiakkaat" ToRole="Tiketit" />
         </EntityType>
         <EntityType Name="Kategoriat">
           <Key>
@@ -172,24 +172,25 @@
             <PropertyRef Name="TikettiID" />
           </Key>
           <Property Name="TikettiID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AsiakasID" Type="Int32" Nullable="false" />
           <Property Name="KategoriaID" Type="Int32" Nullable="false" />
           <Property Name="Otsikko" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Kuvaus" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Aika" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Valmistumisaika" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Asiakkaat" Relationship="Self.FK__Asiakkaat__Tiket__7A672E12" FromRole="Tiketit" ToRole="Asiakkaat" />
-          <NavigationProperty Name="Kategoriat" Relationship="Self.FK__Tiketit__Kategor__4AB81AF0" FromRole="Tiketit" ToRole="Kategoriat" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Asiakkaat" Relationship="Self.FK_Tiketit_Asiakkaat" FromRole="Tiketit" ToRole="Asiakkaat" />
+          <NavigationProperty Name="Kategoriat" Relationship="Self.FK__Tiketit__Kategor__4AB81AF0" FromRole="Tiketit" ToRole="Kategoriat" />
         </EntityType>
-        <Association Name="FK__Asiakkaat__Tiket__7A672E12">
-          <End Role="Tiketit" Type="Self.Tiketit" Multiplicity="1" />
-          <End Role="Asiakkaat" Type="Self.Asiakkaat" Multiplicity="*" />
+        <Association Name="FK_Tiketit_Asiakkaat">
+          <End Role="Asiakkaat" Type="Self.Asiakkaat" Multiplicity="1" />
+          <End Role="Tiketit" Type="Self.Tiketit" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Tiketit">
-              <PropertyRef Name="TikettiID" />
+            <Principal Role="Asiakkaat">
+              <PropertyRef Name="AsiakasID" />
             </Principal>
-            <Dependent Role="Asiakkaat">
-              <PropertyRef Name="TikettiID" />
+            <Dependent Role="Tiketit">
+              <PropertyRef Name="AsiakasID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -205,15 +206,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="TikettiDBEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="TikettiDBEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Asiakkaat" EntityType="Self.Asiakkaat" />
           <EntitySet Name="Kategoriat" EntityType="Self.Kategoriat" />
           <EntitySet Name="Logins" EntityType="Self.Logins" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="Tiketit" EntityType="Self.Tiketit" />
-          <AssociationSet Name="FK__Asiakkaat__Tiket__7A672E12" Association="Self.FK__Asiakkaat__Tiket__7A672E12">
-            <End Role="Tiketit" EntitySet="Tiketit" />
+          <AssociationSet Name="FK_Tiketit_Asiakkaat" Association="Self.FK_Tiketit_Asiakkaat">
             <End Role="Asiakkaat" EntitySet="Asiakkaat" />
+            <End Role="Tiketit" EntitySet="Tiketit" />
           </AssociationSet>
           <AssociationSet Name="FK__Tiketit__Kategor__4AB81AF0" Association="Self.FK__Tiketit__Kategor__4AB81AF0">
             <End Role="Kategoriat" EntitySet="Kategoriat" />
@@ -266,12 +267,11 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="TikettiDBModelStoreContainer" CdmEntityContainer="TikettiDBEntities">
+        <EntityContainerMapping StorageEntityContainer="TikettiDBModelStoreContainer" CdmEntityContainer="TikettiDBEntities1">
           <EntitySetMapping Name="Asiakkaat">
             <EntityTypeMapping TypeName="TikettiDBModel.Asiakkaat">
               <MappingFragment StoreEntitySet="Asiakkaat">
                 <ScalarProperty Name="AsiakasID" ColumnName="AsiakasID" />
-                <ScalarProperty Name="TikettiID" ColumnName="TikettiID" />
                 <ScalarProperty Name="Etunimi" ColumnName="Etunimi" />
                 <ScalarProperty Name="Sukunimi" ColumnName="Sukunimi" />
                 <ScalarProperty Name="Puhelinnumero" ColumnName="Puhelinnumero" />
@@ -311,13 +311,14 @@
           <EntitySetMapping Name="Tiketit">
             <EntityTypeMapping TypeName="TikettiDBModel.Tiketit">
               <MappingFragment StoreEntitySet="Tiketit">
-                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="TikettiID" ColumnName="TikettiID" />
+                <ScalarProperty Name="AsiakasID" ColumnName="AsiakasID" />
                 <ScalarProperty Name="KategoriaID" ColumnName="KategoriaID" />
                 <ScalarProperty Name="Otsikko" ColumnName="Otsikko" />
                 <ScalarProperty Name="Kuvaus" ColumnName="Kuvaus" />
                 <ScalarProperty Name="Aika" ColumnName="Aika" />
                 <ScalarProperty Name="Valmistumisaika" ColumnName="Valmistumisaika" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
