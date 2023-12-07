@@ -30,7 +30,7 @@ namespace TukiVerkko1.Controllers
 
         public ActionResult Authorize(Logins LoginModel)
         {
-            TikettiDBEntities db = new TikettiDBEntities();
+            TikettiDBEntities1 db = new TikettiDBEntities1();
 
             var Kirjautunut = db.Logins.SingleOrDefault(x => x.Käyttäjätunnus == LoginModel.Käyttäjätunnus && x.Salasana == LoginModel.Salasana);
             if (Kirjautunut != null)
