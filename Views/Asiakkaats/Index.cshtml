@@ -24,7 +24,10 @@
             @Html.DisplayNameFor(model => model.Sähköposti)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Tiketit.Otsikko)
+            @Html.DisplayNameFor(model => model.Asiakkaat1.Etunimi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Asiakkaat2.Etunimi)
         </th>
         <th></th>
     </tr>
@@ -44,7 +47,10 @@
             @Html.DisplayFor(modelItem => item.Sähköposti)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Tiketit.Otsikko)
+            @Html.DisplayFor(modelItem => item.Asiakkaat1.Etunimi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Asiakkaat2.Etunimi)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.AsiakasID }) |

@@ -4,6 +4,10 @@
 namespace TukiVerkko1.ViewModels
 {
     using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Web.Mvc;
+
     public class Lomaketiedot
     {
 
@@ -22,4 +26,5 @@ namespace TukiVerkko1.ViewModels
         //public string Status { get; set; }
 
     }
+    
 }

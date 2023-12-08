@@ -14,12 +14,6 @@ namespace TukiVerkko1.Models
     
     public partial class Tiketit
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Tiketit()
-        {
-            this.Asiakkaat = new HashSet<Asiakkaat>();
-        }
-    
         public int TikettiID { get; set; }
         public int KategoriaID { get; set; }
         public string Otsikko { get; set; }
@@ -27,9 +21,9 @@ namespace TukiVerkko1.Models
         public Nullable<System.DateTime> Aika { get; set; }
         public Nullable<System.DateTime> Valmistumisaika { get; set; }
         public string Status { get; set; }
+        public int AsiakasID { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Asiakkaat> Asiakkaat { get; set; }
+        public virtual Asiakkaat Asiakkaat { get; set; }
         public virtual Kategoriat Kategoriat { get; set; }
     }
 }

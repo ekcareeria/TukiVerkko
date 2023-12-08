@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
@@ -20,7 +21,7 @@ namespace TukiVerkko1.Controllers
         // GET: Asiakkaats
         public ActionResult Index()
         {
-            var asiakkaat = db.Asiakkaat.Include(a => a.Tiketit);
+            var asiakkaat = db.Asiakkaat;
             return View(asiakkaat.ToList());
 
         }
@@ -63,8 +64,8 @@ namespace TukiVerkko1.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            // Tämä SelectList liittynee vain dropdowniin
-            ViewBag.TikettiID = new SelectList(db.Tiketit, "TikettiID", "Otsikko", asiakkaat.TikettiID);
+            //// Tämä SelectList liittynee vain dropdowniin
+            //ViewBag.TikettiID = new SelectList(db.Tiketit, "TikettiID", "Otsikko", asiakkaat.TikettiID);
             return View(asiakkaat);
         }
 
@@ -80,7 +81,7 @@ namespace TukiVerkko1.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.TikettiID = new SelectList(db.Tiketit, "TikettiID", "Otsikko", asiakkaat.TikettiID);
+            //ViewBag.TikettiID = new SelectList(db.Tiketit, "TikettiID", "Otsikko", asiakkaat.TikettiID);
             return View(asiakkaat);
         }
 
@@ -97,7 +98,8 @@ namespace TukiVerkko1.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.TikettiID = new SelectList(db.Tiketit, "TikettiID", "Otsikko", asiakkaat.TikettiID);
+            ////Tämä oletuksena luotu, meni rikki kun malli päivitettiin
+            //ViewBag.TikettiID = new SelectList(db.Tiketit, "TikettiID", "Otsikko", asiakkaat.TikettiID);
             return View(asiakkaat);
         }
 
@@ -128,30 +130,31 @@ namespace TukiVerkko1.Controllers
         }
 
         // Testausta varten: ViewModelin mukainen lista tukipyynnöistä
-        public ActionResult TukipyyntolistaTESTI()
-        {
-            var lomake = from a in db.Asiakkaat
-                         join t in db.Tiketit on a.TikettiID equals t.TikettiID
-                         join k in db.Kategoriat on t.KategoriaID equals k.KategoriaID
-                         select new Lomaketiedot
-                         {
-                             Otsikko = t.Otsikko,
-                             Nimi = k.Nimi,
-                             Etunimi = a.Etunimi,
-                             Sukunimi = a.Sukunimi,
-                             Sähköposti = a.Sähköposti,
-                             Puhelinnumero = a.Puhelinnumero,
-                             Kuvaus = t.Kuvaus,
+        // Rikki, koska malli muutettu tämän jälkeen
+        //public ActionResult TukipyyntolistaTESTI()
+        //{
+        //    var lomake = from a in db.Asiakkaat
+        //                 join t in db.Tiketit on a.TikettiID equals t.TikettiID
+        //                 join k in db.Kategoriat on t.KategoriaID equals k.KategoriaID
+        //                 select new Lomaketiedot
+        //                 {
+        //                     Otsikko = t.Otsikko,
+        //                     Nimi = k.Nimi,
+        //                     Etunimi = a.Etunimi,
+        //                     Sukunimi = a.Sukunimi,
+        //                     Sähköposti = a.Sähköposti,
+        //                     Puhelinnumero = a.Puhelinnumero,
+        //                     Kuvaus = t.Kuvaus,
 
-                         };
-            return View(lomake.ToList());
-        }
+        //                 };
+        //    return View(lomake.ToList());
+        //}
 
 
         // GET: Create-NÄKYMÄ tukipyyntölomakkeelle:
         public ActionResult Tukipyynto() 
         {
-            
+
             ////LINQ-kysely tässä kohdassa lienee turha?
             //var lomake = from a in db.Asiakkaat
             //             join t in db.Tiketit on a.TikettiID equals t.TikettiID
@@ -171,6 +174,8 @@ namespace TukiVerkko1.Controllers
             //// Tuleeko tähän kohtaan kategorian dropdown?
 
             //return View(lomake.FirstOrDefault());
+
+            ViewBag.KategoriaID = new SelectList(db.Kategoriat, "KategoriaID", "Nimi");
             return View();
         }
         // POST: Create
@@ -178,7 +183,7 @@ namespace TukiVerkko1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Tukipyynto([Bind(Include = "Otsikko,Nimi,Etunimi,Sukunimi,Sähköposti,Puhelinnumero,Kuvaus")] Lomaketiedot tiedot)
+        public ActionResult Tukipyynto([Bind(Include = "Otsikko,KategoriaID,Etunimi,Sukunimi,Sähköposti,Puhelinnumero,Kuvaus")] Lomaketiedot tiedot)
         {
             if (ModelState.IsValid)
             {
@@ -186,17 +191,19 @@ namespace TukiVerkko1.Controllers
                 {
                     Otsikko = tiedot.Otsikko,
                     Kuvaus = tiedot.Kuvaus,
-                    Aika = tiedot.Aika, // Huom! 7.12. muutettu kenttä Nullable Tiketit.cs ja Lomaketiedot.cs
+                    // Aika = tiedot.Aika, // Huom! 7.12. muutettu kenttä Nullable Tiketit.cs ja Lomaketiedot.cs
+                    KategoriaID = tiedot.KategoriaID,
+
                 };
 
                 DateTime aikanyt = DateTime.Now;
-                tiedot.Aika = aikanyt;
+                tiketti.Aika = aikanyt;
                 db.Tiketit.Add(tiketti);
                 try
                 {
                     db.SaveChanges();
                 }
-                catch (DbEntityValidationException e)
+                catch (DbUpdateException e)
                 {
                     Console.WriteLine(e);
                 }
@@ -220,27 +227,14 @@ namespace TukiVerkko1.Controllers
                 {
                     Console.WriteLine(e);
                 }
-                
-
-                var kategoria = new Kategoriat()
-                {
-                    Nimi = tiedot.Nimi,
-                };
-                
-                db.Kategoriat.Add(kategoria);
-                
-                try
-                {
-                    db.SaveChanges();
-                }
-                catch (DbEntityValidationException e)
-                {
-                    Console.WriteLine(e);
-                }
 
                 return RedirectToAction("Index");
             }
-                        
+
+            //Dropdownlista: "KategoriaID" on avaintieto, "Nimi" on se mikä näytetään valikossa
+
+            ViewBag.KategoriaID = new SelectList(db.Kategoriat, "KategoriaID", "Nimi", tiedot.KategoriaID);
+
             return View(tiedot);
             
         }

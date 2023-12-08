@@ -5,12 +5,13 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="b606505cfae44f6a9437d69582504cce" Name="Diagram1">
-        <EntityTypeShape EntityType="TikettiDBModel.Asiakkaat" Width="1.5" PointX="5.25" PointY="1.125" />
-        <EntityTypeShape EntityType="TikettiDBModel.Kategoriat" Width="1.5" PointX="0.75" PointY="1.5" />
-        <EntityTypeShape EntityType="TikettiDBModel.Logins" Width="1.5" PointX="0.75" PointY="4.75" />
-        <EntityTypeShape EntityType="TikettiDBModel.sysdiagrams" Width="1.5" PointX="2.75" PointY="4.75" />
+        <EntityTypeShape EntityType="TikettiDBModel.Asiakkaat" Width="1.5" PointX="0.75" PointY="1.125" />
+        <EntityTypeShape EntityType="TikettiDBModel.Kategoriat" Width="1.5" PointX="0.75" PointY="5.625" />
+        <EntityTypeShape EntityType="TikettiDBModel.Logins" Width="1.5" PointX="2.75" PointY="4.75" />
+        <EntityTypeShape EntityType="TikettiDBModel.sysdiagrams" Width="1.5" PointX="4.75" PointY="4.75" />
         <EntityTypeShape EntityType="TikettiDBModel.Tiketit" Width="1.5" PointX="3" PointY="1" />
-        <AssociationConnector Association="TikettiDBModel.FK__Asiakkaat__Tiket__7A672E12" />
+        <AssociationConnector Association="TikettiDBModel.FK_Asiakkaat_Asiakkaat" />
+        <AssociationConnector Association="TikettiDBModel.FK_Tiketit_Asiakkaat" />
         <AssociationConnector Association="TikettiDBModel.FK__Tiketit__Kategor__4AB81AF0" />
       </Diagram>
     </edmx:Diagrams>
