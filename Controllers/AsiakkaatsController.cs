@@ -129,52 +129,9 @@ namespace TukiVerkko1.Controllers
             return RedirectToAction("Index");
         }
 
-        // Testausta varten: ViewModelin mukainen lista tukipyynnöistä
-        // Rikki, koska malli muutettu tämän jälkeen
-        //public ActionResult TukipyyntolistaTESTI()
-        //{
-        //    var lomake = from a in db.Asiakkaat
-        //                 join t in db.Tiketit on a.TikettiID equals t.TikettiID
-        //                 join k in db.Kategoriat on t.KategoriaID equals k.KategoriaID
-        //                 select new Lomaketiedot
-        //                 {
-        //                     Otsikko = t.Otsikko,
-        //                     Nimi = k.Nimi,
-        //                     Etunimi = a.Etunimi,
-        //                     Sukunimi = a.Sukunimi,
-        //                     Sähköposti = a.Sähköposti,
-        //                     Puhelinnumero = a.Puhelinnumero,
-        //                     Kuvaus = t.Kuvaus,
-
-        //                 };
-        //    return View(lomake.ToList());
-        //}
-
-
         // GET: Create-NÄKYMÄ tukipyyntölomakkeelle:
         public ActionResult Tukipyynto() 
         {
-
-            ////LINQ-kysely tässä kohdassa lienee turha?
-            //var lomake = from a in db.Asiakkaat
-            //             join t in db.Tiketit on a.TikettiID equals t.TikettiID
-            //             join k in db.Kategoriat on t.KategoriaID equals k.KategoriaID
-            //             select new Lomaketiedot
-            //             {
-            //                 Otsikko = t.Otsikko,
-            //                 Nimi = k.Nimi,
-            //                 Etunimi = a.Etunimi,
-            //                 Sukunimi = a.Sukunimi,
-            //                 Sähköposti = a.Sähköposti,
-            //                 Puhelinnumero = a.Puhelinnumero,
-            //                 Kuvaus = t.Kuvaus,
-
-            //             };
-
-            //// Tuleeko tähän kohtaan kategorian dropdown?
-
-            //return View(lomake.FirstOrDefault());
-
             ViewBag.KategoriaID = new SelectList(db.Kategoriat, "KategoriaID", "Nimi");
             return View();
         }
@@ -191,7 +148,6 @@ namespace TukiVerkko1.Controllers
                 {
                     Otsikko = tiedot.Otsikko,
                     Kuvaus = tiedot.Kuvaus,
-                    // Aika = tiedot.Aika, // Huom! 7.12. muutettu kenttä Nullable Tiketit.cs ja Lomaketiedot.cs
                     KategoriaID = tiedot.KategoriaID,
 
                 };
