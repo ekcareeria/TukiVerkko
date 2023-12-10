@@ -140,7 +140,7 @@ namespace TukiVerkko1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Tukipyynto([Bind(Include = "Otsikko,KategoriaID,Etunimi,Sukunimi,Sähköposti,Puhelinnumero,Kuvaus")] Lomaketiedot tiedot)
+        public ActionResult Tukipyynto([Bind(Include = "AsiakasID,Otsikko,KategoriaID,Etunimi,Sukunimi,Sähköposti,Puhelinnumero,Kuvaus")] Lomaketiedot tiedot)
         {
             if (ModelState.IsValid)
             {
@@ -149,22 +149,13 @@ namespace TukiVerkko1.Controllers
                     Otsikko = tiedot.Otsikko,
                     Kuvaus = tiedot.Kuvaus,
                     KategoriaID = tiedot.KategoriaID,
+                    AsiakasID = tiedot.AsiakasID,
 
                 };
 
                 DateTime aikanyt = DateTime.Now;
                 tiketti.Aika = aikanyt;
                 db.Tiketit.Add(tiketti);
-                try
-                {
-                    db.SaveChanges();
-                }
-                catch (DbUpdateException e)
-                {
-                    Console.WriteLine(e);
-                }
-
-                
 
                 var asiakas = new Asiakkaat()
                 {
@@ -175,19 +166,10 @@ namespace TukiVerkko1.Controllers
                 };
 
                 db.Asiakkaat.Add(asiakas);
-                try
-                {
-                    db.SaveChanges();
-                }
-                catch (DbEntityValidationException e)
-                {
-                    Console.WriteLine(e);
-                }
-
+                db.SaveChanges();
+                
                 return RedirectToAction("Index");
             }
-
-            //Dropdownlista: "KategoriaID" on avaintieto, "Nimi" on se mikä näytetään valikossa
 
             ViewBag.KategoriaID = new SelectList(db.Kategoriat, "KategoriaID", "Nimi", tiedot.KategoriaID);
 
