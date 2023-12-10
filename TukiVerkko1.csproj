@@ -131,7 +131,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AsiakkaatsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\KategoriatsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -248,7 +247,6 @@
     <Content Include="Views\Asiakkaats\Edit.cshtml" />
     <Content Include="Views\Asiakkaats\Index.cshtml" />
     <Content Include="Views\Asiakkaats\Tukipyynto.cshtml" />
-    <Content Include="Views\Asiakkaats\TukipyyntolistaTESTI.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

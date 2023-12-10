@@ -26,8 +26,6 @@ namespace TukiVerkko1.Controllers
 
         }
 
-        
-
         // GET: Asiakkaats/Details/5
         public ActionResult Details(int? id)
         {
@@ -46,7 +44,7 @@ namespace TukiVerkko1.Controllers
         // GET: Asiakkaats/Create
         public ActionResult Create()
         {
-            // Tämä SelectList liittyy vain dropdowniin
+            // Dropdown
             ViewBag.TikettiID = new SelectList(db.Tiketit, "TikettiID", "Otsikko");
             return View();
         }
@@ -128,6 +126,9 @@ namespace TukiVerkko1.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+
+
 
         // GET: Create-NÄKYMÄ tukipyyntölomakkeelle:
         public ActionResult Tukipyynto() 
