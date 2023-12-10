@@ -127,9 +127,6 @@ namespace TukiVerkko1.Controllers
             return RedirectToAction("Index");
         }
 
-
-
-
         // GET: Create-NÄKYMÄ tukipyyntölomakkeelle:
         public ActionResult Tukipyynto() 
         {
@@ -175,8 +172,8 @@ namespace TukiVerkko1.Controllers
             ViewBag.KategoriaID = new SelectList(db.Kategoriat, "KategoriaID", "Nimi", tiedot.KategoriaID);
 
             return View(tiedot);
-            
         }
+        
 
         protected override void Dispose(bool disposing)
         {
