@@ -15,13 +15,13 @@ namespace TukiVerkko1.Models
     public partial class Tiketit
     {
         public int TikettiID { get; set; }
+        public int AsiakasID { get; set; }
         public int KategoriaID { get; set; }
         public string Otsikko { get; set; }
         public string Kuvaus { get; set; }
         public Nullable<System.DateTime> Aika { get; set; }
         public Nullable<System.DateTime> Valmistumisaika { get; set; }
         public string Status { get; set; }
-        public int AsiakasID { get; set; }
     
         public virtual Asiakkaat Asiakkaat { get; set; }
         public virtual Kategoriat Kategoriat { get; set; }

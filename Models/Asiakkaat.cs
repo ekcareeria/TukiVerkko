@@ -26,8 +26,6 @@ namespace TukiVerkko1.Models
         public string Puhelinnumero { get; set; }
         public string Sähköposti { get; set; }
     
-        public virtual Asiakkaat Asiakkaat1 { get; set; }
-        public virtual Asiakkaat Asiakkaat2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tiketit> Tiketit { get; set; }
     }
