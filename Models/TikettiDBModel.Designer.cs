@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\tima1\git\TukiVerkko\Models\TikettiDBModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\I&E\source\repos\TukiVerkko1\Models\TikettiDBModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

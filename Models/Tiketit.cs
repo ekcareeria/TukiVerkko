@@ -19,7 +19,7 @@ namespace TukiVerkko1.Models
         public int KategoriaID { get; set; }
         public string Otsikko { get; set; }
         public string Kuvaus { get; set; }
-        public System.DateTime Aika { get; set; }
+        public Nullable<System.DateTime> Aika { get; set; }
         public Nullable<System.DateTime> Valmistumisaika { get; set; }
         public string Status { get; set; }
     
