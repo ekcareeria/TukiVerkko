@@ -13,7 +13,6 @@ namespace TukiVerkko1.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-
     public partial class Logins
     {
         public int LoginID { get; set; }

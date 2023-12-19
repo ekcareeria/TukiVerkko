@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TikettiDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TikettiDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Asiakkaat">
           <Key>
             <PropertyRef Name="AsiakasID" />
@@ -50,34 +50,10 @@
           <Property Name="KategoriaID" Type="int" Nullable="false" />
           <Property Name="Otsikko" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Kuvaus" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="Aika" Type="datetime" Nullable="false" />
+          <Property Name="Aika" Type="datetime" />
           <Property Name="Valmistumisaika" Type="datetime" />
           <Property Name="Status" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <Association Name="FK__Tiketit__Kategor__4AB81AF0">
-          <End Role="Kategoriat" Type="Self.Kategoriat" Multiplicity="1" />
-          <End Role="Tiketit" Type="Self.Tiketit" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Kategoriat">
-              <PropertyRef Name="KategoriaID" />
-            </Principal>
-            <Dependent Role="Tiketit">
-              <PropertyRef Name="KategoriaID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tiketit_Asiakkaat">
-          <End Role="Asiakkaat" Type="Self.Asiakkaat" Multiplicity="1" />
-          <End Role="Tiketit" Type="Self.Tiketit" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Asiakkaat">
-              <PropertyRef Name="AsiakasID" />
-            </Principal>
-            <Dependent Role="Tiketit">
-              <PropertyRef Name="AsiakasID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -115,17 +91,8 @@
           <EntitySet Name="Logins" EntityType="Self.Logins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tiketit" EntityType="Self.Tiketit" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Tiketit__Kategor__4AB81AF0" Association="Self.FK__Tiketit__Kategor__4AB81AF0">
-            <End Role="Kategoriat" EntitySet="Kategoriat" />
-            <End Role="Tiketit" EntitySet="Tiketit" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tiketit_Asiakkaat" Association="Self.FK_Tiketit_Asiakkaat">
-            <End Role="Asiakkaat" EntitySet="Asiakkaat" />
-            <End Role="Tiketit" EntitySet="Tiketit" />
-          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TikettiDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -176,7 +143,7 @@
           <Property Name="KategoriaID" Type="Int32" Nullable="false" />
           <Property Name="Otsikko" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Kuvaus" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Aika" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Aika" Type="DateTime" Precision="3" />
           <Property Name="Valmistumisaika" Type="DateTime" Precision="3" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Asiakkaat" Relationship="Self.FK_Tiketit_Asiakkaat" FromRole="Tiketit" ToRole="Asiakkaat" />
@@ -361,7 +328,7 @@
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
