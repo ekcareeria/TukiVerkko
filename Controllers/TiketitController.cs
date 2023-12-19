@@ -136,6 +136,7 @@ namespace TukiVerkko1.Controllers
         }
         #endregion
 
+        #region TikettiSummaus
         //currentFilter ja searchString on HAKUTOIMINTOA varten, tikettisummaus-näkymässä lisää koodia. sortOrder nousevaan/laskevaan järjestykseen.
         public ActionResult Tikettisummaus(string currentFilter1, string searchString1, string sortOrder)
         {
@@ -235,6 +236,92 @@ namespace TukiVerkko1.Controllers
 
             return View(tikettisummaus);
         }
+        #endregion
+
+        #region TikettiSummaus2 Arkisto hakua varten
+        //currentFilter ja searchString on HAKUTOIMINTOA varten, tikettisummaus-näkymässä lisää koodia. sortOrder nousevaan/laskevaan järjestykseen.
+        public ActionResult Tikettisummaus2(string currentFilter1, string searchString1, string sortOrder)
+        {
+            ViewBag.EtunimiSortparm = String.IsNullOrEmpty(sortOrder) ? "etunimi_desc" : "";  //Nouseva/laskeva, ?=if.
+
+            //Haku jää muistiin lajittelun nousevaan/laskevaan klikkaamisen jälkeenkin.
+            if (searchString1 != null)
+            {
+
+            }
+            else
+            {
+                searchString1 = currentFilter1;
+            }
+
+            ViewBag.currentFilter1 = searchString1;
+
+            var tikettisummaus = from t in db.Tiketit                                         //LinQ-kysely, minkä perusteella taulut yhdistetty.
+
+                                 join a in db.Asiakkaat on t.AsiakasID equals a.AsiakasID     //Luotu ViewModel. Muista lisätä using-lause ViewModels sivun ylös.
+
+                                 join k in db.Kategoriat on t.KategoriaID equals k.KategoriaID
+                                 select new YhdistettyTikettiData
+
+                                 {
+                                     Otsikko = t.Otsikko,
+
+                                     Nimi = k.Nimi,
+
+                                     Aika = (DateTime)t.Aika,
+
+                                     Kuvaus = t.Kuvaus,
+
+                                     Etunimi = a.Etunimi,
+
+                                     Sukunimi = a.Sukunimi,
+
+                                     Puhelinnumero = a.Puhelinnumero,
+
+                                     Sähköposti = a.Sähköposti,
+
+                                     TikettiID = (int)t.TikettiID,
+
+                                     AsiakasID = (int)a.AsiakasID,
+
+                                     KategoriaID = (int)k.KategoriaID,
+
+                                     Valmistumisaika = (DateTime)t.Valmistumisaika,
+
+                                     Status = t.Status,
+                                 };
+
+            //Yhdistelmähaku: sekä suodatus että lajittelu. Ei hukkaa haun jälkeen, laskevaan/nousevaan järjestykseen. Tarvii vielä käyttöliittymän puolelle koodia.
+            if (!String.IsNullOrEmpty(searchString1))   //HAKUTOIMINTOA varten, etsii etunimen perusteella
+            {
+                switch (sortOrder)    //Nouseva/laskeva.
+                {
+                    case "etunimi_desc":
+                        tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderByDescending(a => a.Etunimi);
+                        break;
+                    default:
+                        tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderBy(a => a.Etunimi);
+                        break;
+                }
+            }
+
+            //Hakufiltteri ei käytössä, lajitellaan ilman suodatuksia.
+            else
+            {
+                switch (sortOrder)
+                {
+                    case "etunimi_desc":
+                        tikettisummaus = tikettisummaus.OrderByDescending(a => a.Etunimi);
+                        break;
+                    default:
+                        tikettisummaus = tikettisummaus.OrderBy(a => a.Etunimi);
+                        break;
+                }
+            };
+
+            return View(tikettisummaus);
+        }
+        #endregion
 
         public ActionResult TikettiOtsikot()                                             //Tästä metodista luotu näkymä, jonne laitettu accordion-lista yms.
         {
@@ -256,6 +343,7 @@ namespace TukiVerkko1.Controllers
         //    return View(tiketit.ToList());
         //}
 
+        #region _Tikettirivit2 ja _Tikettirivit3
         public ActionResult _TikettiRivit2(int? asiakasid)                                 //Tästä metodista luodusta näkymästä tulee tiedot, kun listan otsikkoa painaa (avautuu etunimi, sukunimi yms)
         {
             var TikettiRivitLista2 = from t in db.Tiketit
@@ -311,7 +399,7 @@ namespace TukiVerkko1.Controllers
 
             return PartialView(TikettiRivitLista3);
         }
-
+        #endregion
 
         //----------------Tästä alkaa tiketin statuksen hallinta--------------------//
         private void PaivitaTila(int tikettiID, string uusiTila)

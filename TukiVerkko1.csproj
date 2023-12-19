@@ -256,6 +256,7 @@
     <Content Include="Views\Tiketit\_TikettiRivit2.cshtml" />
     <Content Include="Views\Tiketit\_TikettiRivit3.cshtml" />
     <Content Include="Views\Tiketit\Arkisto.cshtml" />
+    <Content Include="Views\Tiketit\Tikettisummaus2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
