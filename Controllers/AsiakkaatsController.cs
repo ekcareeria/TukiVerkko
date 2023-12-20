@@ -21,8 +21,8 @@ namespace TukiVerkko1.Controllers
         // GET: Asiakkaats
         public ActionResult Index()
         {
-            var asiakkaat = db.Asiakkaat;
-            return View(asiakkaat.ToList());
+            //var asiakkaat = db.Asiakkaat;
+            return RedirectToAction("Index", "HomeController", new {});
 
         }
 

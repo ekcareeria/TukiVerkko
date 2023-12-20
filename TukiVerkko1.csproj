@@ -201,6 +201,7 @@
       <DependentUpon>TikettiDBModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\Lomaketiedot.cs" />
     <Compile Include="ViewModels\TikettiRivit.cs" />
     <Compile Include="ViewModels\YhdistettyTikettiData.cs" />
   </ItemGroup>
@@ -289,6 +290,13 @@
     <Content Include="Views\Tiketit\_TikettiRivit3.cshtml" />
     <Content Include="Views\Tiketit\Arkisto.cshtml" />
     <Content Include="Views\Tiketit\Tikettisummaus2.cshtml" />
+    <Content Include="Views\Asiakkaats\Create.cshtml" />
+    <Content Include="Views\Asiakkaats\Delete.cshtml" />
+    <Content Include="Views\Asiakkaats\Details.cshtml" />
+    <Content Include="Views\Asiakkaats\Edit.cshtml" />
+    <Content Include="Views\Asiakkaats\Index.cshtml" />
+    <Content Include="Views\Asiakkaats\LuoLomake.cshtml" />
+    <Content Include="Views\Asiakkaats\Tukipyynto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
