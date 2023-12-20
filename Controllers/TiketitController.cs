@@ -157,10 +157,10 @@ namespace TukiVerkko1.Controllers
             }
 
             ViewBag.currentFilter1 = searchString1;
+                                                                                                                     //Where-lause, jotta tiketit näkyvät oikeissa paikoissa, valmiit arkistossa jne. hakua tehdessä.
+            var tikettisummaus = from t in db.Tiketit.Where(t => t.Status == "Avoin" || t.Status == "Työn alla")     //LinQ-kysely, minkä perusteella taulut yhdistetty.
 
-            var tikettisummaus = from t in db.Tiketit                                         //LinQ-kysely, minkä perusteella taulut yhdistetty.
-
-                                 join a in db.Asiakkaat on t.AsiakasID equals a.AsiakasID     //Luotu ViewModel. Muista lisätä using-lause ViewModels sivun ylös.
+                                 join a in db.Asiakkaat on t.AsiakasID equals a.AsiakasID                            //Luotu ViewModel. Muista lisätä using-lause ViewModels sivun ylös.
 
                                  join k in db.Kategoriat on t.KategoriaID equals k.KategoriaID
                                  select new YhdistettyTikettiData
@@ -259,8 +259,8 @@ namespace TukiVerkko1.Controllers
             }
 
             ViewBag.currentFilter1 = searchString1;
-
-            var tikettisummaus = from t in db.Tiketit                                         //LinQ-kysely, minkä perusteella taulut yhdistetty.
+                                                                                              //Where-lause, jotta tiketit näkyvät oikeissa paikoissa, valmiit arkistossa jne. hakua tehdessä.
+            var tikettisummaus = from t in db.Tiketit.Where(t => t.Status == "Valmis")        //LinQ-kysely, minkä perusteella taulut yhdistetty.
 
                                  join a in db.Asiakkaat on t.AsiakasID equals a.AsiakasID     //Luotu ViewModel. Muista lisätä using-lause ViewModels sivun ylös.
 
@@ -460,7 +460,7 @@ namespace TukiVerkko1.Controllers
                 }
             }
             db.SaveChanges();
-            return new EmptyResult();  
+            return new EmptyResult();
         }
 
         private void LahetaMaili(int asiakasId, string viestinTeksti)
