@@ -25,71 +25,50 @@
                 <td>@Html.DisplayFor(modelItem => item.Kuvaus)</td>
                 <td>@Html.DisplayFor(modelItem => item.TikettiID)</td>
                 <td>
-                    @{
-                        bool disabloiTyoNappi = item.Status == "Työn alla"; //jos status on jo "työn alla, "työn alla"-nappi ei toimi
-                        bool disabloiValmisNappi = item.Status == "Avoin"; //tikettiä ei voi kuitata valmiiksi ilman, että se on ensin työn alla
-                    }
+                    @*Palauta ja poista-nappulat*@
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#palauta_@item.TikettiID">Palauta</button>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#poista_@item.TikettiID">Poista</button>
 
-                    @*Tämän olisi voinut toteuttaa tiiviimmin, mutta minulle se oli helpompi sisäistää perinteisillä if-else -rakenteilla*@
-
-                    @if (disabloiTyoNappi) //nappi ei todellisuudessa ole disabloitu, koska sen pitää pystyä antamaan alertti
-                    {
-                        <button type="button" class="btn btn-secondary" onclick="AlertIlmoitus2()">Työn alla</button>
-                    }
-                    else
-                    {
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#työn_alle_@item.TikettiID">Työn alla</button>
-                    }
-                    @if (disabloiValmisNappi)
-                    {
-                        <button type="button" class="btn btn-secondary" onclick="AlertIlmoitus()">Valmis</button>
-                    }
-                    else
-                    {
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#valmis_@item.TikettiID">Valmis</button>
-                    }
-
-                    @if (item.Status == "Avoin") //Työn alla -modaali-ikkuna
-                    {
-                        <div class="modal" id="työn_alle_@item.TikettiID">
-                            <div class="modal-dialog modal-sm">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5>Haluatko ottaa tiketin työn alle?</h5>
-                                    </div>
-                                    <div class="modal-body">
-                                        <h5>Asiakkaalle lähetetään sähköposti tiketin työn alle ottamisesta.</h5>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i class="fas fa-times"></i></button>
-                                        <button type="button" class="btn btn-info" onclick="TyoNappiPainettu(@item.TikettiID, 'Työn alla')"><i class="fas fa-check"></i></button>
-                                    </div>
+                    @*PALAUTA-MODAALI-IKKUNA*@
+                    <div class="modal fade" id="palauta_@item.TikettiID">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                </div>
+                                <div class="modal-body">
+                                    <h5>Haluatko varmasti palauttaa tiketin "Avoin"-tilaan?</h5>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i class="fas fa-times"></i></button>
+                                    <button type="button" class="btn btn-info" onclick="TyoNappi(@item.TikettiID, 'Avoin')"><i class="fas fa-check"></i></button>
                                 </div>
                             </div>
                         </div>
-                    }
-                    else if (item.Status == "Työn alla") //Valmis -modaali-ikkuna
-                    {
-                        <div class="modal" id="valmis_@item.TikettiID">
-                            <div class="modal-dialog modal-sm">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5>Haluatko varmasti kuitata tiketin valmiiksi?</h5>
-                                    </div>
-                                    <div class="modal-body">
-                                        <h5>Tiketti siirtyy arkistoon, ja asiakkaalle lähetetään sähköposti tiketin valmistumisesta.</h5>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i class="fas fa-times"></i></button>
-                                        <button type="button" class="btn btn-info" onclick="TyoNappiPainettu(@item.TikettiID, 'Valmis')"><i class="fas fa-check"></i></button>
-                                    </div>
+                    </div>
+
+                    @*POISTA-MODAALI-IKKUNA*@
+                    <div class="modal fade" id="poista_@item.TikettiID">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    @*<h5 class="modal-title">Vahvista poisto</h5>*@
+                                </div>
+                                <div class="modal-body">
+                                    <h5>Oletko varma, että haluat poistaa tiketin? Poisto on lopullinen.</h5>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times"></i></button>
+                                    <button type="button" class="btn btn-danger" onclick="PoistaNappi(@item.TikettiID)"><i class="fas fa-check"></i></button>
                                 </div>
                             </div>
                         </div>
-                    }
+                    </div>
                 </td>
 
             </tr>
         }
     </tbody>
 </table>
+
+
+

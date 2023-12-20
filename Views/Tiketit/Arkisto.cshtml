@@ -10,7 +10,7 @@
         $(function () {
             $(".showOrderClass").click(function () {
                 let asiakasId = $(this).data("asiakasid");
-                var url = "/Tiketit/_TikettiRivit2/?AsiakasID=" + asiakasId;
+                var url = "/Tiketit/_TikettiRivit3/?AsiakasID=" + asiakasId;
                 $("#orderDetails_" + asiakasId).append(" <b>Ladataan tiketin " + asiakasId + " rivejä...</b>"); //Ilmoitus tulee näkyviin, jos tiedot ei lataudu heti
                 var $detailDiv = $("#orderDetails_" + asiakasId);
                 $.get(url, function (data) {
@@ -18,6 +18,42 @@
                 });
             });
         });
+    </script>
+    <script>
+        //Tämä muuttaa tiketin statuksen.
+        function TyoNappi(tikettiID, uusiTila) {
+
+            $.ajax({
+                url: "/Tiketit/TyoNappi",
+                type: "POST",
+                data: { tikettiID: tikettiID, uusiTila: uusiTila },
+                success: function () {
+                    alert("Tiketti palautettu!"); //Tässä on joku bugi.Tiketin palautuksen epäonnistuessa (Tarkoituksella aiheutettu virhetilanne) 
+                    //ei tule virheilmoitusta, vaan ilmoitus onnistumisesta.Mietin asiaa jos vain ehdin.
+                    location.reload();
+                },
+                error: function () {
+                    alert("Päivitys epäonnistui");
+                }
+            });
+        }
+    </script>
+    <script>
+        //Tämä taas poistaa tiketin
+        function PoistaNappi(tikettiID) {
+            $.ajax({
+                url: "/Tiketit/PoistaTiketti/" + tikettiID,
+                type: "POST",
+                success: function () {
+                    $('#poista_' + tikettiID).modal('hide');
+                    alert("Tiketti poistettu onnistuneesti!");
+                    location.reload();
+                },
+                error: function () {
+                    alert("Tiketin poistaminen epäonnistui.");
+                }
+            });
+        }
     </script>
 }
 
@@ -63,10 +99,11 @@
                     <div class="column col-sm-2">
                         <input type="text" class="form-control text-bg-secondary font-weight-bold px-2" value="Tiketti jätetty" disabled>
                     </div>
-                    @* Kolme seuraavaa tyhjänä, jotta otsikkorivi ei jäisi "vajaaksi" *@
                     <div class="column col-sm-2">
-                        <input type="text" class="form-control text-bg-secondary font-weight-bold px-2" value="" disabled>
+                        <input type="text" class="form-control text-bg-secondary font-weight-bold px-2" value="Tiketti valmistunut" disabled>
                     </div>
+                    @* Kaksi seuraavaa tyhjänä, jotta otsikkorivi ei jäisi "vajaaksi" *@
+
                     <div class="column col-sm-2">
                         <input type="text" class="form-control text-bg-secondary font-weight-bold px-2" value="" disabled>
                     </div>
@@ -100,6 +137,9 @@
                                 </div>
                                 <div class="column col-sm-2">
                                     <input type="text" class="form-control px-2" value="@item.Aika" disabled>
+                                </div>
+                                <div class="column col-sm-2">
+                                    <input type="text" class="form-control px-2" value="@item.Valmistumisaika" disabled>
                                 </div>
                             </div>
                         </form>

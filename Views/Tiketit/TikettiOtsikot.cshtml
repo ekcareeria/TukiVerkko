@@ -22,15 +22,17 @@
 
     @*-------------------Tilapainikkeet/tiketin statuksen hallinta--------------------*@
     <script>
-        function TyoNappiPainettu(tikettiID, uusiTila) {
+        function TyoNappi(tikettiID, uusiTila) {
+            $("#ilmoitus").show();
             $.ajax({
-                url: "/Tiketit/TyoNappiPainettu",
+                url: "/Tiketit/TyoNappi",
                 type: "POST",
                 data: { tikettiID: tikettiID, uusiTila: uusiTila },
                 success: function () {
                     location.reload(); //päivittää tiedot ilman että koko sivu pitää manuaalisesti päivittää
                 },
                 error: function () {
+                    $("#ilmoitus").hide();
                     alert("Päivitys epäonnistui");
                 }
             });

@@ -8,6 +8,10 @@ using System.Web;
 using System.Web.Mvc;
 using TukiVerkko1.Models;
 using TukiVerkko1.ViewModels;
+using MailKit.Net.Smtp;
+using MailKit;
+using MimeKit;
+using MailKit.Security;
 
 namespace TukiVerkko1.Controllers
 {
@@ -153,10 +157,10 @@ namespace TukiVerkko1.Controllers
             }
 
             ViewBag.currentFilter1 = searchString1;
+                                                                                                                     //Where-lause, jotta tiketit näkyvät oikeissa paikoissa, valmiit arkistossa jne. hakua tehdessä.
+            var tikettisummaus = from t in db.Tiketit.Where(t => t.Status == "Avoin" || t.Status == "Työn alla")     //LinQ-kysely, minkä perusteella taulut yhdistetty.
 
-            var tikettisummaus = from t in db.Tiketit                                         //LinQ-kysely, minkä perusteella taulut yhdistetty.
-
-                                 join a in db.Asiakkaat on t.AsiakasID equals a.AsiakasID     //Luotu ViewModel. Muista lisätä using-lause ViewModels sivun ylös.
+                                 join a in db.Asiakkaat on t.AsiakasID equals a.AsiakasID                            //Luotu ViewModel. Muista lisätä using-lause ViewModels sivun ylös.
 
                                  join k in db.Kategoriat on t.KategoriaID equals k.KategoriaID
                                  select new YhdistettyTikettiData
@@ -255,8 +259,8 @@ namespace TukiVerkko1.Controllers
             }
 
             ViewBag.currentFilter1 = searchString1;
-
-            var tikettisummaus = from t in db.Tiketit                                         //LinQ-kysely, minkä perusteella taulut yhdistetty.
+                                                                                              //Where-lause, jotta tiketit näkyvät oikeissa paikoissa, valmiit arkistossa jne. hakua tehdessä.
+            var tikettisummaus = from t in db.Tiketit.Where(t => t.Status == "Valmis")        //LinQ-kysely, minkä perusteella taulut yhdistetty.
 
                                  join a in db.Asiakkaat on t.AsiakasID equals a.AsiakasID     //Luotu ViewModel. Muista lisätä using-lause ViewModels sivun ylös.
 
@@ -325,21 +329,26 @@ namespace TukiVerkko1.Controllers
 
         public ActionResult TikettiOtsikot()                                             //Tästä metodista luotu näkymä, jonne laitettu accordion-lista yms.
         {
-            var tiketit = db.Tiketit.Include(t => t.Kategoriat).Include(t => t.Asiakkaat);
+            var tiketit = db.Tiketit.Include(t => t.Kategoriat).Include(t => t.Asiakkaat).Where(t => t.Status == "Avoin" || t.Status == "Työn alla");
             return View(tiketit.ToList());
         }
 
         public ActionResult Arkisto()                                                   //Tästä metodista luotu näkymä, jonne laitettu accordion-lista yms.
         {
-            var tiketit = db.Tiketit.Include(t => t.Kategoriat).Include(t => t.Asiakkaat);
+            var tiketit = db.Tiketit.Include(t => t.Kategoriat).Include(t => t.Asiakkaat).Where(t => t.Status == "Valmis");
             return View(tiketit.ToList());
         }
 
-        //Tässä uusi versio, joka näyttää vain avoimet ja työn alla olevat tiketit. Kommentoituna siksi, koska osalla on luultavasti statuskenttä 
-        //vielä tietokannassa tyhjä, joten tikettinäkymäkin olisi tyhjä.
-        //public ActionResult TikettiOtsikot()                                           //Uusi metodi, josta luotu näkymä.
+        //Tässä tallessa vanha versio, jossa molemmissa näkymissä näkyy kaikki tiketit
+        //public ActionResult TikettiOtsikot()                                             //Tästä metodista luotu näkymä, jonne laitettu accordion-lista yms.
         //{
-        //    var tiketit = db.Tiketit.Include(t => t.Kategoriat).Include(t => t.Asiakkaat).Where(t => t.Status == "Avoin" || t.Status == "Työn alla");
+        //    var tiketit = db.Tiketit.Include(t => t.Kategoriat).Include(t => t.Asiakkaat);
+        //    return View(tiketit.ToList());
+        //}
+
+        //public ActionResult Arkisto()                                                   //Tästä metodista luotu näkymä, jonne laitettu accordion-lista yms.
+        //{
+        //    var tiketit = db.Tiketit.Include(t => t.Kategoriat).Include(t => t.Asiakkaat);
         //    return View(tiketit.ToList());
         //}
 
@@ -412,6 +421,15 @@ namespace TukiVerkko1.Controllers
                 {
                     tiketti.Status = uusiTila;
                     db.SaveChanges();
+                    //MailIN LÄHETYS TÄSTÄ.Asenna ensin MailKit kirjoittamalla package manager consoleen: Install - Package MailKit
+                    //if (uusiTila == "Työn alla")
+                    //{
+                    //    LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on otettu työn alle.");
+                    //}
+                    //else if (uusiTila == "Valmis")
+                    //{
+                    //    LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on valmis.");
+                    //}
                 }
             }
             catch (Exception ex)
@@ -421,22 +439,72 @@ namespace TukiVerkko1.Controllers
         }
 
         [HttpPost]
-        public ActionResult TyoNappiPainettu(int tikettiID, string uusiTila)
+        public ActionResult TyoNappi(int tikettiID, string uusiTila)
         {
             PaivitaTila(tikettiID, uusiTila);
 
+            Tiketit tiketti = db.Tiketit.Find(tikettiID);
 
-            if (uusiTila == "Valmis") //Mikäli uusiTila on ”Valmis”, päivitetään myös valmistumisaika
+            if (tiketti != null)
             {
-                Tiketit tiketti = db.Tiketit.Find(tikettiID);
-                if (tiketti != null)
+
+                if (uusiTila == "Valmis")
                 {
                     tiketti.Valmistumisaika = DateTime.Now;
-                    db.SaveChanges();
+
+                }
+
+                else if (uusiTila == "Avoin")
+                {
+                    tiketti.Valmistumisaika = null;
                 }
             }
-            return Content("");
+            db.SaveChanges();
+            return new EmptyResult();
         }
 
+        private void LahetaMaili(int asiakasId, string viestinTeksti)
+        {
+            var asiakas = db.Asiakkaat.Find(asiakasId);
+
+            if (asiakas != null)
+            {
+                var viesti = new MimeMessage();
+                viesti.From.Add(new MailboxAddress("Tukiverkkoinfo", "Tukiverkko@outlook.com"));
+                viesti.To.Add(new MailboxAddress("", asiakas.Sähköposti));
+                viesti.Subject = "Tukipyynnön tila on muuttunut";
+                viesti.Body = new TextPart("plain")
+                {
+                    Text = viestinTeksti
+                };
+
+                using (var smtp = new SmtpClient())
+                {
+                    smtp.Connect("smtp-mail.outlook.com", 587, false);
+                    smtp.Authenticate("tukiverkko@outlook.com", "tiketticareeria694");
+                    smtp.Send(viesti);
+                    smtp.Disconnect(true);
+                }
+            }
+        }
+
+        [HttpPost]
+        public ActionResult PoistaTiketti(int id)
+        {
+            {
+                var tiketti = db.Tiketit.Find(id);
+
+                if (tiketti != null)
+                {
+                    db.Tiketit.Remove(tiketti);
+                    db.SaveChanges();
+                    return RedirectToAction("Arkisto");
+                }
+                else
+                {
+                    return HttpNotFound();
+                }
+            }
+        }
     }
 }

@@ -59,10 +59,11 @@
                                     </div>
                                     <div class="modal-body">
                                         <h5>Asiakkaalle lähetetään sähköposti tiketin työn alle ottamisesta.</h5>
+                                        <div id="ilmoitus" style="display: none;">Sähköpostia lähetetään...</div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i class="fas fa-times"></i></button>
-                                        <button type="button" class="btn btn-info" onclick="TyoNappiPainettu(@item.TikettiID, 'Työn alla')"><i class="fas fa-check"></i></button>
+                                        <button type="button" class="btn btn-info" onclick="TyoNappi(@item.TikettiID, 'Työn alla')"><i class="fas fa-check"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -78,10 +79,11 @@
                                     </div>
                                     <div class="modal-body">
                                         <h5>Tiketti siirtyy arkistoon, ja asiakkaalle lähetetään sähköposti tiketin valmistumisesta.</h5>
+                                        <div id="ilmoitus" style="display: none;">Sähköpostia lähetetään...</div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i class="fas fa-times"></i></button>
-                                        <button type="button" class="btn btn-info" onclick="TyoNappiPainettu(@item.TikettiID, 'Valmis')"><i class="fas fa-check"></i></button>
+                                        <button type="button" class="btn btn-info" onclick="TyoNappi(@item.TikettiID, 'Valmis')"><i class="fas fa-check"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -93,3 +95,4 @@
         }
     </tbody>
 </table>
+
