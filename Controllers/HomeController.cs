@@ -37,7 +37,7 @@ namespace TukiVerkko1.Controllers
             {
                 ViewBag.LoginVirhe = 0;
                 Session["Käyttäjätunnus"] = Kirjautunut.Käyttäjätunnus;
-                return RedirectToAction("About", "Home");
+                return RedirectToAction("TikettiOtsikot", "Tiketit");
             }
             else
             {

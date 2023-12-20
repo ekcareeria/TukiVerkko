@@ -22,9 +22,9 @@
 
     @*-------------------Tilapainikkeet/tiketin statuksen hallinta--------------------*@
     <script>
-        function TyoNappiPainettu(tikettiID, uusiTila) {
+        function TyoNappi(tikettiID, uusiTila) {
             $.ajax({
-                url: "/Tiketit/TyoNappiPainettu",
+                url: "/Tiketit/TyoNappi",
                 type: "POST",
                 data: { tikettiID: tikettiID, uusiTila: uusiTila },
                 success: function () {
