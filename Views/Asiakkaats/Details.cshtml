@@ -1,0 +1,58 @@
+﻿@model TukiVerkko1.Models.Asiakkaat
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Asiakkaat</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Etunimi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Etunimi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sukunimi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sukunimi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Puhelinnumero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Puhelinnumero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sähköposti)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sähköposti)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tiketit.Otsikko)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tiketit.Otsikko)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.AsiakasID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

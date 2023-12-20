@@ -16,7 +16,7 @@ namespace TukiVerkko1.Controllers
 {
     public class AsiakkaatsController : Controller
     {
-        private TikettiDBEntities db = new TikettiDBEntities();
+        private TikettiDBEntities1 db = new TikettiDBEntities1();
 
         // GET: Asiakkaats
         public ActionResult Index()
