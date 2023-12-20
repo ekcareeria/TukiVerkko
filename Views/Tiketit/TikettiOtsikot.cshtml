@@ -23,6 +23,7 @@
     @*-------------------Tilapainikkeet/tiketin statuksen hallinta--------------------*@
     <script>
         function TyoNappi(tikettiID, uusiTila) {
+            $("#ilmoitus").show();
             $.ajax({
                 url: "/Tiketit/TyoNappi",
                 type: "POST",
@@ -31,6 +32,7 @@
                     location.reload(); //päivittää tiedot ilman että koko sivu pitää manuaalisesti päivittää
                 },
                 error: function () {
+                    $("#ilmoitus").hide();
                     alert("Päivitys epäonnistui");
                 }
             });
