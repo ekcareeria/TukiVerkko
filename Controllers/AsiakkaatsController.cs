@@ -148,7 +148,7 @@ namespace TukiVerkko1.Controllers
                     Kuvaus = tiedot.Kuvaus,
                     KategoriaID = tiedot.KategoriaID,
                     AsiakasID = tiedot.AsiakasID,
-
+                    Status = "Avoin",  
                 };
 
                 DateTime aikanyt = DateTime.Now;
@@ -166,7 +166,7 @@ namespace TukiVerkko1.Controllers
                 db.Asiakkaat.Add(asiakas);
                 db.SaveChanges();
                 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
 
             ViewBag.KategoriaID = new SelectList(db.Kategoriat, "KategoriaID", "Nimi", tiedot.KategoriaID);
