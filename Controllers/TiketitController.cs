@@ -422,14 +422,14 @@ namespace TukiVerkko1.Controllers
                     tiketti.Status = uusiTila;
                     db.SaveChanges();
                     //MailIN LÄHETYS TÄSTÄ.Asenna ensin MailKit kirjoittamalla package manager consoleen: Install - Package MailKit
-                    //if (uusiTila == "Työn alla")
-                    //{
-                    //    LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on otettu työn alle.");
-                    //}
-                    //else if (uusiTila == "Valmis")
-                    //{
-                    //    LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on valmis.");
-                    //}
+                    if (uusiTila == "Työn alla")
+                    {
+                        LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on otettu työn alle.");
+                    }
+                    else if (uusiTila == "Valmis")
+                    {
+                        LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on valmis.");
+                    }
                 }
             }
             catch (Exception ex)
