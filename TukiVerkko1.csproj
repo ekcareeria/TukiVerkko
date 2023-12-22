@@ -297,6 +297,8 @@
     <Content Include="Views\Asiakkaats\Index.cshtml" />
     <Content Include="Views\Asiakkaats\LuoLomake.cshtml" />
     <Content Include="Views\Asiakkaats\Tukipyynto.cshtml" />
+    <Content Include="Views\Shared\_NavbarKirjauduUlos.cshtml" />
+    <Content Include="Views\Shared\_NavbarKirjauduSisään.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
