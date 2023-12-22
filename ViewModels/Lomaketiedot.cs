@@ -6,6 +6,7 @@ namespace TukiVerkko1.ViewModels
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
 
     public class Lomaketiedot
@@ -13,6 +14,7 @@ namespace TukiVerkko1.ViewModels
 
         public int AsiakasID { get; set; }      //Copypastattu Elenalta
         public int TikettiID { get; set; }
+        [Required(ErrorMessage = "Pakollinen kenttä")]
         public string Etunimi { get; set; }
         public string Sukunimi { get; set; }
         public string Puhelinnumero { get; set; }
