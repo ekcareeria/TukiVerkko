@@ -12,7 +12,7 @@ namespace TukiVerkko1.ViewModels
     public class Lomaketiedot
     {
 
-        public int AsiakasID { get; set; }      //Copypastattu Elenalta
+        public int AsiakasID { get; set; }      
         public int TikettiID { get; set; }
         [Required(ErrorMessage = "Pakollinen kenttä")]
         public string Etunimi { get; set; }
