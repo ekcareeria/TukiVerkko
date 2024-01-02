@@ -6,12 +6,13 @@ namespace TukiVerkko1.ViewModels
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
 
     public class Lomaketiedot
     {
 
-        public int AsiakasID { get; set; }      //Copypastattu Elenalta
+        public int AsiakasID { get; set; }      
         public int TikettiID { get; set; }
         public string Etunimi { get; set; }
         public string Sukunimi { get; set; }

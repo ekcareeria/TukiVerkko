@@ -19,8 +19,8 @@
     }
     .left {
         width: 40%;
+        background-image: linear-gradient(blueviolet, violet);
     }
-
     .right {
         width: 60%;
     }
@@ -29,6 +29,13 @@
         content: "";
         display: table;
         clear: both;
+    }
+    #ohjeruutu {
+        padding: 10%;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        color: white;
     }
 </style>
 
@@ -39,7 +46,12 @@
 <hr />
 <div class="row">
     <div class="column left">
-        <p>Placeholder: ohjeruutu</p>
+        <p id="ohjeruutu">
+            Täytä oheiseen lomakkeeseen tietosi ja ongelmasi kuvaus mahdollisimman tarkasti, tarvittaessa otamme sinuun yhteyttä.<br /><br />
+            Saat ilmoituksen sähköpostiisi, kun alamme käsitellä tukipyyntöäsi ja kun se valmistuu.<br /><br />
+            Huomaathan että voit ilmoittaa vain yhden ongelman per tukipyyntö.<br /><br />
+            Kiitos.
+        </p>
     </div>
     <div class="column right">
         @using (Html.BeginForm())
@@ -69,57 +81,52 @@
                 </div>
 
                 <div class="row">
-                    <div class="column left">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Etunimi, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.Etunimi, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Etunimi, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="column right">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Sukunimi, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.Sukunimi, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Sukunimi, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                    </div>
-
-
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Puhelinnumero, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.Etunimi, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.Puhelinnumero, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Puhelinnumero, "", new { @class = "text-danger" })
+                            @Html.EditorFor(model => model.Etunimi, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Etunimi, "", new { @class = "text-danger" })
                         </div>
                     </div>
-
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Sähköposti, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.Sukunimi, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.Sähköposti, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Sähköposti, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Kuvaus, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.Kuvaus, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Kuvaus, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    @* Lähetä napin jälkeen pitäisi päästä etusivulle *@
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Lähetä tukipyyntö" class="btn btn-default" />
+                            @Html.EditorFor(model => model.Sukunimi, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Sukunimi, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Puhelinnumero, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Puhelinnumero, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Puhelinnumero, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Sähköposti, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Sähköposti, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Sähköposti, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Kuvaus, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Kuvaus, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Kuvaus, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                @* Lähetä napin jälkeen pitäisi päästä etusivulle *@
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Lähetä tukipyyntö" class="btn btn-primary" />
+                    </div>
+                </div>
+
 
             </div>
         }
