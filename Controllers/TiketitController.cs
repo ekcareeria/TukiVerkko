@@ -146,6 +146,7 @@ namespace TukiVerkko1.Controllers
         {
             ViewBag.EtunimiSortparm = String.IsNullOrEmpty(sortOrder) ? "etunimi_desc" : "";  //Nouseva/laskeva, ?=if.
             ViewBag.NimiSortparm = sortOrder == "nimi" ? "nimi_desc" : "nimi";
+            ViewBag.StatusSortparm = sortOrder == "status" ? "status_desc" : "status";
 
             //Haku jää muistiin lajittelun nousevaan/laskevaan klikkaamisen jälkeenkin.
             if (searchString1 != null)
@@ -225,6 +226,12 @@ namespace TukiVerkko1.Controllers
                     case "nimi_desc":
                         tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderByDescending(a => a.Nimi);
                         break;
+                    case "status":
+                        tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderBy(t => t.Status);
+                        break;
+                    case "status_desc":
+                        tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderByDescending(t => t.Status);
+                        break;
                     default:
                         tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderBy(a => a.Etunimi);
                         break;
@@ -244,6 +251,12 @@ namespace TukiVerkko1.Controllers
                         break;
                     case "nimi_desc":
                         tikettisummaus = tikettisummaus.OrderByDescending(a => a.Nimi);
+                        break;
+                    case "status":
+                        tikettisummaus = tikettisummaus.OrderBy(t => t.Status);
+                        break;
+                    case "status_desc":
+                        tikettisummaus = tikettisummaus.OrderByDescending(t => t.Status);
                         break;
                     default:
                         tikettisummaus = tikettisummaus.OrderBy(a => a.Etunimi);
@@ -379,7 +392,7 @@ namespace TukiVerkko1.Controllers
         //}
 
         #region _Tikettirivit2 ja _Tikettirivit3
-        public ActionResult _TikettiRivit2(int? asiakasid)                                 //Tästä metodista luodusta näkymästä tulee tiedot, kun listan otsikkoa painaa (avautuu etunimi, sukunimi yms)
+        public ActionResult _TikettiRivit2(int? asiakasid)                                 //Tästä metodista luodusta näkymästä tulee tiedot, kun listan otsikkoa painaa (avautuu etunimi, sukunimi yms ja buttonit)
         {
             var TikettiRivitLista2 = from t in db.Tiketit
 
@@ -407,7 +420,7 @@ namespace TukiVerkko1.Controllers
             return PartialView(TikettiRivitLista2);
         }
 
-        public ActionResult _TikettiRivit3(int? asiakasid)                                 //Tästä metodista luodusta näkymästä tulee tiedot, kun listan otsikkoa painaa (avautuu etunimi, sukunimi yms)
+        public ActionResult _TikettiRivit3(int? asiakasid)                                 //Tästä metodista luodusta näkymästä tulee tiedot, kun listan otsikkoa painaa (avautuu etunimi, sukunimi yms ja buttonit)
         {
             var TikettiRivitLista3 = from t in db.Tiketit
 
