@@ -145,7 +145,7 @@ namespace TukiVerkko1.Controllers
         public ActionResult Tikettisummaus(string currentFilter1, string searchString1, string sortOrder)
         {
             ViewBag.EtunimiSortparm = String.IsNullOrEmpty(sortOrder) ? "etunimi_desc" : "";  //Nouseva/laskeva, ?=if.
-            ViewBag.NimiSortparm = String.IsNullOrEmpty(sortOrder) ? "nimi_desc" : "";
+            ViewBag.NimiSortparm = sortOrder == "nimi" ? "nimi_desc" : "nimi";
 
             //Haku jää muistiin lajittelun nousevaan/laskevaan klikkaamisen jälkeenkin.
             if (searchString1 != null)
@@ -220,10 +220,10 @@ namespace TukiVerkko1.Controllers
                         tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderByDescending(a => a.Etunimi);
                         break;
                     case "nimi":
-                        tikettisummaus = tikettisummaus.Where(a => a.Nimi.Contains(searchString1)).OrderBy(a => a.Nimi);
+                        tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderBy(a => a.Nimi);
                         break;
                     case "nimi_desc":
-                        tikettisummaus = tikettisummaus.Where(a => a.Nimi.Contains(searchString1)).OrderByDescending(a => a.Nimi);
+                        tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderByDescending(a => a.Nimi);
                         break;
                     default:
                         tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderBy(a => a.Etunimi);
@@ -260,6 +260,7 @@ namespace TukiVerkko1.Controllers
         public ActionResult Tikettisummaus2(string currentFilter1, string searchString1, string sortOrder)
         {
             ViewBag.EtunimiSortparm = String.IsNullOrEmpty(sortOrder) ? "etunimi_desc" : "";  //Nouseva/laskeva, ?=if.
+            ViewBag.NimiSortparm = sortOrder == "nimi" ? "nimi_desc" : "nimi";
 
             //Haku jää muistiin lajittelun nousevaan/laskevaan klikkaamisen jälkeenkin.
             if (searchString1 != null)
@@ -316,6 +317,12 @@ namespace TukiVerkko1.Controllers
                     case "etunimi_desc":
                         tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderByDescending(a => a.Etunimi);
                         break;
+                    case "nimi":
+                        tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderBy(a => a.Nimi);
+                        break;
+                    case "nimi_desc":
+                        tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderByDescending(a => a.Nimi);
+                        break;
                     default:
                         tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderBy(a => a.Etunimi);
                         break;
@@ -329,6 +336,12 @@ namespace TukiVerkko1.Controllers
                 {
                     case "etunimi_desc":
                         tikettisummaus = tikettisummaus.OrderByDescending(a => a.Etunimi);
+                        break;
+                    case "nimi":
+                        tikettisummaus = tikettisummaus.OrderBy(a => a.Nimi);
+                        break;
+                    case "nimi_desc":
+                        tikettisummaus = tikettisummaus.OrderByDescending(a => a.Nimi);
                         break;
                     default:
                         tikettisummaus = tikettisummaus.OrderBy(a => a.Etunimi);
