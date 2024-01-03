@@ -14,6 +14,7 @@ namespace TukiVerkko1.Controllers
             return View();
         }
 
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -58,35 +59,33 @@ namespace TukiVerkko1.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [Authorize] // Varmista, että käyttäjä on kirjautunut sisään
-        [HttpGet]
-        public ActionResult HaeRooli()
-        {
-            // Tarkistetaan käyttäjän rooli Sessionista
-            string käyttäjänRooli = Session["Rooli"] as string;
-
-            if (käyttäjänRooli != null)
-            {
-                return Content(käyttäjänRooli);
-            }
-            else
-            {
-                return Content("Vieras");
-            }
-        }
-
-        private string HaeRooliTietokannasta(string käyttäjätunnus)
+        private string HaeRooliTietokannasta(string rooli)
         {
             TikettiDBEntities1 db = new TikettiDBEntities1();
 
-            var käyttäjä = db.Logins.SingleOrDefault(u => u.Käyttäjätunnus == käyttäjätunnus);
+            var käyttäjänr = db.Logins.SingleOrDefault(u => u.Rooli == rooli);
 
-            if (käyttäjä != null)
+            if (käyttäjänr != null)
             {
-                return käyttäjä.Rooli;
+                return käyttäjänr.Rooli;
             }
 
             return "Vieras";
+        }
+
+        public ActionResult Index2()
+        {
+            var rooli = HaeRooliTietokannasta(HttpContext.User.Identity.Name);
+
+            switch (rooli)
+            {
+                case "Opiskelija":
+                    return PartialView("_NavbarOpiskelija");
+                case "Ylläpitäjä":
+                    return PartialView("_NavbarYlläpitäjä");
+                default:
+                    return PartialView("_Navbar");
+            }
         }
     }
 }
