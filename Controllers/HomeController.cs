@@ -56,5 +56,21 @@ namespace TukiVerkko1.Controllers
             Session.Abandon();
             return RedirectToAction("Index", "Home");
         }
+
+        //[Authorize] // Varmista, että käyttäjä on kirjautunut sisään
+        //[HttpGet]
+        //public ActionResult HaeRooli()
+        //{
+        //    TikettiDBEntities1 db = new TikettiDBEntities1();
+        //    Tarkistetaan käyttäjän rooli
+        //    string käyttäjänRooli = HttpContext.Current.Session["Rooli"] as string;
+
+        //    if (käyttäjänRooli != null && käyttäjänRooli.Equals("Ylläpitäjä", StringComparison.OrdinalIgnoreCase))
+        //    {
+        //        return true; // Palauta true, jos käyttäjällä on oikea rooli
+        //    }
+
+        //    return Json(rooli);
+        //}
     }
 }
