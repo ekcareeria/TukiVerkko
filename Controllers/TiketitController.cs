@@ -221,10 +221,10 @@ namespace TukiVerkko1.Controllers
                         tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderByDescending(a => a.Etunimi);
                         break;
                     case "nimi":
-                        tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderBy(a => a.Nimi);
+                        tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderBy(k => k.Nimi);
                         break;
                     case "nimi_desc":
-                        tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderByDescending(a => a.Nimi);
+                        tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderByDescending(k => k.Nimi);
                         break;
                     case "status":
                         tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderBy(t => t.Status);
@@ -247,10 +247,10 @@ namespace TukiVerkko1.Controllers
                         tikettisummaus = tikettisummaus.OrderByDescending(a => a.Etunimi);
                         break;
                     case "nimi":
-                        tikettisummaus = tikettisummaus.OrderBy(a => a.Nimi);
+                        tikettisummaus = tikettisummaus.OrderBy(k => k.Nimi);
                         break;
                     case "nimi_desc":
-                        tikettisummaus = tikettisummaus.OrderByDescending(a => a.Nimi);
+                        tikettisummaus = tikettisummaus.OrderByDescending(k => k.Nimi);
                         break;
                     case "status":
                         tikettisummaus = tikettisummaus.OrderBy(t => t.Status);
@@ -331,10 +331,10 @@ namespace TukiVerkko1.Controllers
                         tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderByDescending(a => a.Etunimi);
                         break;
                     case "nimi":
-                        tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderBy(a => a.Nimi);
+                        tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderBy(k => k.Nimi);
                         break;
                     case "nimi_desc":
-                        tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderByDescending(a => a.Nimi);
+                        tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderByDescending(k => k.Nimi);
                         break;
                     default:
                         tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderBy(a => a.Etunimi);
@@ -351,10 +351,10 @@ namespace TukiVerkko1.Controllers
                         tikettisummaus = tikettisummaus.OrderByDescending(a => a.Etunimi);
                         break;
                     case "nimi":
-                        tikettisummaus = tikettisummaus.OrderBy(a => a.Nimi);
+                        tikettisummaus = tikettisummaus.OrderBy(k => k.Nimi);
                         break;
                     case "nimi_desc":
-                        tikettisummaus = tikettisummaus.OrderByDescending(a => a.Nimi);
+                        tikettisummaus = tikettisummaus.OrderByDescending(k => k.Nimi);
                         break;
                     default:
                         tikettisummaus = tikettisummaus.OrderBy(a => a.Etunimi);
