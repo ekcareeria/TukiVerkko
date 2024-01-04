@@ -10,48 +10,61 @@
         text-align: center;
         color: #593196;
     }
+
+    body {
+        background: #dddfee;
+    }
+
+      td {
+        background-color: #dddfee !important;
+    }
+
 </style>
 
-@*Jotta otsikon ympärillä tilaa (tähän kyllä varmaan parempikin tapa)*@
-<br />
-<br />
-<h1>Arkisto</h1>
-<br />
-<br />
+<body>
 
-<table class="table container">
-    <tr>
-        @* nousevaan ja laskevaan järjestykseen lajitteluun.*@
-        <th>@Html.ActionLink("Etunimi", "Tikettisummaus2", new { sortOrder = ViewBag.EtunimiSortParm, currentFilter1 = ViewBag.currentFilter1 })</th>
-        <th>@Html.DisplayNameFor(model => model.Sukunimi)</th>
-        <th>@Html.DisplayNameFor(model => model.Puhelinnumero)</th>
-        <th>@Html.DisplayNameFor(model => model.Sähköposti)</th>
-        <th>@Html.DisplayNameFor(model => model.Kuvaus)</th>
-        <th>@Html.DisplayNameFor(model => model.TikettiID)</th>
-        <th>@Html.DisplayNameFor(model => model.Otsikko)</th>
-        <th>@Html.ActionLink("Nimi", "Tikettisummaus2", new { sortOrder = ViewBag.NimiSortParm, currentFilter1 = ViewBag.currentFilter1 })</th>
-        <th>@Html.DisplayNameFor(model => model.Aika)</th>
-        <th>@Html.DisplayNameFor(model => model.Status)</th>
-        <th></th>
-    </tr>
+    @*Jotta otsikon ympärillä tilaa (tähän kyllä varmaan parempikin tapa)*@
+    <br />
+    <br />
+    <h1>Arkisto</h1>
+    <br />
+    <br />
 
-    @foreach (var item in Model)
-    {
+    <table class="table container">
         <tr>
-            <td>@Html.DisplayFor(modelItem => item.Etunimi)</td>
-            <td>@Html.DisplayFor(modelItem => item.Sukunimi)</td>
-            <td>@Html.DisplayFor(modelItem => item.Puhelinnumero)</td>
-            <td>@Html.DisplayFor(modelItem => item.Sähköposti)</td>
-            <td>@Html.DisplayFor(modelItem => item.Kuvaus)</td>
-            <td>@Html.DisplayFor(modelItem => item.TikettiID)</td>
-            <td>@Html.DisplayFor(modelItem => item.Otsikko)</td>
-            <td>@Html.DisplayFor(modelItem => item.Nimi)</td>
-            <td>@Html.ValueFor(modelItem => item.Aika, "{0:d}")</td>
-            <td>@Html.DisplayFor(modelItem => item.Status)</td>
+            @* nousevaan ja laskevaan järjestykseen lajitteluun.*@
+            <th>@Html.ActionLink("Etunimi", "Tikettisummaus2", new { sortOrder = ViewBag.EtunimiSortParm, currentFilter1 = ViewBag.currentFilter1 })</th>
+            <th>@Html.DisplayNameFor(model => model.Sukunimi)</th>
+            <th>@Html.DisplayNameFor(model => model.Puhelinnumero)</th>
+            <th>@Html.DisplayNameFor(model => model.Sähköposti)</th>
+            <th>@Html.DisplayNameFor(model => model.Kuvaus)</th>
+            <th>@Html.DisplayNameFor(model => model.TikettiID)</th>
+            <th>@Html.DisplayNameFor(model => model.Otsikko)</th>
+            @* nousevaan ja laskevaan järjestykseen lajitteluun.*@
+            <th>@Html.ActionLink("Nimi", "Tikettisummaus2", new { sortOrder = ViewBag.NimiSortParm, currentFilter1 = ViewBag.currentFilter1 })</th>
+            <th>@Html.DisplayNameFor(model => model.Aika)</th>
+            <th>@Html.DisplayNameFor(model => model.Status)</th>
+            <th></th>
         </tr>
-    }
-</table>
 
-<div class="container">
-    <button type="button" class="btn btn-outline-secondary">@Html.ActionLink("Takaisin", "Arkisto")</button>
-</div>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Etunimi)</td>
+                <td>@Html.DisplayFor(modelItem => item.Sukunimi)</td>
+                <td>@Html.DisplayFor(modelItem => item.Puhelinnumero)</td>
+                <td>@Html.DisplayFor(modelItem => item.Sähköposti)</td>
+                <td>@Html.DisplayFor(modelItem => item.Kuvaus)</td>
+                <td>@Html.DisplayFor(modelItem => item.TikettiID)</td>
+                <td>@Html.DisplayFor(modelItem => item.Otsikko)</td>
+                <td>@Html.DisplayFor(modelItem => item.Nimi)</td>
+                <td>@Html.ValueFor(modelItem => item.Aika, "{0:d}")</td>
+                <td>@Html.DisplayFor(modelItem => item.Status)</td>
+            </tr>
+        }
+    </table>
+
+    <div class="container">
+        <button type="button" class="btn btn-outline-secondary">@Html.ActionLink("Takaisin", "Arkisto")</button>
+    </div>
+</body>

@@ -10,6 +10,10 @@
         text-align: center;
         color: #593196;
     }
+
+    th {
+        background-color: #dddfee !important;
+    }
 </style>
 
 @*Jotta otsikon ympärillä tilaa (tähän kyllä varmaan parempikin tapa)*@
@@ -30,7 +34,8 @@
         <th>@Html.DisplayNameFor(model => model.TikettiID)</th>
         <th>@Html.DisplayNameFor(model => model.Otsikko)</th>
         <th>@Html.ActionLink("Nimi", "Tikettisummaus", new { sortOrder = ViewBag.NimiSortParm, currentFilter1 = ViewBag.currentFilter1 })</th>
-        <th>@Html.DisplayNameFor(model => model.Aika)</th>
+        @*<th>@Html.DisplayNameFor(model => model.Aika)</th>*@
+        <th>@Html.ActionLink("Aika", "Tikettisummaus", new { sortOrder = ViewBag.NimiSortParm, currentFilter1 = ViewBag.currentFilter1 })</th>
         <th>@Html.ActionLink("Status", "Tikettisummaus", new { sortOrder = ViewBag.StatusSortParm, currentFilter1 = ViewBag.currentFilter1 })</th>
         <th></th>
     </tr>

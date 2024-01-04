@@ -147,6 +147,7 @@ namespace TukiVerkko1.Controllers
             ViewBag.EtunimiSortparm = String.IsNullOrEmpty(sortOrder) ? "etunimi_desc" : "";  //Nouseva/laskeva, ?=if.
             ViewBag.NimiSortparm = sortOrder == "nimi" ? "nimi_desc" : "nimi";
             ViewBag.StatusSortparm = sortOrder == "status" ? "status_desc" : "status";
+            ViewBag.StatusSortparm = sortOrder == "aika" ? "aika_desc" : "aika";
 
             //Haku jää muistiin lajittelun nousevaan/laskevaan klikkaamisen jälkeenkin.
             if (searchString1 != null)
