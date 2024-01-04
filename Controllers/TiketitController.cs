@@ -147,7 +147,7 @@ namespace TukiVerkko1.Controllers
             ViewBag.EtunimiSortparm = String.IsNullOrEmpty(sortOrder) ? "etunimi_desc" : "";  //Nouseva/laskeva, ?=if.
             ViewBag.NimiSortparm = sortOrder == "nimi" ? "nimi_desc" : "nimi";
             ViewBag.StatusSortparm = sortOrder == "status" ? "status_desc" : "status";
-            ViewBag.StatusSortparm = sortOrder == "aika" ? "aika_desc" : "aika";
+            ViewBag.AikaSortparm = sortOrder == "aika" ? "aika_desc" : "aika";
 
             //Haku jää muistiin lajittelun nousevaan/laskevaan klikkaamisen jälkeenkin.
             if (searchString1 != null)
@@ -233,6 +233,12 @@ namespace TukiVerkko1.Controllers
                     case "status_desc":
                         tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderByDescending(t => t.Status);
                         break;
+                    case "aika":
+                        tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderBy(t => t.Aika);
+                        break;
+                    case "aika_desc":
+                        tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderByDescending(t => t.Aika);
+                        break;
                     default:
                         tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderBy(a => a.Etunimi);
                         break;
@@ -259,6 +265,12 @@ namespace TukiVerkko1.Controllers
                     case "status_desc":
                         tikettisummaus = tikettisummaus.OrderByDescending(t => t.Status);
                         break;
+                    case "aika":
+                        tikettisummaus = tikettisummaus.OrderBy(t => t.Aika);
+                        break;
+                    case "aika_desc":
+                        tikettisummaus = tikettisummaus.OrderByDescending(t => t.Aika);
+                        break;
                     default:
                         tikettisummaus = tikettisummaus.OrderBy(a => a.Etunimi);
                         break;
@@ -275,6 +287,7 @@ namespace TukiVerkko1.Controllers
         {
             ViewBag.EtunimiSortparm = String.IsNullOrEmpty(sortOrder) ? "etunimi_desc" : "";  //Nouseva/laskeva, ?=if.
             ViewBag.NimiSortparm = sortOrder == "nimi" ? "nimi_desc" : "nimi";
+            ViewBag.AikaSortparm = sortOrder == "aika" ? "aika_desc" : "aika";
 
             //Haku jää muistiin lajittelun nousevaan/laskevaan klikkaamisen jälkeenkin.
             if (searchString1 != null)
@@ -337,6 +350,12 @@ namespace TukiVerkko1.Controllers
                     case "nimi_desc":
                         tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderByDescending(k => k.Nimi);
                         break;
+                    case "aika":
+                        tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderBy(t => t.Aika);
+                        break;
+                    case "aika_desc":
+                        tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderByDescending(t => t.Aika);
+                        break;
                     default:
                         tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderBy(a => a.Etunimi);
                         break;
@@ -356,6 +375,12 @@ namespace TukiVerkko1.Controllers
                         break;
                     case "nimi_desc":
                         tikettisummaus = tikettisummaus.OrderByDescending(k => k.Nimi);
+                        break;
+                    case "aika":
+                        tikettisummaus = tikettisummaus.OrderBy(t => t.Aika);
+                        break;
+                    case "aika_desc":
+                        tikettisummaus = tikettisummaus.OrderByDescending(t => t.Aika);
                         break;
                     default:
                         tikettisummaus = tikettisummaus.OrderBy(a => a.Etunimi);
