@@ -28,8 +28,8 @@
                 type: "POST",
                 data: { tikettiID: tikettiID, uusiTila: uusiTila },
                 success: function () {
-                    alert("Tiketti palautettu!"); //Tässä on joku bugi.Tiketin palautuksen epäonnistuessa (Tarkoituksella aiheutettu virhetilanne) 
-                    //ei tule virheilmoitusta, vaan ilmoitus onnistumisesta.Mietin asiaa jos vain ehdin.
+                    alert("Tiketti palautettu!"); //Tässä on joku ongelma. Tiketin palautuksen epäonnistuessa (Tarkoituksella aiheutettu virhetilanne) 
+                    //ei tule virheilmoitusta, vaan ilmoitus onnistumisesta. Mietin asiaa jos vain ehdin.
                     location.reload();
                 },
                 error: function () {
