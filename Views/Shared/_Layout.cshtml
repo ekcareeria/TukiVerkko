@@ -21,7 +21,15 @@
         {
             @Html.Partial("_NavbarOpiskelija")
         }
+        else if (rooli == "opiskelija")
+        {
+            @Html.Partial("_NavbarOpiskelija")
+        }
         else if (rooli == "Ylläpitäjä")
+        {
+            @Html.Partial("_NavbarYlläpitäjä")
+        }
+        else if (rooli == "ylläpitäjä")
         {
             @Html.Partial("_NavbarYlläpitäjä")
         }

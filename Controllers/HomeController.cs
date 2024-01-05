@@ -59,19 +59,5 @@ namespace TukiVerkko1.Controllers
             Session.Abandon();
             return RedirectToAction("Index", "Home");
         }
-
-        //public ActionResult HaeRooliTietokannasta(string rooli)
-        //{
-        //    TikettiDBEntities1 db = new TikettiDBEntities1();
-
-        //    var käyttäjänrooli = db.Logins.SingleOrDefault(u => u.Rooli == rooli);
-
-        //    if (käyttäjänrooli != null)
-        //    {
-        //        return Json(new { rooli = käyttäjänrooli.Rooli });
-        //    }
-
-        //    return Json(new { virhe = "Roolia ei löytynyt" });
-        //}
     }
 }
