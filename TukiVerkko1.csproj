@@ -170,6 +170,7 @@
     <Compile Include="Models\Kategoriat.cs">
       <DependentUpon>TikettiDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\LoginRoolit.cs" />
     <Compile Include="Models\Logins.cs">
       <DependentUpon>TikettiDBModel.tt</DependentUpon>
     </Compile>
@@ -298,6 +299,9 @@
     <Content Include="Views\Asiakkaats\Index.cshtml" />
     <Content Include="Views\Asiakkaats\LuoLomake.cshtml" />
     <Content Include="Views\Asiakkaats\Tukipyynto.cshtml" />
+    <Content Include="Views\Shared\_NavbarYlläpitäjä.cshtml" />
+    <Content Include="Views\Shared\_Navbar.cshtml" />
+    <Content Include="Views\Shared\_NavbarOpiskelija.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

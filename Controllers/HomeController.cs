@@ -14,6 +14,7 @@ namespace TukiVerkko1.Controllers
             return View();
         }
 
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -35,7 +36,9 @@ namespace TukiVerkko1.Controllers
             var Kirjautunut = db.Logins.SingleOrDefault(x => x.Käyttäjätunnus == LoginModel.Käyttäjätunnus && x.Salasana == LoginModel.Salasana);
             if (Kirjautunut != null)
             {
+                string rooli = Kirjautunut.Rooli;
                 ViewBag.LoginVirhe = 0;
+                Session["Rooli"] = rooli;
                 Session["Käyttäjätunnus"] = Kirjautunut.Käyttäjätunnus;
                 return RedirectToAction("TikettiOtsikot", "Tiketit");
             }

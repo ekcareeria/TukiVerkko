@@ -1,0 +1,36 @@
+﻿@{
+    string loggausInfo = "";
+    if (Session["Käyttäjätunnus"] == null)
+    {
+        loggausInfo = " ";
+    }
+    else
+    {
+        loggausInfo = "Hei " + Session["Käyttäjätunnus"] + "!";
+    }
+ }
+
+<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/Home/Index">TukiVERKKO</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav ms-auto">
+                <li class="btn"><a class="nav-link">@loggausInfo</a></li>
+                <li class="btn dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Saapuneet tiketit</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/Tiketit/TikettiOtsikot">Saapuneet tiketit</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/Tiketit/Arkisto">Arkisto</a>
+                    </div>
+                </li>
+                <li class="btn"><a class="nav-link" href="/Home/Info">Info</a></li>
+                <li class="btn"><a class="nav-link" href="/Asiakkaats/Tukipyynto">Tukipyyntö</a></li>
+                <li class="btn"><a class="nav-link" href="/Home/Logout">Kirjaudu ulos</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>

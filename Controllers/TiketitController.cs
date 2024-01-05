@@ -333,6 +333,7 @@ namespace TukiVerkko1.Controllers
             return View(tiketit.ToList());
         }
 
+        [LoginRoolit(Roles = "Ylläpitäjä")]
         public ActionResult Arkisto()                                                   //Tästä metodista luotu näkymä, jonne laitettu accordion-lista yms.
         {
             var tiketit = db.Tiketit.Include(t => t.Kategoriat).Include(t => t.Asiakkaat).Where(t => t.Status == "Valmis");
