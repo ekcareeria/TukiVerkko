@@ -157,7 +157,7 @@ namespace TukiVerkko1.Controllers
             }
 
             ViewBag.currentFilter1 = searchString1;
-                                                                                                                     //Where-lause, jotta tiketit näkyvät oikeissa paikoissa, valmiit arkistossa jne. hakua tehdessä.
+            //Where-lause, jotta tiketit näkyvät oikeissa paikoissa, valmiit arkistossa jne. hakua tehdessä.
             var tikettisummaus = from t in db.Tiketit.Where(t => t.Status == "Avoin" || t.Status == "Työn alla")     //LinQ-kysely, minkä perusteella taulut yhdistetty.
 
                                  join a in db.Asiakkaat on t.AsiakasID equals a.AsiakasID                            //Luotu ViewModel. Muista lisätä using-lause ViewModels sivun ylös.
@@ -259,7 +259,7 @@ namespace TukiVerkko1.Controllers
             }
 
             ViewBag.currentFilter1 = searchString1;
-                                                                                              //Where-lause, jotta tiketit näkyvät oikeissa paikoissa, valmiit arkistossa jne. hakua tehdessä.
+            //Where-lause, jotta tiketit näkyvät oikeissa paikoissa, valmiit arkistossa jne. hakua tehdessä.
             var tikettisummaus = from t in db.Tiketit.Where(t => t.Status == "Valmis")        //LinQ-kysely, minkä perusteella taulut yhdistetty.
 
                                  join a in db.Asiakkaat on t.AsiakasID equals a.AsiakasID     //Luotu ViewModel. Muista lisätä using-lause ViewModels sivun ylös.
@@ -326,32 +326,36 @@ namespace TukiVerkko1.Controllers
             return View(tikettisummaus);
         }
         #endregion
-
         public ActionResult TikettiOtsikot()                                             //Tästä metodista luotu näkymä, jonne laitettu accordion-lista yms.
         {
-            var tiketit = db.Tiketit.Include(t => t.Kategoriat).Include(t => t.Asiakkaat).Where(t => t.Status == "Avoin" || t.Status == "Työn alla");
-            return View(tiketit.ToList());
+            {
+                if (Session["Käyttäjätunnus"] == null)
+                {
+                    return RedirectToAction("index", "home");
+                }
+                else
+                {
+                    var tiketit = db.Tiketit.Include(t => t.Kategoriat).Include(t => t.Asiakkaat).Where(t => t.Status == "Avoin" || t.Status == "Työn alla");
+                    return View(tiketit.ToList());
+                }
+            }
         }
 
         [LoginRoolit(Roles = "Ylläpitäjä")]
-        public ActionResult Arkisto()                                                   //Tästä metodista luotu näkymä, jonne laitettu accordion-lista yms.
+        public ActionResult Arkisto()
+        //Tästä metodista luotu näkymä, jonne laitettu accordion-lista yms.
         {
-            var tiketit = db.Tiketit.Include(t => t.Kategoriat).Include(t => t.Asiakkaat).Where(t => t.Status == "Valmis");
-            return View(tiketit.ToList());
+            if (Session["Käyttäjätunnus"] == null)
+            {
+                return RedirectToAction("index", "home");
+            }
+            else
+            {
+                ViewBag.Käyttäjätunnus = Session["Käyttäjätunnus"];
+                var tiketit = db.Tiketit.Include(t => t.Kategoriat).Include(t => t.Asiakkaat).Where(t => t.Status == "Valmis");
+                return View(tiketit.ToList());
+            }
         }
-
-        //Tässä tallessa vanha versio, jossa molemmissa näkymissä näkyy kaikki tiketit
-        //public ActionResult TikettiOtsikot()                                             //Tästä metodista luotu näkymä, jonne laitettu accordion-lista yms.
-        //{
-        //    var tiketit = db.Tiketit.Include(t => t.Kategoriat).Include(t => t.Asiakkaat);
-        //    return View(tiketit.ToList());
-        //}
-
-        //public ActionResult Arkisto()                                                   //Tästä metodista luotu näkymä, jonne laitettu accordion-lista yms.
-        //{
-        //    var tiketit = db.Tiketit.Include(t => t.Kategoriat).Include(t => t.Asiakkaat);
-        //    return View(tiketit.ToList());
-        //}
 
         #region _Tikettirivit2 ja _Tikettirivit3
         public ActionResult _TikettiRivit2(int? asiakasid)                                 //Tästä metodista luodusta näkymästä tulee tiedot, kun listan otsikkoa painaa (avautuu etunimi, sukunimi yms)
@@ -422,7 +426,7 @@ namespace TukiVerkko1.Controllers
                 {
                     tiketti.Status = uusiTila;
                     db.SaveChanges();
-                    //MailIN LÄHETYS TÄSTÄ.Asenna ensin MailKit kirjoittamalla package manager consoleen: Install - Package MailKit
+                    //MailIN LÄHETYS TÄSTÄ
                     //if (uusiTila == "Työn alla")
                     //{
                     //    LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on otettu työn alle.");
