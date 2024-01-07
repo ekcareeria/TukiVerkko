@@ -4,6 +4,21 @@
     ViewBag.Title = "Tukipyynto";
 }
 
+@section scripts {
+    <script type="text/javascript">
+    $(window).on('load', function () {
+        if (@ViewBag.LoginVirhe == 1) {
+            $('#LoginRuutu').modal('show');
+        }
+    });
+
+    </script>
+
+    @{
+        Html.RenderPartial("~/Views/Home/_LoginModal.cshtml"); 
+    }
+}
+
 <style>
     * {
         box-sizing: border-box;
@@ -80,123 +95,123 @@
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
-        <div class="form-horizontal">
-            @*<h2>Lomaketiedot</h2>*@
+            <div class="form-horizontal">
+                @*<h2>Lomaketiedot</h2>*@
 
 
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.Otsikko, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Otsikko, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Otsikko, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            @*Dropdown-lista*@
-            <div class="form-group">
-                @Html.LabelFor(model => model.KategoriaID, "Kategoria", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("KategoriaID", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.KategoriaID, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="row">
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Etunimi, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Otsikko, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.Etunimi, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Etunimi, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.Otsikko, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Otsikko, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                @*Dropdown-lista*@
+                <div class="form-group">
+                    @Html.LabelFor(model => model.KategoriaID, "Kategoria", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("KategoriaID", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.KategoriaID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Etunimi, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Etunimi, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Etunimi, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Sukunimi, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Sukunimi, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Sukunimi, "", new { @class = "text-danger" })
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Sukunimi, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Puhelinnumero, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.Sukunimi, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Sukunimi, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Puhelinnumero, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Puhelinnumero, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Puhelinnumero, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Sähköposti, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Sähköposti, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Sähköposti, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Kuvaus, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-12">
-                    <textarea class="form-control" @Html.EditorFor(model => model.Kuvaus, new { htmlAttributes = new { style = "width=500px", @class = "form-control" } })></textarea>
-                    @Html.ValidationMessageFor(model => model.Kuvaus, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-
-            <br />
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <button type="button" class="btn btn-primary btn-lg" style="width:5em" data-bs-toggle="modal" data-bs-target="#peruutus">Peru</button>
-                    <button type="button" class="btn btn-info btn-lg" style="width:5em" data-bs-toggle="modal" data-bs-target="#lähetys">Lähetä</button>
-                </div>
-            </div>
-            @*Tukipyynnön lähetys-modaali*@
-            <div class="modal" id="lähetys">
-                <div class="modal-dialog modal-sm">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Lähetetäänkö tukipyyntö?</h5>
-                        </div>
-                        <div class="modal-body">
-                            <h5>
-                                Saat ilmoituksen sähköpostiisi, kun tukipyyntösi on otettu käsittelyyn. <br />
-                                <br />
-                                Kiitos, hyvää päivänjatkoa!
-                            </h5>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" style=" width: 3em" data-bs-dismiss="modal"><i class="fas fa-times"></i></button>
-                            <button type="submit" class="btn btn-info" style=" width: 3em"><i class="fas fa-check"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Peruutus-modaali -->
-            <div class="modal" id="peruutus">
-                <div class="modal-dialog modal-sm">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                        </div>
-                        <div class="modal-body">
-                            <h5>
-                                Haluatko varmasti <br />
-                                perua tukipyynnön ja <br />
-                                palata etusivulle?
-                            </h5>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" style=" width: 3em" data-bs-dismiss="modal"><i class="fas fa-times"></i></button>
-                            <a href="@Url.Action("Index", "Home")" class="btn btn-info" style="border-radius: 6px; width:3em"><i class="fas fa-check"></i></a>
-                        </div>
+                        @Html.EditorFor(model => model.Puhelinnumero, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Puhelinnumero, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Sähköposti, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Sähköposti, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Sähköposti, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Kuvaus, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-12">
+                        <textarea class="form-control" @Html.EditorFor(model => model.Kuvaus, new { htmlAttributes = new { style = "width=500px", @class = "form-control" } })></textarea>
+                        @Html.ValidationMessageFor(model => model.Kuvaus, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <br />
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="button" class="btn btn-primary btn-lg" style="width:5em" data-bs-toggle="modal" data-bs-target="#peruutus">Peru</button>
+                        <button type="button" class="btn btn-info btn-lg" style="width:5em" data-bs-toggle="modal" data-bs-target="#lähetys">Lähetä</button>
+                    </div>
+                </div>
+                @*Tukipyynnön lähetys-modaali*@
+                <div class="modal" id="lähetys">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Lähetetäänkö tukipyyntö?</h5>
+                            </div>
+                            <div class="modal-body">
+                                <h5>
+                                    Saat ilmoituksen sähköpostiisi, kun tukipyyntösi on otettu käsittelyyn. <br />
+                                    <br />
+                                    Kiitos, hyvää päivänjatkoa!
+                                </h5>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" style=" width: 3em" data-bs-dismiss="modal"><i class="fas fa-times"></i></button>
+                                <button type="submit" class="btn btn-info" style=" width: 3em"><i class="fas fa-check"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Peruutus-modaali -->
+                <div class="modal" id="peruutus">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            </div>
+                            <div class="modal-body">
+                                <h5>
+                                    Haluatko varmasti <br />
+                                    perua tukipyynnön ja <br />
+                                    palata etusivulle?
+                                </h5>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" style=" width: 3em" data-bs-dismiss="modal"><i class="fas fa-times"></i></button>
+                                <a href="@Url.Action("Index", "Home")" class="btn btn-info" style="border-radius: 6px; width:3em"><i class="fas fa-check"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
             </div>
-
-
-        </div>
         }
     </div>
 </div>

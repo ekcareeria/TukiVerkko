@@ -488,8 +488,7 @@ namespace TukiVerkko1.Controllers
         //----------------Tästä alkaa tiketin statuksen hallinta--------------------//
         private void PaivitaTila(int tikettiID, string uusiTila)
         {
-            try
-            {
+
                 Tiketit tiketti = db.Tiketit.Find(tikettiID);
 
                 if (tiketti != null)
@@ -497,20 +496,15 @@ namespace TukiVerkko1.Controllers
                     tiketti.Status = uusiTila;
                     db.SaveChanges();
                     //MailIN LÄHETYS TÄSTÄ
-                    if (uusiTila == "Työn alla")
-                    {
-                        LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on otettu työn alle.");
-                    }
-                    else if (uusiTila == "Valmis")
-                    {
-                        LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on valmis.");
-                    }
+                    //if (uusiTila == "Työn alla")
+                    //{
+                    //    LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on otettu työn alle.");
+                    //}
+                    //else if (uusiTila == "Valmis")
+                    //{
+                    //    LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on valmis.");
+                    //}
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Virhe tietokantapäivityksessä: {ex.Message}");
-            }
         }
 
         [HttpPost]
@@ -535,7 +529,7 @@ namespace TukiVerkko1.Controllers
                 }
             }
             db.SaveChanges();
-            return new EmptyResult();
+            return Json(new { success = true }); //Tätä ei hyödynnetä missään, kun en ehtinyt. :)
         }
 
         private void LahetaMaili(int asiakasId, string viestinTeksti)
@@ -577,7 +571,7 @@ namespace TukiVerkko1.Controllers
                 }
                 else
                 {
-                    return HttpNotFound();
+                    return HttpNotFound();  //Tiketin poiston epäonnistuessa näkyy alert, kts. Arkisto.cshtml
                 }
             }
         }
