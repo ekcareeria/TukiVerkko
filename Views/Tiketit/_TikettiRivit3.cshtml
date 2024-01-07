@@ -26,8 +26,8 @@
                 <td>@Html.DisplayFor(modelItem => item.TikettiID)</td>
                 <td>
                     @*Palauta ja poista-nappulat*@
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#palauta_@item.TikettiID">Palauta</button>
-                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#poista_@item.TikettiID">Poista</button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" style="width: 5em" data-bs-target="#palauta_@item.TikettiID">Palauta</button>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"  style="width: 5em" data-bs-target="#poista_@item.TikettiID">Poista</button>
 
                     @*PALAUTA-MODAALI-IKKUNA*@
                     <div class="modal fade" id="palauta_@item.TikettiID">
@@ -39,8 +39,8 @@
                                     <h5>Haluatko varmasti palauttaa tiketin "Avoin"-tilaan?</h5>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i class="fas fa-times"></i></button>
-                                    <button type="button" class="btn btn-info" onclick="TyoNappi(@item.TikettiID, 'Avoin')"><i class="fas fa-check"></i></button>
+                                    <button type="button" class="btn btn-primary" style="width: 3em" data-bs-dismiss="modal"><i class="fas fa-times"></i></button>
+                                    <button type="button" class="btn btn-info" style="width: 3em" onclick="TyoNappi(@item.TikettiID, 'Avoin')"><i class="fas fa-check"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -57,8 +57,8 @@
                                     <h5>Oletko varma, että haluat poistaa tiketin? Poisto on lopullinen.</h5>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times"></i></button>
-                                    <button type="button" class="btn btn-danger" onclick="PoistaNappi(@item.TikettiID)"><i class="fas fa-check"></i></button>
+                                    <button type="button" class="btn btn-primary" style="width: 3em" data-bs-dismiss="modal"><i class="fas fa-times"></i></button>
+                                    <button type="button" class="btn btn-info" style="width: 3em" onclick="PoistaNappi(@item.TikettiID)"><i class="fas fa-check"></i></button>
                                 </div>
                             </div>
                         </div>
