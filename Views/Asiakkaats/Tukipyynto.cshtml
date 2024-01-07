@@ -22,6 +22,7 @@
     .left {
         width: 40%;
         background-image: linear-gradient(blueviolet, violet);
+        padding: 20px;
     }
 
     .right {
@@ -126,8 +127,8 @@
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Kuvaus, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <textarea class="form-control" @Html.EditorFor(model => model.Kuvaus, new { htmlAttributes = new { @class = "form-control" } })></textarea>
+                <div class="col-md-12">
+                    <textarea class="form-control" @Html.EditorFor(model => model.Kuvaus, new { htmlAttributes = new { style = "width=500px", @class = "form-control" } })></textarea>
                     @Html.ValidationMessageFor(model => model.Kuvaus, "", new { @class = "text-danger" })
                 </div>
             </div>
