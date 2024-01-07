@@ -80,9 +80,9 @@
 @using (Html.BeginForm("Tikettisummaus2", "Tiketit", FormMethod.Get))
 {
     <div class="input-group container">
-        <p class="px-1">@Html.Label("Etsi etunimellä:")</p>
+        <p class="px-1">@Html.Label("Etsi etunimellä tai avaa lajittelu:")</p>
         <p class="px-1">@Html.TextBox("SearchString1", ViewBag.currentFilter1 as string, new { @class = "form-control" })</p>
-        <p class="px-1"><input type="submit" value="Etsi" class="form-control" /></p>
+        <p class="px-1"><input type="submit" value="Etsi/avaa lajittelu" class="form-control" /></p>
     </div>
 }
 
