@@ -14,12 +14,19 @@ namespace TukiVerkko1.ViewModels
 
         public int AsiakasID { get; set; }      
         public int TikettiID { get; set; }
+        [Required(ErrorMessage ="Pakollinen kenttä")]
         public string Etunimi { get; set; }
+        [Required(ErrorMessage = "Pakollinen kenttä")]
         public string Sukunimi { get; set; }
+        [Required(ErrorMessage = "Pakollinen kenttä")]
         public string Puhelinnumero { get; set; }
+        [Required(ErrorMessage = "Pakollinen kenttä")]
         public string Sähköposti { get; set; }
+        [Required(ErrorMessage = "Pakollinen kenttä")]
         public int KategoriaID { get; set; }
+        [Required(ErrorMessage = "Pakollinen kenttä")]
         public string Otsikko { get; set; }
+        [Required(ErrorMessage = "Pakollinen kenttä")]
         public string Kuvaus { get; set; }
         public Nullable<System.DateTime> Aika { get; set; }
         public Nullable<System.DateTime> Valmistumisaika { get; set; }
