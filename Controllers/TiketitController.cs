@@ -394,6 +394,7 @@ namespace TukiVerkko1.Controllers
 
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")] //tämä estää välimuistituksen, joten uloskirjautumisen jälkeen ei selaimen back-napilla pääse takaisin tikettinäkymiin
                                                                           //kirjautuneena voi kuitenkin liikkua esim. arkiston ja saapuneiden välillä selaimen napeilla
+        [LoginRoolit1(Roles = "Ylläpitäjä, Opiskelija")]
         public ActionResult TikettiOtsikot()                              //Tästä metodista luotu näkymä, jonne laitettu accordion-lista yms.
         {
             {
