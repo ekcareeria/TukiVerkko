@@ -170,6 +170,7 @@
     <Compile Include="Models\Kategoriat.cs">
       <DependentUpon>TikettiDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\LoginRoolit1.cs" />
     <Compile Include="Models\LoginRoolit.cs" />
     <Compile Include="Models\Logins.cs">
       <DependentUpon>TikettiDBModel.tt</DependentUpon>

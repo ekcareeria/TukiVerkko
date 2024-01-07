@@ -17,19 +17,11 @@
         {
             @Html.Partial("_Navbar")
         }
-        else if (rooli == "Opiskelija")
+        else if (rooli.Equals("Opiskelija", StringComparison.OrdinalIgnoreCase))
         {
             @Html.Partial("_NavbarOpiskelija")
         }
-        else if (rooli == "opiskelija")
-        {
-            @Html.Partial("_NavbarOpiskelija")
-        }
-        else if (rooli == "Ylläpitäjä")
-        {
-            @Html.Partial("_NavbarYlläpitäjä")
-        }
-        else if (rooli == "ylläpitäjä")
+        else if (rooli.Equals("Ylläpitäjä", StringComparison.OrdinalIgnoreCase))
         {
             @Html.Partial("_NavbarYlläpitäjä")
         }
