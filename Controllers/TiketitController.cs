@@ -145,6 +145,9 @@ namespace TukiVerkko1.Controllers
         public ActionResult Tikettisummaus(string currentFilter1, string searchString1, string sortOrder)
         {
             ViewBag.EtunimiSortparm = String.IsNullOrEmpty(sortOrder) ? "etunimi_desc" : "";  //Nouseva/laskeva, ?=if.
+            ViewBag.NimiSortparm = sortOrder == "nimi" ? "nimi_desc" : "nimi";
+            ViewBag.StatusSortparm = sortOrder == "status" ? "status_desc" : "status";
+            ViewBag.AikaSortparm = sortOrder == "aika" ? "aika_desc" : "aika";
 
             //Haku jää muistiin lajittelun nousevaan/laskevaan klikkaamisen jälkeenkin.
             if (searchString1 != null)
@@ -157,7 +160,7 @@ namespace TukiVerkko1.Controllers
             }
 
             ViewBag.currentFilter1 = searchString1;
-                                                                                                                     //Where-lause, jotta tiketit näkyvät oikeissa paikoissa, valmiit arkistossa jne. hakua tehdessä.
+            //Where-lause, jotta tiketit näkyvät oikeissa paikoissa, valmiit arkistossa jne. hakua tehdessä.
             var tikettisummaus = from t in db.Tiketit.Where(t => t.Status == "Avoin" || t.Status == "Työn alla")     //LinQ-kysely, minkä perusteella taulut yhdistetty.
 
                                  join a in db.Asiakkaat on t.AsiakasID equals a.AsiakasID                            //Luotu ViewModel. Muista lisätä using-lause ViewModels sivun ylös.
@@ -218,6 +221,24 @@ namespace TukiVerkko1.Controllers
                     case "etunimi_desc":
                         tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderByDescending(a => a.Etunimi);
                         break;
+                    case "nimi":
+                        tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderBy(k => k.Nimi);
+                        break;
+                    case "nimi_desc":
+                        tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderByDescending(k => k.Nimi);
+                        break;
+                    case "status":
+                        tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderBy(t => t.Status);
+                        break;
+                    case "status_desc":
+                        tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderByDescending(t => t.Status);
+                        break;
+                    case "aika":
+                        tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderBy(t => t.Aika);
+                        break;
+                    case "aika_desc":
+                        tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderByDescending(t => t.Aika);
+                        break;
                     default:
                         tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderBy(a => a.Etunimi);
                         break;
@@ -231,6 +252,24 @@ namespace TukiVerkko1.Controllers
                 {
                     case "etunimi_desc":
                         tikettisummaus = tikettisummaus.OrderByDescending(a => a.Etunimi);
+                        break;
+                    case "nimi":
+                        tikettisummaus = tikettisummaus.OrderBy(k => k.Nimi);
+                        break;
+                    case "nimi_desc":
+                        tikettisummaus = tikettisummaus.OrderByDescending(k => k.Nimi);
+                        break;
+                    case "status":
+                        tikettisummaus = tikettisummaus.OrderBy(t => t.Status);
+                        break;
+                    case "status_desc":
+                        tikettisummaus = tikettisummaus.OrderByDescending(t => t.Status);
+                        break;
+                    case "aika":
+                        tikettisummaus = tikettisummaus.OrderBy(t => t.Aika);
+                        break;
+                    case "aika_desc":
+                        tikettisummaus = tikettisummaus.OrderByDescending(t => t.Aika);
                         break;
                     default:
                         tikettisummaus = tikettisummaus.OrderBy(a => a.Etunimi);
@@ -247,6 +286,8 @@ namespace TukiVerkko1.Controllers
         public ActionResult Tikettisummaus2(string currentFilter1, string searchString1, string sortOrder)
         {
             ViewBag.EtunimiSortparm = String.IsNullOrEmpty(sortOrder) ? "etunimi_desc" : "";  //Nouseva/laskeva, ?=if.
+            ViewBag.NimiSortparm = sortOrder == "nimi" ? "nimi_desc" : "nimi";
+            ViewBag.AikaSortparm = sortOrder == "aika" ? "aika_desc" : "aika";
 
             //Haku jää muistiin lajittelun nousevaan/laskevaan klikkaamisen jälkeenkin.
             if (searchString1 != null)
@@ -259,7 +300,7 @@ namespace TukiVerkko1.Controllers
             }
 
             ViewBag.currentFilter1 = searchString1;
-                                                                                              //Where-lause, jotta tiketit näkyvät oikeissa paikoissa, valmiit arkistossa jne. hakua tehdessä.
+            //Where-lause, jotta tiketit näkyvät oikeissa paikoissa, valmiit arkistossa jne. hakua tehdessä.
             var tikettisummaus = from t in db.Tiketit.Where(t => t.Status == "Valmis")        //LinQ-kysely, minkä perusteella taulut yhdistetty.
 
                                  join a in db.Asiakkaat on t.AsiakasID equals a.AsiakasID     //Luotu ViewModel. Muista lisätä using-lause ViewModels sivun ylös.
@@ -303,6 +344,18 @@ namespace TukiVerkko1.Controllers
                     case "etunimi_desc":
                         tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderByDescending(a => a.Etunimi);
                         break;
+                    case "nimi":
+                        tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderBy(k => k.Nimi);
+                        break;
+                    case "nimi_desc":
+                        tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderByDescending(k => k.Nimi);
+                        break;
+                    case "aika":
+                        tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderBy(t => t.Aika);
+                        break;
+                    case "aika_desc":
+                        tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderByDescending(t => t.Aika);
+                        break;
                     default:
                         tikettisummaus = tikettisummaus.Where(a => a.Etunimi.Contains(searchString1)).OrderBy(a => a.Etunimi);
                         break;
@@ -317,6 +370,18 @@ namespace TukiVerkko1.Controllers
                     case "etunimi_desc":
                         tikettisummaus = tikettisummaus.OrderByDescending(a => a.Etunimi);
                         break;
+                    case "nimi":
+                        tikettisummaus = tikettisummaus.OrderBy(k => k.Nimi);
+                        break;
+                    case "nimi_desc":
+                        tikettisummaus = tikettisummaus.OrderByDescending(k => k.Nimi);
+                        break;
+                    case "aika":
+                        tikettisummaus = tikettisummaus.OrderBy(t => t.Aika);
+                        break;
+                    case "aika_desc":
+                        tikettisummaus = tikettisummaus.OrderByDescending(t => t.Aika);
+                        break;
                     default:
                         tikettisummaus = tikettisummaus.OrderBy(a => a.Etunimi);
                         break;
@@ -327,33 +392,42 @@ namespace TukiVerkko1.Controllers
         }
         #endregion
 
-        public ActionResult TikettiOtsikot()                                             //Tästä metodista luotu näkymä, jonne laitettu accordion-lista yms.
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")] //tämä estää välimuistituksen, joten uloskirjautumisen jälkeen ei selaimen back-napilla pääse takaisin tikettinäkymiin
+                                                                          //kirjautuneena voi kuitenkin liikkua esim. arkiston ja saapuneiden välillä selaimen napeilla
+        public ActionResult TikettiOtsikot()                              //Tästä metodista luotu näkymä, jonne laitettu accordion-lista yms.
         {
-            var tiketit = db.Tiketit.Include(t => t.Kategoriat).Include(t => t.Asiakkaat).Where(t => t.Status == "Avoin" || t.Status == "Työn alla");
-            return View(tiketit.ToList());
+            {
+                if (Session["Käyttäjätunnus"] == null)
+                {
+                    return RedirectToAction("index", "home");
+                }
+                else
+                {
+                    var tiketit = db.Tiketit.Include(t => t.Kategoriat).Include(t => t.Asiakkaat).Where(t => t.Status == "Avoin" || t.Status == "Työn alla");
+                    return View(tiketit.ToList());
+                }
+            }
         }
 
-        public ActionResult Arkisto()                                                   //Tästä metodista luotu näkymä, jonne laitettu accordion-lista yms.
+        [LoginRoolit(Roles = "Ylläpitäjä")]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
+        public ActionResult Arkisto()
+        //Tästä metodista luotu näkymä, jonne laitettu accordion-lista yms.
         {
-            var tiketit = db.Tiketit.Include(t => t.Kategoriat).Include(t => t.Asiakkaat).Where(t => t.Status == "Valmis");
-            return View(tiketit.ToList());
+            if (Session["Käyttäjätunnus"] == null)
+            {
+                return RedirectToAction("index", "home");
+            }
+            else
+            {
+                ViewBag.Käyttäjätunnus = Session["Käyttäjätunnus"];
+                var tiketit = db.Tiketit.Include(t => t.Kategoriat).Include(t => t.Asiakkaat).Where(t => t.Status == "Valmis");
+                return View(tiketit.ToList());
+            }
         }
-
-        //Tässä tallessa vanha versio, jossa molemmissa näkymissä näkyy kaikki tiketit
-        //public ActionResult TikettiOtsikot()                                             //Tästä metodista luotu näkymä, jonne laitettu accordion-lista yms.
-        //{
-        //    var tiketit = db.Tiketit.Include(t => t.Kategoriat).Include(t => t.Asiakkaat);
-        //    return View(tiketit.ToList());
-        //}
-
-        //public ActionResult Arkisto()                                                   //Tästä metodista luotu näkymä, jonne laitettu accordion-lista yms.
-        //{
-        //    var tiketit = db.Tiketit.Include(t => t.Kategoriat).Include(t => t.Asiakkaat);
-        //    return View(tiketit.ToList());
-        //}
 
         #region _Tikettirivit2 ja _Tikettirivit3
-        public ActionResult _TikettiRivit2(int? asiakasid)                                 //Tästä metodista luodusta näkymästä tulee tiedot, kun listan otsikkoa painaa (avautuu etunimi, sukunimi yms)
+        public ActionResult _TikettiRivit2(int? asiakasid)                    //Tästä metodista luodusta näkymästä tulee tiedot, kun listan otsikkoa painaa (avautuu etunimi, sukunimi yms)
         {
             var TikettiRivitLista2 = from t in db.Tiketit
 
@@ -421,15 +495,15 @@ namespace TukiVerkko1.Controllers
                 {
                     tiketti.Status = uusiTila;
                     db.SaveChanges();
-                    //MailIN LÄHETYS TÄSTÄ.Asenna ensin MailKit kirjoittamalla package manager consoleen: Install - Package MailKit
-                    //if (uusiTila == "Työn alla")
-                    //{
-                    //    LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on otettu työn alle.");
-                    //}
-                    //else if (uusiTila == "Valmis")
-                    //{
-                    //    LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on valmis.");
-                    //}
+                    //MailIN LÄHETYS TÄSTÄ
+                    if (uusiTila == "Työn alla")
+                    {
+                        LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on otettu työn alle.");
+                    }
+                    else if (uusiTila == "Valmis")
+                    {
+                        LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on valmis.");
+                    }
                 }
             }
             catch (Exception ex)

@@ -10,6 +10,14 @@
         text-align: center;
         color: #593196;
     }
+
+    body {
+        background: #f0f1fa;
+    }
+
+    td {
+        background-color: #f0f1fa !important;
+    }
 </style>
 
 @*Jotta otsikon ympärillä tilaa (tähän kyllä varmaan parempikin tapa)*@
@@ -21,7 +29,7 @@
 
 <table class="table container">
     <tr>
-        @* nousevaan ja laskevaan järjestykseen lajitteluun.*@
+        @* nousevaan ja laskevaan järjestykseen lajitteluun. Eli ActionLink rivit tätä hommaa.*@
         <th>@Html.ActionLink("Etunimi", "Tikettisummaus2", new { sortOrder = ViewBag.EtunimiSortParm, currentFilter1 = ViewBag.currentFilter1 })</th>
         <th>@Html.DisplayNameFor(model => model.Sukunimi)</th>
         <th>@Html.DisplayNameFor(model => model.Puhelinnumero)</th>
@@ -29,8 +37,8 @@
         <th>@Html.DisplayNameFor(model => model.Kuvaus)</th>
         <th>@Html.DisplayNameFor(model => model.TikettiID)</th>
         <th>@Html.DisplayNameFor(model => model.Otsikko)</th>
-        <th>@Html.DisplayNameFor(model => model.Nimi)</th>
-        <th>@Html.DisplayNameFor(model => model.Aika)</th>
+        <th>@Html.ActionLink("Nimi", "Tikettisummaus2", new { sortOrder = ViewBag.NimiSortParm, currentFilter1 = ViewBag.currentFilter1 })</th>
+        <th>@Html.ActionLink("Aika", "Tikettisummaus2", new { sortOrder = ViewBag.AikaSortParm, currentFilter1 = ViewBag.currentFilter1 })</th>
         <th>@Html.DisplayNameFor(model => model.Status)</th>
         <th></th>
     </tr>
@@ -53,5 +61,5 @@
 </table>
 
 <div class="container">
-    <button type="button" class="btn btn-outline-secondary">@Html.ActionLink("Takaisin", "Arkisto")</button>
+    <a href="@Url.Action("Arkisto", "Tiketit")" class="btn btn-primary" style="border-radius: 6px">Takaisin</a>
 </div>

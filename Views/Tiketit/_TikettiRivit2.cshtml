@@ -22,7 +22,7 @@
                 <td>@Html.DisplayFor(modelItem => item.Sukunimi)</td>
                 <td>@Html.DisplayFor(modelItem => item.Puhelinnumero)</td>
                 <td>@Html.DisplayFor(modelItem => item.Sähköposti)</td>
-                <td>@Html.DisplayFor(modelItem => item.Kuvaus)</td>
+                <td width="500px">@Html.DisplayFor(modelItem => item.Kuvaus)</td>
                 <td>@Html.DisplayFor(modelItem => item.TikettiID)</td>
                 <td>
                     @{
@@ -34,19 +34,19 @@
 
                     @if (disabloiTyoNappi) //nappi ei todellisuudessa ole disabloitu, koska sen pitää pystyä antamaan alertti
                     {
-                        <button type="button" class="btn btn-secondary" onclick="AlertIlmoitus2()">Työn alla</button>
+                        <button type="button" class="btn btn-secondary"  style="width: 6em" onclick="AlertIlmoitus2()">Työn alla</button>
                     }
                     else
                     {
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#työn_alle_@item.TikettiID">Työn alla</button>
+                        <button type="button" class="btn btn-primary" style="width: 6em" data-bs-toggle="modal" data-bs-target="#työn_alle_@item.TikettiID">Työn alla</button>
                     }
                     @if (disabloiValmisNappi)
                     {
-                        <button type="button" class="btn btn-secondary" onclick="AlertIlmoitus()">Valmis</button>
+                        <button type="button" class="btn btn-secondary" style="width: 6em" onclick="AlertIlmoitus()">Valmis</button>
                     }
                     else
                     {
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#valmis_@item.TikettiID">Valmis</button>
+                        <button type="button" class="btn btn-primary" style="width: 6em" data-bs-toggle="modal" data-bs-target="#valmis_@item.TikettiID">Valmis</button>
                     }
 
                     @if (item.Status == "Avoin") //Työn alla -modaali-ikkuna
@@ -62,8 +62,8 @@
                                         <div id="ilmoitus" style="display: none;">Sähköpostia lähetetään...</div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i class="fas fa-times"></i></button>
-                                        <button type="button" class="btn btn-info" onclick="TyoNappi(@item.TikettiID, 'Työn alla')"><i class="fas fa-check"></i></button>
+                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" style="width: 3em"><i class="fas fa-times"></i></button>
+                                        <button type="button" class="btn btn-info"  style="width: 3em" onclick="TyoNappi(@item.TikettiID, 'Työn alla')"><i class="fas fa-check"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -82,8 +82,8 @@
                                         <div id="ilmoitus" style="display: none;">Sähköpostia lähetetään...</div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i class="fas fa-times"></i></button>
-                                        <button type="button" class="btn btn-info" onclick="TyoNappi(@item.TikettiID, 'Valmis')"><i class="fas fa-check"></i></button>
+                                        <button type="button" class="btn btn-primary" style="width: 3em" data-bs-dismiss="modal"><i class="fas fa-times"></i></button>
+                                        <button type="button" class="btn btn-info" style="width: 3em" onclick="TyoNappi(@item.TikettiID, 'Valmis')"><i class="fas fa-check"></i></button>
                                     </div>
                                 </div>
                             </div>

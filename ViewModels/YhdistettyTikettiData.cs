@@ -16,6 +16,7 @@
         public string Kuvaus { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> Aika { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> Valmistumisaika { get; set; }
         public string Nimi { get; set; }
         public string Status { get; set; }

@@ -28,8 +28,8 @@
                 type: "POST",
                 data: { tikettiID: tikettiID, uusiTila: uusiTila },
                 success: function () {
-                    alert("Tiketti palautettu!"); //Tässä on joku bugi.Tiketin palautuksen epäonnistuessa (Tarkoituksella aiheutettu virhetilanne) 
-                    //ei tule virheilmoitusta, vaan ilmoitus onnistumisesta.Mietin asiaa jos vain ehdin.
+                    alert("Tiketti palautettu!"); //Tässä on joku ongelma. Tiketin palautuksen epäonnistuessa (Tarkoituksella aiheutettu virhetilanne) 
+                    //ei tule virheilmoitusta, vaan ilmoitus onnistumisesta. Mietin asiaa jos vain ehdin.
                     location.reload();
                 },
                 error: function () {
@@ -63,6 +63,10 @@
         text-align: center;
         color: #593196;
     }
+
+    body {
+        background: #f0f1fa;
+    }
 </style>
 
 @*Jotta otsikon ympärillä tilaa (tähän kyllä varmaan parempikin tapa)*@
@@ -76,9 +80,9 @@
 @using (Html.BeginForm("Tikettisummaus2", "Tiketit", FormMethod.Get))
 {
     <div class="input-group container">
-        <p class="px-1">@Html.Label("Etsi etunimellä:")</p>
+        <p class="px-1">@Html.Label("Etsi etunimellä tai avaa lajittelu:")</p>
         <p class="px-1">@Html.TextBox("SearchString1", ViewBag.currentFilter1 as string, new { @class = "form-control" })</p>
-        <p class="px-1"><input type="submit" value="Search" class="form-control" /></p>
+        <p class="px-1"><input type="submit" value="Etsi/avaa lajittelu" class="form-control" /></p>
     </div>
 }
 
@@ -128,7 +132,7 @@
                             <div class="input-group">
                                 <div class="column col-sm-2">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text px-2">@item.Otsikko</span>
+                                        <span class="input-group-text, align-self-xxl-stretch">@item.Otsikko</span>
                                         @* Tässä yllä määritelty, että otsikkoa klikkaamalla aukeaa collapse toiminto. *@
                                     </div>
                                 </div>
