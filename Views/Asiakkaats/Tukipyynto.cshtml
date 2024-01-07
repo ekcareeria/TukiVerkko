@@ -20,9 +20,13 @@
     }
 
     .left {
-        width: 40%;
-        background-image: linear-gradient(blueviolet, violet);
+        width: 38%;
+        background-image: linear-gradient(#593196, cornflowerblue);
         padding: 20px;
+        color:
+    }
+    .middle {
+        width: 1%;
     }
 
     .right {
@@ -66,6 +70,7 @@
             Kiitos.
         </p>
     </div>
+    <div class="column middle"></div>
     <div class="column right">
         @using (Html.BeginForm())
         {
@@ -132,14 +137,55 @@
                     @Html.ValidationMessageFor(model => model.Kuvaus, "", new { @class = "text-danger" })
                 </div>
             </div>
-            
+
 
             <br />
 
-            @* Lähetä napin jälkeen pitäisi päästä etusivulle *@
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Lähetä tukipyyntö" class="btn btn-primary" />
+                    <button type="button" class="btn btn-primary btn-lg" style="width:5em" data-bs-toggle="modal" data-bs-target="#peruutus">Peru</button>
+                    <button type="button" class="btn btn-info btn-lg" style="width:5em" data-bs-toggle="modal" data-bs-target="#lähetys">Lähetä</button>
+                </div>
+            </div>
+            @*Tukipyynnön lähetys-modaali*@
+            <div class="modal" id="lähetys">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Lähetetäänkö tukipyyntö?</h5>
+                        </div>
+                        <div class="modal-body">
+                            <h5>
+                                Saat ilmoituksen sähköpostiisi, kun tukipyyntösi on otettu käsittelyyn. <br />
+                                <br />
+                                Kiitos, hyvää päivänjatkoa!
+                            </h5>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" style=" width: 3em" data-bs-dismiss="modal"><i class="fas fa-times"></i></button>
+                            <button type="submit" class="btn btn-info" style=" width: 3em"><i class="fas fa-check"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Peruutus-modaali -->
+            <div class="modal" id="peruutus">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        </div>
+                        <div class="modal-body">
+                            <h5>
+                                Haluatko varmasti <br />
+                                perua tukipyynnön ja <br />
+                                palata etusivulle?
+                            </h5>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" style=" width: 3em" data-bs-dismiss="modal"><i class="fas fa-times"></i></button>
+                            <a href="@Url.Action("Index", "Home")" class="btn btn-info" style="border-radius: 6px; width:3em"><i class="fas fa-check"></i></a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -148,7 +194,7 @@
         }
     </div>
 </div>
-
+<br />
 <a href="@Url.Action("Index", "Home")">Takaisin etusivulle</a>
 @*<div>
         @Html.ActionLink("Takaisin etusivulle", "Index", "HomeController", new {})
