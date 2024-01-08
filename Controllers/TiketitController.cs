@@ -489,22 +489,22 @@ namespace TukiVerkko1.Controllers
         private void PaivitaTila(int tikettiID, string uusiTila)
         {
 
-                Tiketit tiketti = db.Tiketit.Find(tikettiID);
+            Tiketit tiketti = db.Tiketit.Find(tikettiID);
 
-                if (tiketti != null)
+            if (tiketti != null)
+            {
+                tiketti.Status = uusiTila;
+                db.SaveChanges();
+                //MailIN LÄHETYS TÄSTÄ
+                if (uusiTila == "Työn alla")
                 {
-                    tiketti.Status = uusiTila;
-                    db.SaveChanges();
-                    //MailIN LÄHETYS TÄSTÄ
-                    //if (uusiTila == "Työn alla")
-                    //{
-                    //    LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on otettu työn alle.");
-                    //}
-                    //else if (uusiTila == "Valmis")
-                    //{
-                    //    LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on valmis.");
-                    //}
+                    LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on otettu työn alle.");
                 }
+                else if (uusiTila == "Valmis")
+                {
+                    LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on valmis.");
+                }
+            }
         }
 
         [HttpPost]
@@ -546,13 +546,19 @@ namespace TukiVerkko1.Controllers
                 {
                     Text = viestinTeksti
                 };
-
                 using (var smtp = new SmtpClient())
                 {
-                    smtp.Connect("smtp-mail.outlook.com", 587, false);
-                    smtp.Authenticate("tukiverkko@outlook.com", "tiketticareeria694");
-                    smtp.Send(viesti);
-                    smtp.Disconnect(true);
+                    try
+                    {
+                        smtp.Connect("smtp-mail.outlook.com", 587, false);
+                        smtp.Authenticate("tukiverkko@outlook.com", "tiketticareeria694");
+                        smtp.Send(viesti);
+                        smtp.Disconnect(true);
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.ErrorMessage = "" + ex.Message; //Huom, tätä ei näytetä missään, siksi siinä ei ole viestiäkään. Se estää ohjelman kaatumisen, vaikka mailiosoite olisi epäkelpo
+                    }
                 }
             }
         }
