@@ -539,7 +539,7 @@ namespace TukiVerkko1.Controllers
             if (asiakas != null)
             {
                 var viesti = new MimeMessage();
-                viesti.From.Add(new MailboxAddress("Tukiverkkoinfo", "Tukiverkko@outlook.com"));
+                viesti.From.Add(new MailboxAddress("Tukiverkkoinfo", "emuuronen@gmail.com"));
                 viesti.To.Add(new MailboxAddress("", asiakas.Sähköposti));
                 viesti.Subject = "Tukipyynnön tila on muuttunut";
                 viesti.Body = new TextPart("plain")
@@ -550,14 +550,14 @@ namespace TukiVerkko1.Controllers
                 {
                     try
                     {
-                        smtp.Connect("smtp-mail.outlook.com", 587, false);
-                        smtp.Authenticate("tukiverkko@outlook.com", "tiketticareeria694");
+                        smtp.Connect("smtp.gmail.com", 587, false);
+                        smtp.Authenticate("emuuronen@gmail.com", "aejc srwd ecbe qvpi"); //gmailia käytettäessä pitää luoda erillinen sovellussalasana, normaalisti kirjautuessa käytettävää ei voi käyttää
                         smtp.Send(viesti);
                         smtp.Disconnect(true);
                     }
                     catch (Exception ex)
                     {
-                        ViewBag.ErrorMessage = "" + ex.Message; //Huom, tätä ei näytetä missään, väliaikaisratkaisu joka estää ohjelman kaatumisen, vaikka mailiosoite olisi epäkelpo
+                        ViewBag.ErrorMessage = "Viestin lähetys epäonnistui" + ex.Message; //Huom, tätä ei näytetä missään, väliaikaisratkaisu joka estää ohjelman kaatumisen, vaikka mailiosoite olisi epäkelpo
                     }
                 }
             }
