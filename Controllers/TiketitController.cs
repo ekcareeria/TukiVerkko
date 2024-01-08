@@ -557,7 +557,7 @@ namespace TukiVerkko1.Controllers
                     }
                     catch (Exception ex)
                     {
-                        ViewBag.ErrorMessage = "" + ex.Message; //Huom, tätä ei näytetä missään, siksi siinä ei ole viestiäkään. Se estää ohjelman kaatumisen, vaikka mailiosoite olisi epäkelpo
+                        ViewBag.ErrorMessage = "" + ex.Message; //Huom, tätä ei näytetä missään, väliaikaisratkaisu joka estää ohjelman kaatumisen, vaikka mailiosoite olisi epäkelpo
                     }
                 }
             }
