@@ -530,11 +530,11 @@ namespace TukiVerkko1.Controllers
                     }
 
                     db.SaveChanges();
-                    return Json(new { success = true, message = "Tiedot päivitetty" });  //Tämä ei ole käytössä toistaiseksi missään
+                    return Json(new { success = true, message = "Tiketin tila päivitetty." });  //Tämä vain Saapuneissa tiketeissä
                 }
                 else
                 {
-                    return Json(new { success = false, message = "Tikettiä ei löydy tikettiID:llä" }); //Tämä on käytössä vain arkistossa 
+                    return Json(new { success = false, message = "Tikettiä ei löydy tikettiID:llä." }); //Toimii sekä Arkistossa että Saapuneissa
                 }
             }
             catch
@@ -619,7 +619,7 @@ namespace TukiVerkko1.Controllers
                 }
                 else
                 {
-                    return Json(new { success = false, message = "Tikettiä ei löydy tikettiID:llä" });
+                    return Json(new { success = false, message = "Tikettiä ei löydy tikettiID:llä." });
                 }
             }
             catch

@@ -20,24 +20,30 @@
         });
     </script>
 
-    @*-------------------Tilapainikkeet/tiketin statuksen hallinta--------------------*@
     <script>
         function TyoNappi(tikettiID, uusiTila) {
-            $("#ilmoitus").show();
+
             $.ajax({
                 url: "/Tiketit/TyoNappi",
                 type: "POST",
                 data: { tikettiID: tikettiID, uusiTila: uusiTila },
-                success: function () {
-                    location.reload(); //päivittää tiedot ilman että koko sivu pitää manuaalisesti päivittää
+                success: function (response) {
+                    if (response.success) {
+                        alert(response.message);
+                        location.reload();
+                    } else {
+                        alert(response.message);
+                        location.reload();
+                    }
                 },
                 error: function () {
-                    $("#ilmoitus").hide();
                     alert("Päivitys epäonnistui");
                 }
             });
         }
     </script>
+
+
     <script>
         function AlertIlmoitus() {
             alert("Tiketin on oltava ensin työn alla.");
