@@ -510,31 +510,39 @@ namespace TukiVerkko1.Controllers
         [HttpPost]
         public ActionResult TyoNappi(int tikettiID, string uusiTila)
         {
-            PaivitaTila(tikettiID, uusiTila);
-
-            Tiketit tiketti = db.Tiketit.Find(tikettiID);
-
-            if (tiketti != null)
+            try
             {
+                PaivitaTila(tikettiID, uusiTila);
 
-                if (uusiTila == "Valmis")
+                Tiketit tiketti = db.Tiketit.Find(tikettiID);
+
+                if (tiketti != null)
                 {
-                    tiketti.Valmistumisaika = DateTime.Now;
 
+                    if (uusiTila == "Valmis")
+                    {
+                        tiketti.Valmistumisaika = DateTime.Now;
+                    }
+
+                    else if (uusiTila == "Avoin")
+                    {
+                        tiketti.Valmistumisaika = null;
+                    }
+
+                    db.SaveChanges();
+                    return Json(new { success = true, message = "Tiedot päivitetty" });  //Tämä ei ole käytössä toistaiseksi missään
                 }
-
-                else if (uusiTila == "Avoin")
+                else
                 {
-                    tiketti.Valmistumisaika = null;
+                    return Json(new { success = false, message = "Tikettiä ei löydy tikettiID:llä" }); //Tämä on käytössä vain arkistossa 
                 }
-                db.SaveChanges();
-                return Json(new { success = true, message = "Tiedot päivitetty" });  //Tämä ei ole käytössä toistaiseksi missään
             }
-            else
+            catch
             {
-                return Json(new { success = false, message = "Tikettiä ei löydy tikettiID:llä" }); //Tämä on käytössä vain arkistossa
+                return Json(new { success = false, message = "Tietojen päivitys ei onnistunut" }); //Tämä toteutuu, jos vaikkapa yhteys tietokantaan katkeaa
+
             }
-           
+
         }
 
         private void LahetaMaili(int asiakasId, string viestinTeksti)

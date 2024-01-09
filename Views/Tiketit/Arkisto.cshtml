@@ -29,12 +29,12 @@
                 data: { tikettiID: tikettiID, uusiTila: uusiTila },
                 success: function (response) {
                     if (response.success) {
-                        alert(response.message); 
-                        window.location.href = '/Tiketit/Arkisto'; 
+                        alert("Tiketti palautettu!"); 
+                        location.reload(); 
+                        /*window.location.href = '/Tiketit/Arkisto'; */
                     } else {
                         alert(response.message); 
-                        location.reload();
-                        
+                        location.reload();         
                     }
                 },
                 error: function () {
@@ -51,11 +51,12 @@
                 type: "POST",
                 success: function () {
                     $('#poista_' + tikettiID).modal('hide');
-                    alert("Tiketti poistettu onnistuneesti!");
+                    alert("Tiketti poistettu!");
                     location.reload();
                 },
                 error: function () {
                     alert("Tiketin poistaminen epäonnistui.");
+                    location.reload();
                 }
             });
         }
