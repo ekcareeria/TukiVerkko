@@ -554,7 +554,7 @@ namespace TukiVerkko1.Controllers
                 try
                 {
                     var viesti = new MimeMessage();
-                    viesti.From.Add(new MailboxAddress("Tukiverkkoinfo", "emuuronen@gmail.com"));
+                    viesti.From.Add(new MailboxAddress("Tukiverkkoinfo", "Tukiverkko@outlook.com"));
                     viesti.To.Add(new MailboxAddress("", asiakas.Sähköposti));
                     viesti.Subject = "Tukipyynnön tila on muuttunut";
                     viesti.Body = new TextPart("plain")
@@ -563,9 +563,8 @@ namespace TukiVerkko1.Controllers
                     };
                     using (var smtp = new SmtpClient())
                     {
-
-                        smtp.Connect("smtp.gmail.com", 587, false);
-                        smtp.Authenticate("emuuronen@gmail.com", "aejc srwd ecbe qvpi"); //gmailia käytettäessä pitää luoda erillinen sovellussalasana, normaalisti kirjautuessa käytettävää ei voi käyttää
+                        smtp.Connect("smtp-mail.outlook.com", 587, false);
+                        smtp.Authenticate("tukiverkko@outlook.com", "tiketticareeria694");
                         smtp.Send(viesti);
                         smtp.Disconnect(true);
 
