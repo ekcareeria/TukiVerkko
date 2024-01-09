@@ -21,11 +21,11 @@ namespace TukiVerkko1.Controllers
         private TikettiDBEntities1 db = new TikettiDBEntities1();
 
         // GET: Tiketit
-        public ActionResult Index()
-        {
-            var tiketit = db.Tiketit.Include(t => t.Asiakkaat).Include(t => t.Kategoriat);
-            return View(tiketit.ToList());
-        }
+        //public ActionResult Index()
+        //{
+        //    var tiketit = db.Tiketit.Include(t => t.Asiakkaat).Include(t => t.Kategoriat);
+        //    return View(tiketit.ToList());
+        //}
 
         #region Automaattisesti tulleet koodinpätkät
         // GET: Tiketit/Details/5

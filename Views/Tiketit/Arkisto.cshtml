@@ -20,7 +20,7 @@
         });
     </script>
     <script>
-        //Tämä muuttaa tiketin statuksen.
+/*  --------------------------Tiketin palauttaminen---------------------------------------*/
         function TyoNappi(tikettiID, uusiTila) {
 
             $.ajax({
@@ -34,18 +34,18 @@
                         location.reload();
                     } else
                     {
-                        alert(response.message);
+                        alert(response.message); //Tämä näkyy, jos tikettiID:llä ei löydy tikettiä
                         location.reload();
                     }
                 },
                 error: function () {
-                    alert("Päivitys epäonnistui");
+                    alert("Päivitys epäonnistui"); //Ja tämä, jos ajax-kutsussa joku epäonnistuu
                 }
             });
         }
     </script>
     <script>
-        //Tämä taas poistaa tiketin
+/*  --------------------------Tiketin poisto---------------------------------------*/
         function PoistaNappi(tikettiID) {
             $.ajax({
                 url: "/Tiketit/PoistaTiketti/" + tikettiID,
@@ -53,12 +53,12 @@
                 success: function (response) {
                     if (response.success)
                     {
-                        alert(response.message);
+                        alert(response.message); //Kuittaus poiston onnistumisesta
                         location.reload();
                     }
                     else
                     {
-                        alert(response.message);
+                        alert(response.message); //Tämä näkyy, jos tikettiID:llä ei löydy tikettiä
                         location.reload();
                     }
                 },

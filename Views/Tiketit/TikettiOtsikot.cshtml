@@ -19,7 +19,7 @@
             });
         });
     </script>
-
+    @*----------------------Tiketin tilan muuttaminen---------------------------------*@
     <script>
         function TyoNappi(tikettiID, uusiTila) {
 
@@ -29,19 +29,22 @@
                 data: { tikettiID: tikettiID, uusiTila: uusiTila },
                 success: function (response) {
                     if (response.success) {
-                        alert(response.message);
+                        $("#ilmoitus").show(); //Sähköpostin lähetyksen ajan modaali-ikkuna pysyy auki, ja siinä näkyy teksti "Sähköpostia lähetetään..."
+                        /*alert(response.message);*/ //Tästä saa halutessaan päälle "Tiketin tila päivitetty-alertin"
                         location.reload();
                     } else {
-                        alert(response.message);
+                        alert(response.message); //Tämä näkyy, jos tikettiID:llä ei löydy tikettiä
                         location.reload();
                     }
                 },
                 error: function () {
-                    alert("Päivitys epäonnistui");
+                    alert("Päivitys epäonnistui"); //Ja tämä, jos ajax-kutsussa joku epäonnistuu
+                    $("#ilmoitus").hide();
                 }
             });
         }
     </script>
+   
 
 
     <script>
