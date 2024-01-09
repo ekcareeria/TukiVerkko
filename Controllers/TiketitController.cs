@@ -607,6 +607,7 @@ namespace TukiVerkko1.Controllers
         [HttpPost]
         public ActionResult PoistaTiketti(int id)
         {
+            try
             {
                 var tiketti = db.Tiketit.Find(id);
 
@@ -614,12 +615,16 @@ namespace TukiVerkko1.Controllers
                 {
                     db.Tiketit.Remove(tiketti);
                     db.SaveChanges();
-                    return RedirectToAction("Arkisto");
+                    return Json(new { success = true, message = "Tiketti poistettu!" });
                 }
                 else
                 {
-                    return HttpNotFound();  //Tiketin poiston epäonnistuessa näkyy alert, siksi tässä ei ole muuta, kts. Arkisto.cshtml
+                    return Json(new { success = false, message = "Tikettiä ei löydy tikettiID:llä" });
                 }
+            }
+            catch
+            {
+                return Json(new { success = false, message = "Tietojen päivitys ei onnistunut" });
             }
         }
     }

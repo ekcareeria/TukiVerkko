@@ -28,12 +28,14 @@
                 type: "POST",
                 data: { tikettiID: tikettiID, uusiTila: uusiTila },
                 success: function (response) {
-                    if (response.success) {
-                        alert("Tiketti palautettu!"); 
-                        location.reload(); 
-                    } else {
-                        alert(response.message); 
-                        location.reload();         
+                    if (response.success)
+                    {
+                        alert("Tiketti palautettu!");
+                        location.reload();
+                    } else
+                    {
+                        alert(response.message);
+                        location.reload();
                     }
                 },
                 error: function () {
@@ -48,10 +50,17 @@
             $.ajax({
                 url: "/Tiketit/PoistaTiketti/" + tikettiID,
                 type: "POST",
-                success: function () {
-                    $('#poista_' + tikettiID).modal('hide');
-                    alert("Tiketti poistettu!");
-                    location.reload();
+                success: function (response) {
+                    if (response.success)
+                    {
+                        alert(response.message);
+                        location.reload();
+                    }
+                    else
+                    {
+                        alert(response.message);
+                        location.reload();
+                    }
                 },
                 error: function () {
                     alert("Tiketin poistaminen epäonnistui.");
