@@ -489,7 +489,6 @@ namespace TukiVerkko1.Controllers
         //----------------Tästä alkaa tiketin statuksen hallinta--------------------//
         private void PaivitaTila(int tikettiID, string uusiTila)
         {
-
             Tiketit tiketti = db.Tiketit.Find(tikettiID);
 
             if (tiketti != null)
@@ -497,14 +496,14 @@ namespace TukiVerkko1.Controllers
                 tiketti.Status = uusiTila;
                 db.SaveChanges();
                 //MailIN LÄHETYS TÄSTÄ
-                if (uusiTila == "Työn alla")
-                {
-                    LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on otettu työn alle.");
-                }
-                else if (uusiTila == "Valmis")
-                {
-                    LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on valmis.");
-                }
+                //if (uusiTila == "Työn alla")
+                //{
+                //    LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on otettu työn alle.");
+                //}
+                //else if (uusiTila == "Valmis")
+                //{
+                //    LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on valmis.");
+                //}
             }
         }
 
@@ -528,9 +527,14 @@ namespace TukiVerkko1.Controllers
                 {
                     tiketti.Valmistumisaika = null;
                 }
+                db.SaveChanges();
+                return Json(new { success = true, message = "Tiedot päivitetty" });  //Tämä ei ole käytössä toistaiseksi missään
             }
-            db.SaveChanges();
-            return Json(new { success = true }); //Tätä ei hyödynnetä missään, kun en ehtinyt. :)
+            else
+            {
+                return Json(new { success = false, message = "Tikettiä ei löydy tikettiID:llä" }); //Tämä on käytössä vain arkistossa
+            }
+           
         }
 
         private void LahetaMaili(int asiakasId, string viestinTeksti)
