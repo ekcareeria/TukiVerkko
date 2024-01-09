@@ -1,5 +1,16 @@
 ﻿@model IEnumerable<TukiVerkko1.ViewModels.TikettiRivit2>
 
+@*<style>
+
+    .table{
+    table-layout: fixed;
+    }
+
+    .table td {
+        overflow-wrap: break-word;
+    }
+</style>*@
+
 @* Tässä alla se tieto mitä tulee näkyviin collapse/accordion toiminnolla listaan*@
 <table class="table">
     <thead>
@@ -22,7 +33,7 @@
                 <td>@Html.DisplayFor(modelItem => item.Sukunimi)</td>
                 <td>@Html.DisplayFor(modelItem => item.Puhelinnumero)</td>
                 <td>@Html.DisplayFor(modelItem => item.Sähköposti)</td>
-                <td width="500px">@Html.DisplayFor(modelItem => item.Kuvaus)</td>
+                <td>@Html.DisplayFor(modelItem => item.Kuvaus)</td>
                 <td>@Html.DisplayFor(modelItem => item.TikettiID)</td>
                 <td>
                     @{
