@@ -489,6 +489,7 @@ namespace TukiVerkko1.Controllers
         //----------------Tästä alkaa tiketin statuksen hallinta--------------------//
         private void PaivitaTila(int tikettiID, string uusiTila)
         {
+
             Tiketit tiketti = db.Tiketit.Find(tikettiID);
 
             if (tiketti != null)
@@ -505,6 +506,7 @@ namespace TukiVerkko1.Controllers
                 //    LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on valmis.");
                 //}
             }
+
         }
 
         [HttpPost]
@@ -542,6 +544,7 @@ namespace TukiVerkko1.Controllers
                 return Json(new { success = false, message = "Tietojen päivitys ei onnistunut" }); //Tämä toteutuu, jos vaikkapa yhteys tietokantaan katkeaa
 
             }
+
 
         }
 
