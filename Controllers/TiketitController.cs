@@ -12,6 +12,7 @@ using MailKit.Net.Smtp;
 using MailKit;
 using MimeKit;
 using MailKit.Security;
+using System.Diagnostics;
 
 namespace TukiVerkko1.Controllers
 {
@@ -20,11 +21,11 @@ namespace TukiVerkko1.Controllers
         private TikettiDBEntities1 db = new TikettiDBEntities1();
 
         // GET: Tiketit
-        public ActionResult Index()
-        {
-            var tiketit = db.Tiketit.Include(t => t.Asiakkaat).Include(t => t.Kategoriat);
-            return View(tiketit.ToList());
-        }
+        //public ActionResult Index()
+        //{
+        //    var tiketit = db.Tiketit.Include(t => t.Asiakkaat).Include(t => t.Kategoriat);
+        //    return View(tiketit.ToList());
+        //}
 
         #region Automaattisesti tulleet koodinpätkät
         // GET: Tiketit/Details/5
@@ -489,47 +490,62 @@ namespace TukiVerkko1.Controllers
         private void PaivitaTila(int tikettiID, string uusiTila)
         {
 
-                Tiketit tiketti = db.Tiketit.Find(tikettiID);
+            Tiketit tiketti = db.Tiketit.Find(tikettiID);
 
-                if (tiketti != null)
-                {
-                    tiketti.Status = uusiTila;
-                    db.SaveChanges();
-                    //MailIN LÄHETYS TÄSTÄ
-                    //if (uusiTila == "Työn alla")
-                    //{
-                    //    LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on otettu työn alle.");
-                    //}
-                    //else if (uusiTila == "Valmis")
-                    //{
-                    //    LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on valmis.");
-                    //}
-                }
+            if (tiketti != null)
+            {
+                tiketti.Status = uusiTila;
+                db.SaveChanges();
+                //MailIN LÄHETYS TÄSTÄ
+                //if (uusiTila == "Työn alla")
+                //{
+                //    LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on otettu työn alle.");
+                //}
+                //else if (uusiTila == "Valmis")
+                //{
+                //    LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on valmis.");
+                //}
+            }
+
         }
 
         [HttpPost]
         public ActionResult TyoNappi(int tikettiID, string uusiTila)
         {
-            PaivitaTila(tikettiID, uusiTila);
-
-            Tiketit tiketti = db.Tiketit.Find(tikettiID);
-
-            if (tiketti != null)
+            try
             {
+                PaivitaTila(tikettiID, uusiTila);
 
-                if (uusiTila == "Valmis")
+                Tiketit tiketti = db.Tiketit.Find(tikettiID);
+
+                if (tiketti != null)
                 {
-                    tiketti.Valmistumisaika = DateTime.Now;
 
+                    if (uusiTila == "Valmis")
+                    {
+                        tiketti.Valmistumisaika = DateTime.Now;
+                    }
+
+                    else if (uusiTila == "Avoin")
+                    {
+                        tiketti.Valmistumisaika = null;
+                    }
+
+                    db.SaveChanges();
+                    return Json(new { success = true, message = "Tiketin tila päivitetty." });  //Tämä ei tällä hetkellä käytössä
                 }
-
-                else if (uusiTila == "Avoin")
+                else
                 {
-                    tiketti.Valmistumisaika = null;
+                    return Json(new { success = false, message = "Tikettiä ei löydy tikettiID:llä." }); //Toimii sekä Arkistossa että Saapuneissa
                 }
             }
-            db.SaveChanges();
-            return Json(new { success = true }); //Tätä ei hyödynnetä missään, kun en ehtinyt. :)
+            catch
+            {
+                return Json(new { success = false, message = "Tietojen päivitys ei onnistunut" }); //Tämä toteutuu, jos vaikkapa yhteys tietokantaan katkeaa
+
+            }
+
+
         }
 
         private void LahetaMaili(int asiakasId, string viestinTeksti)
@@ -538,28 +554,37 @@ namespace TukiVerkko1.Controllers
 
             if (asiakas != null)
             {
-                var viesti = new MimeMessage();
-                viesti.From.Add(new MailboxAddress("Tukiverkkoinfo", "Tukiverkko@outlook.com"));
-                viesti.To.Add(new MailboxAddress("", asiakas.Sähköposti));
-                viesti.Subject = "Tukipyynnön tila on muuttunut";
-                viesti.Body = new TextPart("plain")
+                try
                 {
-                    Text = viestinTeksti
-                };
+                    var viesti = new MimeMessage();
+                    viesti.From.Add(new MailboxAddress("Tukiverkkoinfo", "Tukiverkko@outlook.com"));
+                    viesti.To.Add(new MailboxAddress("", asiakas.Sähköposti));
+                    viesti.Subject = "Tukipyynnön tila on muuttunut";
+                    viesti.Body = new TextPart("plain")
+                    {
+                        Text = viestinTeksti
+                    };
+                    using (var smtp = new SmtpClient())
+                    {
+                        smtp.Connect("smtp-mail.outlook.com", 587, false);
+                        smtp.Authenticate("tukiverkko@outlook.com", "tiketticareeria694");
+                        smtp.Send(viesti);
+                        smtp.Disconnect(true);
 
-                using (var smtp = new SmtpClient())
+                    }
+                }
+                catch (Exception ex)
                 {
-                    smtp.Connect("smtp-mail.outlook.com", 587, false);
-                    smtp.Authenticate("tukiverkko@outlook.com", "tiketticareeria694");
-                    smtp.Send(viesti);
-                    smtp.Disconnect(true);
+                    ViewBag.ErrorMessage = "Viestin lähetys epäonnistui" + ex.Message; //Huom, tätä ei näytetä missään, väliaikaisratkaisu joka estää ohjelman kaatumisen, vaikka mailiosoite olisi epäkelpo
                 }
             }
         }
 
+
         [HttpPost]
         public ActionResult PoistaTiketti(int id)
         {
+            try
             {
                 var tiketti = db.Tiketit.Find(id);
 
@@ -567,12 +592,16 @@ namespace TukiVerkko1.Controllers
                 {
                     db.Tiketit.Remove(tiketti);
                     db.SaveChanges();
-                    return RedirectToAction("Arkisto");
+                    return Json(new { success = true, message = "Tiketti poistettu!" });
                 }
                 else
                 {
-                    return HttpNotFound();  //Tiketin poiston epäonnistuessa näkyy alert, kts. Arkisto.cshtml
+                    return Json(new { success = false, message = "Tikettiä ei löydy tikettiID:llä." });
                 }
+            }
+            catch
+            {
+                return Json(new { success = false, message = "Tietojen päivitys ei onnistunut" });
             }
         }
     }
