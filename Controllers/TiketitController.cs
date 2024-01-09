@@ -530,7 +530,7 @@ namespace TukiVerkko1.Controllers
                     }
 
                     db.SaveChanges();
-                    return Json(new { success = true, message = "Tiketin tila päivitetty." });  //Tämä vain Saapuneissa tiketeissä
+                    return Json(new { success = true, message = "Tiketin tila päivitetty." });  //Tämä ei tällä hetkellä käytössä
                 }
                 else
                 {
@@ -577,31 +577,6 @@ namespace TukiVerkko1.Controllers
             }
         }
 
-
-        //private void LahetaMaili(int asiakasId, string viestinTeksti)
-        //{
-        //    var asiakas = db.Asiakkaat.Find(asiakasId);
-
-        //    if (asiakas != null)
-        //    {
-        //        var viesti = new MimeMessage();
-        //        viesti.From.Add(new MailboxAddress("Tukiverkkoinfo", "Tukiverkko@outlook.com"));
-        //        viesti.To.Add(new MailboxAddress("", asiakas.Sähköposti));
-        //        viesti.Subject = "Tukipyynnön tila on muuttunut";
-        //        viesti.Body = new TextPart("plain")
-        //        {
-        //            Text = viestinTeksti
-        //        };
-
-        //        using (var smtp = new SmtpClient())
-        //        {
-        //            smtp.Connect("smtp-mail.outlook.com", 587, false);
-        //            smtp.Authenticate("tukiverkko@outlook.com", "tiketticareeria694");
-        //            smtp.Send(viesti);
-        //            smtp.Disconnect(true);
-        //        }
-        //    }
-        //}
 
         [HttpPost]
         public ActionResult PoistaTiketti(int id)
