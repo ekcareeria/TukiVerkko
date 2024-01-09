@@ -20,36 +20,52 @@
         });
     </script>
     <script>
-        //Tämä muuttaa tiketin statuksen.
+/*  --------------------------Tiketin palauttaminen---------------------------------------*/
         function TyoNappi(tikettiID, uusiTila) {
 
             $.ajax({
                 url: "/Tiketit/TyoNappi",
                 type: "POST",
                 data: { tikettiID: tikettiID, uusiTila: uusiTila },
-                success: function () {
-                    alert("Tiketti palautettu!"); //Tässä on virhe. Onnistumisesta tulee ilmoitus myös palautuksen epäonnistuessa. En ehtinyt korjata.
-                    location.reload();
+                success: function (response) {
+                    if (response.success)
+                    {
+                        alert("Tiketti palautettu!");
+                        location.reload();
+                    } else
+                    {
+                        alert(response.message); //Tämä näkyy, jos tikettiID:llä ei löydy tikettiä
+                        location.reload();
+                    }
+
                 },
                 error: function () {
-                    alert("Päivitys epäonnistui");
+                    alert("Päivitys epäonnistui"); //Ja tämä, jos ajax-kutsussa joku epäonnistuu
                 }
             });
         }
     </script>
     <script>
-        //Tämä taas poistaa tiketin
+/*  --------------------------Tiketin poisto---------------------------------------*/
         function PoistaNappi(tikettiID) {
             $.ajax({
                 url: "/Tiketit/PoistaTiketti/" + tikettiID,
                 type: "POST",
-                success: function () {
-                    $('#poista_' + tikettiID).modal('hide');
-                    alert("Tiketti poistettu onnistuneesti!");
-                    location.reload();
+                success: function (response) {
+                    if (response.success)
+                    {
+                        alert(response.message); //Kuittaus poiston onnistumisesta
+                        location.reload();
+                    }
+                    else
+                    {
+                        alert(response.message); //Tämä näkyy, jos tikettiID:llä ei löydy tikettiä
+                        location.reload();
+                    }
                 },
                 error: function () {
                     alert("Tiketin poistaminen epäonnistui.");
+                    location.reload();
                 }
             });
         }

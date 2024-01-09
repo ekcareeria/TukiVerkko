@@ -19,25 +19,34 @@
             });
         });
     </script>
-
-    @*-------------------Tilapainikkeet/tiketin statuksen hallinta--------------------*@
+    @*----------------------Tiketin tilan muuttaminen---------------------------------*@
     <script>
         function TyoNappi(tikettiID, uusiTila) {
-            $("#ilmoitus").show();
+
             $.ajax({
                 url: "/Tiketit/TyoNappi",
                 type: "POST",
                 data: { tikettiID: tikettiID, uusiTila: uusiTila },
-                success: function () {
-                    location.reload(); //päivittää tiedot ilman että koko sivu pitää manuaalisesti päivittää
+                success: function (response) {
+                    if (response.success) {
+                        $("#ilmoitus").show(); //Sähköpostin lähetyksen ajan modaali-ikkuna pysyy auki, ja siinä näkyy teksti "Sähköpostia lähetetään..."
+                        /*alert(response.message);*/ //Tästä saa halutessaan päälle "Tiketin tila päivitetty-alertin"
+                        location.reload();
+                    } else {
+                        alert(response.message); //Tämä näkyy, jos tikettiID:llä ei löydy tikettiä
+                        location.reload();
+                    }
                 },
                 error: function () {
+                    alert("Päivitys epäonnistui"); //Ja tämä, jos ajax-kutsussa joku epäonnistuu
                     $("#ilmoitus").hide();
-                    alert("Päivitys epäonnistui");
                 }
             });
         }
     </script>
+   
+
+
     <script>
         function AlertIlmoitus() {
             alert("Tiketin on oltava ensin työn alla.");
