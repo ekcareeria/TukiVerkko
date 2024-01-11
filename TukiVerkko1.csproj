@@ -167,6 +167,7 @@
     <Compile Include="Models\Asiakkaat.cs">
       <DependentUpon>TikettiDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EmailService.cs" />
     <Compile Include="Models\Kategoriat.cs">
       <DependentUpon>TikettiDBModel.tt</DependentUpon>
     </Compile>

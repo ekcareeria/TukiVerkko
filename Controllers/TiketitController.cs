@@ -489,22 +489,26 @@ namespace TukiVerkko1.Controllers
         //----------------Tästä alkaa tiketin statuksen hallinta--------------------//
         private void PaivitaTila(int tikettiID, string uusiTila)
         {
-
             Tiketit tiketti = db.Tiketit.Find(tikettiID);
 
             if (tiketti != null)
             {
+                var emailService = new EmailService();
+                Asiakkaat asiakas = db.Asiakkaat.Find(tiketti.AsiakasID);
                 tiketti.Status = uusiTila;
-                db.SaveChanges();
+               
                 //MailIN LÄHETYS TÄSTÄ
-                //if (uusiTila == "Työn alla")
-                //{
-                //    LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on otettu työn alle.");
-                //}
-                //else if (uusiTila == "Valmis")
-                //{
-                //    LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on valmis.");
-                //}
+                if (uusiTila == "Työn alla")
+                {
+
+                    emailService.SendEmail(asiakas.Sähköposti, "Tiketin tila on muuttunut", "Tikettisi on otettu työn alle.");
+
+                }
+                else if (uusiTila == "Valmis")
+                {
+                    emailService.SendEmail(asiakas.Sähköposti, "Tiketin tila on muuttunut", "Tikettisi on valmis.");
+                }
+                db.SaveChanges();
             }
 
         }
@@ -548,37 +552,37 @@ namespace TukiVerkko1.Controllers
 
         }
 
-        private void LahetaMaili(int asiakasId, string viestinTeksti)
-        {
-            var asiakas = db.Asiakkaat.Find(asiakasId);
+        //private void LahetaMaili(int asiakasId, string viestinTeksti)
+        //{
+        //    var asiakas = db.Asiakkaat.Find(asiakasId);
 
-            if (asiakas != null)
-            {
-                try
-                {
-                    var viesti = new MimeMessage();
-                    viesti.From.Add(new MailboxAddress("Tukiverkkoinfo", "Tukiverkko@outlook.com"));
-                    viesti.To.Add(new MailboxAddress("", asiakas.Sähköposti));
-                    viesti.Subject = "Tukipyynnön tila on muuttunut";
-                    viesti.Body = new TextPart("plain")
-                    {
-                        Text = viestinTeksti
-                    };
-                    using (var smtp = new SmtpClient())
-                    {
-                        smtp.Connect("smtp-mail.outlook.com", 587, false);
-                        smtp.Authenticate("tukiverkko@outlook.com", "tiketticareeria694");
-                        smtp.Send(viesti);
-                        smtp.Disconnect(true);
+        //    if (asiakas != null)
+        //    {
+        //        try
+        //        {
+        //            var viesti = new MimeMessage();
+        //            viesti.From.Add(new MailboxAddress("Tukiverkkoinfo", "Tukiverkko@outlook.com"));
+        //            viesti.To.Add(new MailboxAddress("", asiakas.Sähköposti));
+        //            viesti.Subject = "Tukipyynnön tila on muuttunut";
+        //            viesti.Body = new TextPart("plain")
+        //            {
+        //                Text = viestinTeksti
+        //            };
+        //            using (var smtp = new SmtpClient())
+        //            {
+        //                smtp.Connect("smtp-mail.outlook.com", 587, false);
+        //                smtp.Authenticate("tukiverkko@outlook.com", "tiketticareeria694");
+        //                smtp.Send(viesti);
+        //                smtp.Disconnect(true);
 
-                    }
-                }
-                catch (Exception ex)
-                {
-                    ViewBag.ErrorMessage = "Viestin lähetys epäonnistui" + ex.Message; //Huom, tätä ei näytetä missään, väliaikaisratkaisu joka estää ohjelman kaatumisen, vaikka mailiosoite olisi epäkelpo
-                }
-            }
-        }
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            ViewBag.ErrorMessage = "Viestin lähetys epäonnistui" + ex.Message; //Huom, tätä ei näytetä missään, väliaikaisratkaisu joka estää ohjelman kaatumisen, vaikka mailiosoite olisi epäkelpo
+        //        }
+        //    }
+        //}
 
 
         [HttpPost]
