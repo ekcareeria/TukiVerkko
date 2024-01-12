@@ -509,7 +509,7 @@ namespace TukiVerkko1.Controllers
             {
                 tiketti.Status = uusiTila;
                 db.SaveChanges();
-                //MailIN LÄHETYS TÄSTÄ
+                //MailIN LÄHETYS TÄSTÄ, huom tässä on spämmiraja joten ei välttämättä toimi
                 //if (uusiTila == "Työn alla")
                 //{
                 //    LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on otettu työn alle.");
