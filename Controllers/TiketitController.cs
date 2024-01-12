@@ -13,12 +13,23 @@ using MailKit;
 using MimeKit;
 using MailKit.Security;
 using System.Diagnostics;
+using System.Globalization;
+using System.Threading;
 
 namespace TukiVerkko1.Controllers
 {
     public class TiketitController : Controller                                             //Luotu cotrolleri valmiilla pohjalla tikettien tuontia listausta varten tietokannasta.
     {                                                                                       //Tekee samalla myös Tiketit-View:n automaattisesti.
         private TikettiDBEntities1 db = new TikettiDBEntities1();
+
+        protected override void OnActionExecuting( //Tämä on vain Azurea varten, jotta päivämäärät näkyisivät suomalaisittain ja aikavyöhyke olisi oikea
+        ActionExecutingContext filterContext)
+        {
+            base.OnActionExecuting(filterContext);
+            var cultureInfo = CultureInfo.GetCultureInfo("fi");
+            Thread.CurrentThread.CurrentCulture = cultureInfo;
+            Thread.CurrentThread.CurrentUICulture = cultureInfo;
+        }
 
         // GET: Tiketit
         //public ActionResult Index()
@@ -497,14 +508,14 @@ namespace TukiVerkko1.Controllers
                 tiketti.Status = uusiTila;
                 db.SaveChanges();
                 //MailIN LÄHETYS TÄSTÄ
-                //if (uusiTila == "Työn alla")
-                //{
-                //    LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on otettu työn alle.");
-                //}
-                //else if (uusiTila == "Valmis")
-                //{
-                //    LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on valmis.");
-                //}
+                if (uusiTila == "Työn alla")
+                {
+                    LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on otettu työn alle.");
+                }
+                else if (uusiTila == "Valmis")
+                {
+                    LahetaMaili(tiketti.AsiakasID, "Tukipyyntösi on valmis.");
+                }
             }
 
         }
@@ -541,7 +552,7 @@ namespace TukiVerkko1.Controllers
             }
             catch
             {
-                return Json(new { success = false, message = "Tietojen päivitys ei onnistunut" }); //Tämä toteutuu, jos vaikkapa yhteys tietokantaan katkeaa
+                return Json(new { success = false, message = "Tietojen päivitys ei onnistunut" }); //Tämä toteutuu, jos tietojen päivitys ei onnistu muista syistä, esim. tietokantayhteysongelma
 
             }
 
@@ -575,7 +586,7 @@ namespace TukiVerkko1.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ViewBag.ErrorMessage = "Viestin lähetys epäonnistui" + ex.Message; //Huom, tätä ei näytetä missään, väliaikaisratkaisu joka estää ohjelman kaatumisen, vaikka mailiosoite olisi epäkelpo
+                    ViewBag.ErrorMessage = "Viestin lähetys epäonnistui" + ex.Message; //Huom, tätä ei näytetä missään, väliaikaisratkaisu joka estää ohjelman kaatumisen, vaikka mailiosoite olisi tyhjä tai epäkelpo
                 }
             }
         }
