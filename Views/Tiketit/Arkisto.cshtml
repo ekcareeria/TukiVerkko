@@ -1,0 +1,178 @@
+﻿@model IEnumerable<TukiVerkko1.Models.Tiketit>
+
+@{
+    ViewBag.Title = "Arkisto";
+}
+
+@* ----------------------Tikettien tietojen hakuun----------------------------------- *@
+@section scripts {
+    <script type="text/javascript">
+        $(function () {
+            $(".showOrderClass").click(function () {
+                let asiakasId = $(this).data("asiakasid");
+                var url = "/Tiketit/_TikettiRivit3/?AsiakasID=" + asiakasId;
+                $("#orderDetails_" + asiakasId).append(" <b>Ladataan tiketin " + asiakasId + " rivejä...</b>"); //Ilmoitus tulee näkyviin, jos tiedot ei lataudu heti
+                var $detailDiv = $("#orderDetails_" + asiakasId);
+                $.get(url, function (data) {
+                    $detailDiv.replaceWith(data);
+                });
+            });
+        });
+    </script>
+    <script>
+/*  --------------------------Tiketin palauttaminen---------------------------------------*/
+        function TyoNappi(tikettiID, uusiTila) {
+
+            $.ajax({
+                url: "/Tiketit/TyoNappi",
+                type: "POST",
+                data: { tikettiID: tikettiID, uusiTila: uusiTila },
+                success: function (response) {
+                    if (response.success)
+                    {
+                        alert("Tiketti palautettu!");
+                        location.reload();
+                    } else
+                    {
+                        alert(response.message); //Tämä näkyy, jos tikettiID:llä ei löydy tikettiä
+                        location.reload();
+                    }
+
+                },
+                error: function () {
+                    alert("Päivitys epäonnistui"); //Ja tämä, jos ajax-kutsussa joku epäonnistuu
+                }
+            });
+        }
+    </script>
+    <script>
+/*  --------------------------Tiketin poisto---------------------------------------*/
+        function PoistaNappi(tikettiID) {
+            $.ajax({
+                url: "/Tiketit/PoistaTiketti/" + tikettiID,
+                type: "POST",
+                success: function (response) {
+                    if (response.success)
+                    {
+                        alert(response.message); //Kuittaus poiston onnistumisesta
+                        location.reload();
+                    }
+                    else
+                    {
+                        alert(response.message); //Tämä näkyy, jos tikettiID:llä ei löydy tikettiä
+                        location.reload();
+                    }
+                },
+                error: function () {
+                    alert("Tiketin poistaminen epäonnistui.");
+                    location.reload();
+                }
+            });
+        }
+    </script>
+}
+
+@*Otsikon muotoilua varten*@
+<style>
+    h1 {
+        text-align: center;
+        color: #593196;
+    }
+
+    body {
+        background: #f0f1fa;
+    }
+</style>
+
+@*Jotta otsikon ympärillä tilaa (tähän kyllä varmaan parempikin tapa)*@
+<br />
+<br />
+<h1>Arkisto</h1>
+<br />
+<br />
+
+@* Etsi toimintoa varten, tekee hakukentän yms. *@
+@using (Html.BeginForm("Tikettisummaus2", "Tiketit", FormMethod.Get))
+{
+    <div class="input-group container">
+        <p class="px-1">@Html.Label("Etsi etunimellä tai avaa lajittelu:")</p>
+        <p class="px-1">@Html.TextBox("SearchString1", ViewBag.currentFilter1 as string, new { @class = "form-control" })</p>
+        <p class="px-1"><input type="submit" value="Etsi/avaa lajittelu" class="form-control" /></p>
+    </div>
+}
+
+@*Tässä taulukon ihan ylimmäiset otsikot liilalla pohjalla*@
+<div class="container">
+    <div class="card-header">
+        <a class="card-link">
+            <form>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                    </div>
+                    <div class="column col-sm-2">
+                        <input type="text" class="form-control text-bg-secondary font-weight-bold " value="Otsikko" disabled>
+                    </div>
+                    <div class="column col-sm-2">
+                        <input type="text" class="form-control text-bg-secondary font-weight-bold px-2" value="Kategoria" disabled>
+                    </div>
+                    <div class="column col-sm-2">
+                        <input type="text" class="form-control text-bg-secondary font-weight-bold px-2" value="Tiketti jätetty" disabled>
+                    </div>
+                    <div class="column col-sm-2">
+                        <input type="text" class="form-control text-bg-secondary font-weight-bold px-2" value="Tiketti valmistunut" disabled>
+                    </div>
+                    @* Kaksi seuraavaa tyhjänä, jotta otsikkorivi ei jäisi "vajaaksi" *@
+
+                    <div class="column col-sm-2">
+                        <input type="text" class="form-control text-bg-secondary font-weight-bold px-2" value="" disabled>
+                    </div>
+                    <div class="column col-sm-2">
+                        <input type="text" class="form-control text-bg-secondary font-weight-bold px-2" value="" disabled>
+                    </div>
+                </div>
+            </form>
+        </a>
+    </div>
+</div>
+
+@*Tässä haetaan otsikoiden alle vastaavat tiedot ja accordion ja collapse ominaisuus, käyttää sivun yläosan scriptiä.*@
+<div class="container">
+    <div id="accordion">
+        @foreach (var item in Model)
+        {
+            <div class="card">
+                <div class="card-header">
+                    <a class="card-link showOrderClass" data-asiakasid="@item.AsiakasID" data-bs-toggle="collapse" href="#collapse_@item.AsiakasID">
+                        <form>
+                            <div class="input-group">
+                                <div class="column col-sm-2">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text, align-self-xxl-stretch">@item.Otsikko</span>
+                                        @* Tässä yllä määritelty, että otsikkoa klikkaamalla aukeaa collapse toiminto. *@
+                                    </div>
+                                </div>
+                                <div class="column col-sm-2">
+                                    <input type="text" class="form-control px-2" value="@item.Kategoriat.Nimi" disabled>
+                                </div>
+                                <div class="column col-sm-2">
+                                    <input type="text" class="form-control px-2" value="@item.Aika" disabled>
+                                </div>
+                                <div class="column col-sm-2">
+                                    <input type="text" class="form-control px-2" value="@item.Valmistumisaika" disabled>
+                                </div>
+                            </div>
+                        </form>
+                    </a>
+                </div>
+
+                @* Tässä haetaan näytettävät tiedot, kun klikattu otsikkoa eli nämä avautuu taulukkoon. Käyttää _TikettiRivit2 näkymää. *@
+                <div id="collapse_@item.AsiakasID" class="collapse" data-bs-parent="#accordion">
+                    <div class="card-body">
+                        <div id="orderDetails_@item.AsiakasID"></div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>

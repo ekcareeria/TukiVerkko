@@ -6,29 +6,54 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+    @{
+        string rooli = Session["Rooli"] as string;
+
+        if (rooli == null)
+        {
+            @Html.Partial("_Navbar")
+        }
+        else if (rooli.Equals("Opiskelija", StringComparison.OrdinalIgnoreCase))
+        {
+            @Html.Partial("_NavbarOpiskelija")
+        }
+        else if (rooli.Equals("Ylläpitäjä", StringComparison.OrdinalIgnoreCase))
+        {
+            @Html.Partial("_NavbarYlläpitäjä")
+        }
+    }
+
+    <style>
+        footer {
+            padding-left: 1em;
+            padding-right: 1em;
+        }
+
+        img.footer {
+            height: 2em;
+        }
+    </style>
+
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/Home/Index">TukiVERKKO</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarColor02">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/Home/Index">Etusivu<span class="visually-hidden">(current)</span></a></li>
-                </ul>
-                <form class="d-flex">
-                    <ul class="nav-item"><a class="nav-link" href="Home/Contact">Info</a></ul> 
-                </form>
+
+    @RenderBody()
+    <hr />
+    <footer>
+        @using System.Globalization
+        <div class="row">
+            <div class="column col-sm-6">
+                &copy;
+                <img class="footer" src="~/Content/TukiverkkoLogoPieni.png">
+                <img class="footer" src="~/Content/CareeriaLogo.png">
             </div>
+            <div class="column col-sm-6"><p style="text-align:right">Tänään on @DateTime.Now.ToString("F", CultureInfo.CreateSpecificCulture("fi-FI"))</p></div>
         </div>
-    </nav>        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Date - My ASP.NET Application</p>
-        </footer>
+    </footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

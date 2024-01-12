@@ -1,0 +1,61 @@
+﻿@model IEnumerable<TukiVerkko1.ViewModels.YhdistettyTikettiData>
+
+@{
+    ViewBag.Title = "Tikettisummaus";
+}
+
+@*Otsikon muotoilua varten*@
+<style>
+    h1 {
+        text-align: center;
+        color: #593196;
+    }
+
+    th {
+        background-color: #f0f1fa !important;
+    }
+</style>
+
+@*Jotta otsikon ympärillä tilaa (tähän kyllä varmaan parempikin tapa)*@
+<br />
+<br />
+<h1>Saapuneet tiketit</h1>
+<br />
+<br />
+
+<table class="table container">
+    <tr>
+        @* nousevaan ja laskevaan järjestykseen lajitteluun.*@
+        <th>@Html.ActionLink("Etunimi", "Tikettisummaus", new { sortOrder = ViewBag.EtunimiSortParm, currentFilter1 = ViewBag.currentFilter1 })</th>
+        <th>@Html.DisplayNameFor(model => model.Sukunimi)</th>
+        <th>@Html.DisplayNameFor(model => model.Puhelinnumero)</th>
+        <th>@Html.DisplayNameFor(model => model.Sähköposti)</th>
+        <th>@Html.DisplayNameFor(model => model.Kuvaus)</th>
+        <th>@Html.DisplayNameFor(model => model.TikettiID)</th>
+        <th>@Html.DisplayNameFor(model => model.Otsikko)</th>
+        <th>@Html.ActionLink("Kategoria", "Tikettisummaus", new { sortOrder = ViewBag.NimiSortParm, currentFilter1 = ViewBag.currentFilter1 })</th>
+        <th>@Html.ActionLink("Aika", "Tikettisummaus", new { sortOrder = ViewBag.AikaSortParm, currentFilter1 = ViewBag.currentFilter1 })</th>
+        <th>@Html.ActionLink("Status", "Tikettisummaus", new { sortOrder = ViewBag.StatusSortParm, currentFilter1 = ViewBag.currentFilter1 })</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.Etunimi)</td>
+            <td>@Html.DisplayFor(modelItem => item.Sukunimi)</td>
+            <td>@Html.DisplayFor(modelItem => item.Puhelinnumero)</td>
+            <td>@Html.DisplayFor(modelItem => item.Sähköposti)</td>
+            <td>@Html.DisplayFor(modelItem => item.Kuvaus)</td>
+            <td>@Html.DisplayFor(modelItem => item.TikettiID)</td>
+            <td>@Html.DisplayFor(modelItem => item.Otsikko)</td>
+            <td>@Html.DisplayFor(modelItem => item.Nimi)</td>
+            <td>@Html.ValueFor(modelItem => item.Aika, "{0:d}")</td>
+            <td>@Html.DisplayFor(modelItem => item.Status)</td>
+        </tr>
+    }
+</table>
+
+<div class="container">
+    <a href="@Url.Action("Tikettiotsikot", "Tiketit")" class="btn btn-primary" style="border-radius: 6px">Takaisin</a>
+</div>

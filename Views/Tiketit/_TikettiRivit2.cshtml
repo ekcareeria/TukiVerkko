@@ -1,0 +1,109 @@
+﻿@model IEnumerable<TukiVerkko1.ViewModels.TikettiRivit2>
+
+<style>
+
+    .table {
+        table-layout: fixed;
+    }
+
+        .table td {
+            overflow-wrap: break-word;
+        }
+</style>
+
+@* Tässä alla se tieto mitä tulee näkyviin collapse/accordion toiminnolla listaan*@
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Etunimi)</th>
+            <th>@Html.DisplayNameFor(model => model.Sukunimi)</th>
+            <th>@Html.DisplayNameFor(model => model.Puhelinnumero)</th>
+            <th>@Html.DisplayNameFor(model => model.Sähköposti)</th>
+            <th>@Html.DisplayNameFor(model => model.Kuvaus)</th>
+            <th>@Html.DisplayNameFor(model => model.TikettiID)</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Etunimi)</td>
+                <td>@Html.DisplayFor(modelItem => item.Sukunimi)</td>
+                <td>@Html.DisplayFor(modelItem => item.Puhelinnumero)</td>
+                <td>@Html.DisplayFor(modelItem => item.Sähköposti)</td>
+                <td>@Html.DisplayFor(modelItem => item.Kuvaus)</td>
+                <td>@Html.DisplayFor(modelItem => item.TikettiID)</td>
+                <td>
+                    @{
+                        bool disabloiTyoNappi = item.Status == "Työn alla"; //jos status on jo "työn alla, "työn alla"-nappi ei toimi
+                        bool disabloiValmisNappi = item.Status == "Avoin"; //tikettiä ei voi kuitata valmiiksi ilman, että se on ensin työn alla
+                    }
+
+                    @*Tämän olisi voinut toteuttaa tiiviimmin, mutta minulle se oli helpompi sisäistää perinteisillä if-else -rakenteilla*@
+
+                    @if (disabloiTyoNappi) //nappi ei todellisuudessa ole disabloitu, koska sen pitää pystyä antamaan alertti
+                    {
+                        <button type="button" class="btn btn-secondary"  style="width: 6em" onclick="AlertIlmoitus2()">Työn alla</button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-primary" style="width: 6em" data-bs-toggle="modal" data-bs-target="#työn_alle_@item.TikettiID">Työn alla</button>
+                    }
+                    @if (disabloiValmisNappi)
+                    {
+                        <button type="button" class="btn btn-secondary" style="width: 6em" onclick="AlertIlmoitus()">Valmis</button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-primary" style="width: 6em" data-bs-toggle="modal" data-bs-target="#valmis_@item.TikettiID">Valmis</button>
+                    }
+
+                    @if (item.Status == "Avoin") //Työn alla -modaali-ikkuna
+                    {
+                        <div class="modal" id="työn_alle_@item.TikettiID">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5>Haluatko ottaa tiketin työn alle?</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h5>Asiakkaalle lähetetään sähköposti tiketin työn alle ottamisesta.</h5>
+                                        <div id="ilmoitus" style="display: none;">Sähköpostia lähetetään...</div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" style="width: 3em"><i class="fas fa-times"></i></button>
+                                        <button type="button" class="btn btn-info"  style="width: 3em" onclick="TyoNappi(@item.TikettiID, 'Työn alla')"><i class="fas fa-check"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else if (item.Status == "Työn alla") //Valmis -modaali-ikkuna
+                    {
+                        <div class="modal" id="valmis_@item.TikettiID">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5>Haluatko varmasti kuitata tiketin valmiiksi?</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h5>Tiketti siirtyy arkistoon, ja asiakkaalle lähetetään sähköposti tiketin valmistumisesta.</h5>
+                                        <div id="ilmoitus" style="display: none;">Sähköpostia lähetetään...</div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" style="width: 3em" data-bs-dismiss="modal"><i class="fas fa-times"></i></button>
+                                        <button type="button" class="btn btn-info" style="width: 3em" onclick="TyoNappi(@item.TikettiID, 'Valmis')"><i class="fas fa-check"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+

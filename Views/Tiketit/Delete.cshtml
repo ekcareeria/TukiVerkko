@@ -1,0 +1,80 @@
+﻿@model TukiVerkko1.Models.Tiketit
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Tiketit</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Otsikko)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Otsikko)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Kuvaus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Kuvaus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Aika)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Aika)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Valmistumisaika)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Valmistumisaika)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Asiakkaat.Etunimi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Asiakkaat.Etunimi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Kategoriat.Nimi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Kategoriat.Nimi)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

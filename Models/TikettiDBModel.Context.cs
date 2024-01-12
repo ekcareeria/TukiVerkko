@@ -15,10 +15,10 @@ namespace TukiVerkko1.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class TikettiDBEntities : DbContext
+    public partial class TikettiDBEntities1 : DbContext
     {
-        public TikettiDBEntities()
-            : base("name=TikettiDBEntities")
+        public TikettiDBEntities1()
+            : base("name=TikettiDBEntities1")
         {
         }
     

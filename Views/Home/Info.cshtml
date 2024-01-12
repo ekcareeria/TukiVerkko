@@ -1,0 +1,96 @@
+﻿@{
+    ViewBag.Title = "Info";
+}
+
+@section scripts {
+    <script type="text/javascript">
+    $(window).on('load', function () {
+        if (@ViewBag.LoginVirhe == 1) {
+            $('#LoginRuutu').modal('show');
+        }
+    });
+
+    </script>
+
+    @{
+        Html.RenderPartial("_LoginModal");
+    }
+}
+
+<style>
+    div {
+        padding-left: 1em;
+        padding-right: 1em;
+        padding-top: 1em;
+    }
+
+    iframe.kartta {
+        width: 100%;
+        height: 20em;
+    }
+
+    h2 {
+        text-align: center;
+        color: #593196;
+    }
+
+    img.logot {
+        width: 15em;
+        place-content: center;
+    }
+
+    div.container {
+        background-color: #DED6EA;
+        border: 1px solid black;
+    }
+
+    .ikonit {
+        display: flex;
+        text-align: left;
+    }
+
+    .teksti {
+        display: block;
+        padding-left: 1em;
+    }
+</style>
+<body>
+    <div>
+        <iframe class="kartta" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7886.011348045783!2d25.635195719117753!3d60.38737232644368!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4691f5701c2a966b%3A0x7e490d8a5ed511ce!2sCareeria%2C%20Hevosenkeng%C3%A4nkadun%20toimipaikka!5e0!3m2!1sfi!2sfi!4v1700404420707!5m2!1sfi!2sfi" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <h2>Yhteystiedot</h2>
+    <div class="container">
+        <div class="row">
+            <div class="column col-sm-4">
+                <h4 style="text-align:center;">TukiVERKKO</h4>
+                <p>
+                    <br />
+                    Careerian IT-tuen opiskelijat auttavat täällä juuri sinua ratkomaan arkesi
+                    tietoteknisiä ongelmia. Ota rohkeasti yhteyttä ja pidä meidät kiireisinä!
+                </p>
+            </div>
+            <div class="column col-sm-4">
+                <div class="ikonit">
+                    <i class="fas fa-map-marker-alt fa-2x"></i>
+                    <p class="teksti">Hevosenkengänkatu 2<br />06100 Porvoo</p>
+                </div>
+                <div class="ikonit">
+                    <i class="fas fa-phone fa-2x"></i>
+                    <p class="teksti">Vaihde 020 51 311 (ma–pe klo 8–16)<br />Aulavastaava 040 736 8200</p>
+                </div>
+                <div class="ikonit">
+                    <i class="fas fa-mail-bulk fa-2x"></i>
+                    <p class="teksti">hkk.infopiste@careeria.fi</p>
+                </div>
+            </div>
+            <div class="column col-sm-4">
+                <img class="logot" src="~/Content/TukiverkkoLogo.png">
+                <br />
+                <br />
+                <img class="logot" src="~/Content/CareeriaLogo.png">
+                <br />
+                <br />
+            </div>
+        </div>
+    </div>
+</body>

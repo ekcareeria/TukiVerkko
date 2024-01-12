@@ -1,0 +1,81 @@
+﻿@model IEnumerable<TukiVerkko1.ViewModels.TikettiRivit2>
+<style>
+
+    .table {
+        table-layout: fixed;
+    }
+
+        .table td {
+            overflow-wrap: break-word;
+        }
+</style>
+@* Tässä alla se tieto mitä tulee näkyviin collapse/accordion toiminnolla listaan*@
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Etunimi)</th>
+            <th>@Html.DisplayNameFor(model => model.Sukunimi)</th>
+            <th>@Html.DisplayNameFor(model => model.Puhelinnumero)</th>
+            <th>@Html.DisplayNameFor(model => model.Sähköposti)</th>
+            <th>@Html.DisplayNameFor(model => model.Kuvaus)</th>
+            <th>@Html.DisplayNameFor(model => model.TikettiID)</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Etunimi)</td>
+                <td>@Html.DisplayFor(modelItem => item.Sukunimi)</td>
+                <td>@Html.DisplayFor(modelItem => item.Puhelinnumero)</td>
+                <td>@Html.DisplayFor(modelItem => item.Sähköposti)</td>
+                <td>@Html.DisplayFor(modelItem => item.Kuvaus)</td>
+                <td>@Html.DisplayFor(modelItem => item.TikettiID)</td>
+                <td>
+                    @*Palauta ja poista-nappulat*@
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" style="width: 5em" data-bs-target="#palauta_@item.TikettiID">Palauta</button>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" style="width: 5em" data-bs-target="#poista_@item.TikettiID">Poista</button>
+
+                    @*PALAUTA-MODAALI-IKKUNA*@
+                    <div class="modal fade" id="palauta_@item.TikettiID">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                </div>
+                                <div class="modal-body">
+                                    <h5>Haluatko varmasti palauttaa tiketin "Avoin"-tilaan?</h5>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" style="width: 3em" data-bs-dismiss="modal"><i class="fas fa-times"></i></button>
+                                    <button type="button" class="btn btn-info" style="width: 3em" onclick="TyoNappi(@item.TikettiID, 'Avoin')"><i class="fas fa-check"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*POISTA-MODAALI-IKKUNA*@
+                    <div class="modal fade" id="poista_@item.TikettiID">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-header"></div>
+                                <div class="modal-body">
+                                    <h5>Oletko varma, että haluat poistaa tiketin? Poisto on lopullinen.</h5>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" style="width: 3em" data-bs-dismiss="modal"><i class="fas fa-times"></i></button>
+                                    <button type="button" class="btn btn-info" style="width: 3em" onclick="PoistaNappi(@item.TikettiID)"><i class="fas fa-check"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
