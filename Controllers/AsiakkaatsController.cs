@@ -140,8 +140,9 @@ namespace TukiVerkko1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Tukipyynto([Bind(Include = "AsiakasID,Otsikko,KategoriaID,Etunimi,Sukunimi,Sähköposti,Puhelinnumero,Kuvaus")] Lomaketiedot tiedot)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid) //huom tämä try-catch on vain akuuttiratkaisu estämään ohjelman kaatuminen jos vaikka kentissä on liian pitkä
             {
+                try { 
                 var tiketti = new Tiketit()
                 {
                     Otsikko = tiedot.Otsikko,
@@ -167,6 +168,11 @@ namespace TukiVerkko1.Controllers
                 db.SaveChanges();
                 
                 return RedirectToAction("Index", "Home");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.ErrorMessage = "Lomakkeen lähetys epäonnistui, ole hyvä ja tarkista kentät.";
+                }
             }
 
             ViewBag.KategoriaID = new SelectList(db.Kategoriat, "KategoriaID", "Nimi", tiedot.KategoriaID);

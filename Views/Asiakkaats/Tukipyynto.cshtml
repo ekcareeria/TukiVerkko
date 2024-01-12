@@ -201,3 +201,11 @@
         }
     </div>
 </div>
+@section scripts {
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <script>
+            alert(@Html.Raw(Json.Encode(ViewBag.ErrorMessage)));
+        </script>
+    }
+} 
