@@ -205,10 +205,8 @@
     @if (ViewBag.ErrorMessage != null)
     {
         <script>
-
             alert(@Html.Raw(Json.Encode(ViewBag.ErrorMessage)));
         </script>
-
     }
     <script type="text/javascript">
     $(window).on('load', function () {
@@ -219,9 +217,9 @@
 
     </script>
 
-    
-        @{
-            Html.RenderPartial("~/Views/Home/_LoginModal.cshtml");
-        }
-    
+
+    @{
+        Html.RenderPartial("~/Views/Home/_LoginModal.cshtml", new TukiVerkko1.Models.Logins());
+    }
+
 } 

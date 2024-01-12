@@ -30,7 +30,7 @@ namespace TukiVerkko1.Controllers
             Thread.CurrentThread.CurrentCulture = cultureInfo;
             Thread.CurrentThread.CurrentUICulture = cultureInfo;
         }
-
+        #region Automaattisesti tulleet koodinpätkät
         // GET: Tiketit
         //public ActionResult Index()
         //{
@@ -38,7 +38,7 @@ namespace TukiVerkko1.Controllers
         //    return View(tiketit.ToList());
         //}
 
-        #region Automaattisesti tulleet koodinpätkät
+
         // GET: Tiketit/Details/5
         public ActionResult Details(int? id)
         {
@@ -404,6 +404,7 @@ namespace TukiVerkko1.Controllers
         }
         #endregion
 
+        #region Saapuneet tiketit ja Arkisto 
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")] //tämä estää välimuistituksen, joten uloskirjautumisen jälkeen ei selaimen back-napilla pääse takaisin tikettinäkymiin
                                                                           //kirjautuneena voi kuitenkin liikkua esim. arkiston ja saapuneiden välillä selaimen napeilla
         [LoginRoolit1(Roles = "Ylläpitäjä, Opiskelija")]
@@ -439,7 +440,7 @@ namespace TukiVerkko1.Controllers
             }
         }
 
-        #region _Tikettirivit2 ja _Tikettirivit3
+       
         public ActionResult _TikettiRivit2(int? asiakasid)                    //Tästä metodista luodusta näkymästä tulee tiedot, kun listan otsikkoa painaa (avautuu etunimi, sukunimi yms)
         {
             var TikettiRivitLista2 = from t in db.Tiketit
@@ -497,6 +498,7 @@ namespace TukiVerkko1.Controllers
         }
         #endregion
 
+        #region Tiketin statuksen hallinta & sähköposti
         //----------------Tästä alkaa tiketin statuksen hallinta--------------------//
         private void PaivitaTila(int tikettiID, string uusiTila)
         {
@@ -545,6 +547,7 @@ namespace TukiVerkko1.Controllers
                     db.SaveChanges();
                     return Json(new { success = true, message = "Tiketin tila päivitetty." });  //Tämä ei tällä hetkellä käytössä
                 }
+
                 else
                 {
                     return Json(new { success = false, message = "Tikettiä ei löydy tikettiID:llä." }); //Toimii sekä Arkistossa että Saapuneissa
@@ -553,10 +556,7 @@ namespace TukiVerkko1.Controllers
             catch
             {
                 return Json(new { success = false, message = "Tietojen päivitys ei onnistunut" }); //Tämä toteutuu, jos tietojen päivitys ei onnistu muista syistä, esim. tietokantayhteysongelma
-
             }
-
-
         }
 
         private void LahetaMaili(int asiakasId, string viestinTeksti)
@@ -581,7 +581,6 @@ namespace TukiVerkko1.Controllers
                         smtp.Authenticate("tukiverkko@outlook.com", "tiketticareeria694");
                         smtp.Send(viesti);
                         smtp.Disconnect(true);
-
                     }
                 }
                 catch (Exception ex)
@@ -615,5 +614,6 @@ namespace TukiVerkko1.Controllers
                 return Json(new { success = false, message = "Tietojen päivitys ei onnistunut" });
             }
         }
+        #endregion
     }
 }
