@@ -205,7 +205,23 @@
     @if (ViewBag.ErrorMessage != null)
     {
         <script>
+
             alert(@Html.Raw(Json.Encode(ViewBag.ErrorMessage)));
         </script>
+
     }
+    <script type="text/javascript">
+    $(window).on('load', function () {
+        if (@ViewBag.LoginVirhe == 1) {
+            $('#LoginRuutu').modal('show');
+        }
+    });
+
+    </script>
+
+    
+        @{
+            Html.RenderPartial("~/Views/Home/_LoginModal.cshtml");
+        }
+    
 } 
